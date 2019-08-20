@@ -25,7 +25,8 @@ The newest-node bisection for the local mesh refinement was clearly stated  than
 The MATLAB codes are in Folder AFEM2D. 
 
 
-Undo: - high-order FEM
+Undo: 
+      - high-order FEM
 
       - mesh generation
       
