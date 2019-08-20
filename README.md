@@ -26,9 +26,15 @@ The MATLAB codes are in Folder AFEM2D.
 
 
 Undo: - high-order FEM
+
       - mesh generation
+      
       - Solver: multigrid methods (mg)
+      
       - 3-D FEM
+      
       - mixed FEM (e.g. Stokes equation)
+      
       - time-dependent problems
+      
       - ...
