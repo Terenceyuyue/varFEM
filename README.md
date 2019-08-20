@@ -21,7 +21,7 @@ certain modifications.  One can refer to Chapter 4 for full explanation.
 
            SOLVE -> ESTIMATE -> MARK -> REFINE
 
-The newest-nodal bisection for the local mesh refinement was clearly stated  thanks to the smart idea in iFEM.  
+The newest-node bisection for the local mesh refinement was clearly stated  thanks to the smart idea in iFEM.  
 The MATLAB codes are in Folder AFEM2D. 
 
 
