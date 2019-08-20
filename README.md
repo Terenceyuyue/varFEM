@@ -19,7 +19,7 @@ certain modifications.  One can refer to Chapter 4 for full explanation.
 5. The adpative finite element method (AFEM) is introduced in Chapter 5 for the Poisson equation with homogeneous Dirichlet's 
    conditions.  Each step was explained in detail, viz. the loops of the form: 
 
-           SOLVE ¡ª> ESTIMATE ¡ª> MARK ¡ª> REFINE
+           SOLVE -> ESTIMATE -> MARK -> REFINE
 
 The newest-nodal bisection for the local mesh refinement was clearly stated  thanks to the smart idea in iFEM.  
 The MATLAB codes are in Folder AFEM2D. 
