@@ -1,4 +1,4 @@
-function [u,A,B,ff] = elasticity1(node,elem,pde,bdFlag)
+function u = elasticity1(node,elem,pde,bdFlag)
 %Elasticity  Conforming P1 elements discretization of linear elasticity equation
 %
 %       u = [ u1, u2]
