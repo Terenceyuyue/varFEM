@@ -27,7 +27,7 @@ The MATLAB codes are in Folder AFEM2D.
 6. We consider the programming of linear elasticity equations in Chapter 6, which is a classical vector equation arising from 
    elastic mechanics. The assembly of the stiff matrix and load vector is clearly presented following the idea of scalar equations. 
    The presented code may be more accepatable than the one in iFEM. We remark that the idea can be directly applied to 
-    Stokes equations which will be introduced later for the mixed FEM.  The MATLAB codes are inclued in Folder elasticity. 
+    Stokes equations which will be introduced later for the mixed FEM.  The MATLAB codes are included in Folder elasticity. 
 
 Undo: - high-order FEM
    
