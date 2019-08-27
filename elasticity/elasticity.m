@@ -1,4 +1,4 @@
-function [u,A,B,ff] = elasticity(node,elem,pde,bdFlag)
+function u = elasticity(node,elem,pde,bdFlag)
 %Elasticity  Conforming P1 FEM of linear elasticity equation
 %
 %       u = [ u1, u2]
