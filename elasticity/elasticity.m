@@ -84,8 +84,8 @@ for iel = 1:NT
 end
 F1 = [f1(:,1),f2(:,1),f3(:,1)]; F1 = F1(:);
 F2 = [f1(:,2),f2(:,2),f3(:,2)]; F2 = F2(:);
-ff1 = accumarray(elem(:), F1(:),[N 1]);
-ff2 = accumarray(elem(:), F2(:),[N 1]);
+ff1 = accumarray(elem(:), F1,[N 1]);
+ff2 = accumarray(elem(:), F2,[N 1]);
 ff = [ff1;ff2];
 
 % ------------ Dirichlet boundary condition ----------------
