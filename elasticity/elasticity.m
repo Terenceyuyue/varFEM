@@ -1,7 +1,7 @@
 function u = elasticity(node,elem,pde,bdFlag)
 %Elasticity  Conforming P1 FEM of linear elasticity equation
 %
-%       u = [ u1, u2]
+%       u = [u1, u2]
 %       -div (sigma) = f in \Omega
 %       Dirichlet boundary condition u = [g1_D, g2_D] on \Gamma_D
 %
@@ -39,21 +39,31 @@ for i = 1:Ndof
         id = id + NT;
     end
 end
+
+ii11 = ii;   jj11 = jj;  ii12 = ii;   jj12 = jj+N;
+ii21 = ii+N; jj21 = jj;  ii22 = ii+N; jj22 = jj+N;
+
 % ----------- Assemble stiffness matrix -----------
 % (Eij(u):Eij(v))
 ss11 = Dbase{1,1}+0.5*Dbase{2,2};  ss12 = 0.5*Dbase{2,1};
 ss21 = 0.5*Dbase{1,2};             ss22 = Dbase{2,2}+0.5*Dbase{1,1};
-A11 = sparse(ii,jj,ss11,N,N); A12 = sparse(ii,jj,ss12,N,N);
-A21 = sparse(ii,jj,ss21,N,N); A22 = sparse(ii,jj,ss22,N,N);
-A = [A11,A12; A21,A22];
+% A11 = sparse(ii,jj,ss11,N,N); A12 = sparse(ii,jj,ss12,N,N);
+% A21 = sparse(ii,jj,ss21,N,N); A22 = sparse(ii,jj,ss22,N,N);
+% A = [A11,A12; A21,A22];
+ii = [ii11; ii12; ii21; ii22];
+jj = [jj11; jj12; jj21; jj22];
+ss = [ss11; ss12; ss21; ss22];
+A = sparse(ii,jj,ss,2*N,2*N);
 A = 2*mu*A;
 
 % (div u,div v)
 ss11 = Dbase{1,1};            ss12 = Dbase{1,2};
 ss21 = Dbase{2,1};            ss22 = Dbase{2,2};
-B11 = sparse(ii,jj,ss11,N,N); B12 = sparse(ii,jj,ss12,N,N);
-B21 = sparse(ii,jj,ss21,N,N); B22 = sparse(ii,jj,ss22,N,N);
-B = [B11,B12; B21,B22];
+% B11 = sparse(ii,jj,ss11,N,N); B12 = sparse(ii,jj,ss12,N,N);
+% B21 = sparse(ii,jj,ss21,N,N); B22 = sparse(ii,jj,ss22,N,N);
+% B = [B11,B12; B21,B22];
+ss = [ss11; ss12; ss21; ss22];
+B = sparse(ii,jj,ss,2*N,2*N);
 B = lambda*B;
 
 % stiff matrix
@@ -82,10 +92,10 @@ for iel = 1:NT
     f2(iel,:) = area(iel)*dot(weight,fv2);
     f3(iel,:) = area(iel)*dot(weight,fv3);
 end
-F1 = [f1(:,1),f2(:,1),f3(:,1)]; F1 = F1(:);
-F2 = [f1(:,2),f2(:,2),f3(:,2)]; F2 = F2(:);
-ff1 = accumarray(elem(:), F1,[N 1]);
-ff2 = accumarray(elem(:), F2,[N 1]);
+F1 = [f1(:,1),f2(:,1),f3(:,1)]; 
+F2 = [f1(:,2),f2(:,2),f3(:,2)]; 
+ff1 = accumarray(elem(:), F1(:), [N 1]);
+ff2 = accumarray(elem(:), F2(:), [N 1]);
 ff = [ff1;ff2];
 
 % ------------ Dirichlet boundary condition ----------------
