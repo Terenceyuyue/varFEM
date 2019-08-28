@@ -70,7 +70,7 @@ aux.elem2edge = elem2edge;
 aux.edge = edge; aux.bdEdge = bdEdge;
 aux.edge2elem = edge2elem;
 aux.neighbor = neighbor;
-aux.elemCenter = elemCentroid;
+aux.elemCentroid = elemCentroid;
 aux.area = area;
 aux.diameter = diameter;
 
