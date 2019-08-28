@@ -34,4 +34,5 @@ subplot(1,2,2), showsolution(node,elem,ue(:,id));
 zlabel('ue');
 Eabs = u-ue;  % Absolute errors
 figure,showsolution(node,elem,Eabs(:,id)); zlim('auto');
+format shorte
 Err = norm(Eabs)./norm(ue)
