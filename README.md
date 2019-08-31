@@ -2,7 +2,7 @@
 
 ## 1-D problems
 
-Folder FEM1D introduces FEM programming of one dimensional problems.    
+Folder FEM1D introduces FEM programming of one dimensional problems $\sqrt(x)$.    
     The assembly of stiff matrix and load vector is explained in the PDF document 
 	"FEM.pdf" in detail (See chapter 1).
 
