@@ -1,6 +1,8 @@
-MATLAB Programming for Finite Element Methods
+# MATLAB Programming for Finite Element Methods
 
-1. Folder FEM1D introduces FEM programming of one dimensional problems. 
+## One dimensional problems
+
+Folder FEM1D introduces FEM programming of one dimensional problems. 
    
     The assembly of stiff matrix and load vector is explained in the PDF document 
 	"FEM.pdf" in detail (See chapter 1).
