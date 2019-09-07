@@ -36,7 +36,7 @@ We consider the programming of linear elasticity equations in Chapter 6, which i
     Stokes equations which will be introduced later for the mixed FEM.  The MATLAB codes are included in Folder elasticity. 
     
 ## Variational formulation based programming for 1-D problems
-We present the variational formulation based programming for 1-D problems in Folder variational1D. In some successful FE softwares, those programs are organized in an object-oriented way 
+We present the variational formulation based programming for 1-D problems in Folder variational1D. The arrangement is entirely process-oriented and thus easy to understand. 
 
 
 
