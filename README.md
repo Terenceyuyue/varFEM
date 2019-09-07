@@ -34,23 +34,23 @@ We consider the programming of linear elasticity equations in Chapter 6, which i
    elastic mechanics. The assembly of stiff matrix and load vector is clearly presented following the idea of scalar equations. 
    The presented code may be more accepatable than the one in iFEM. We remark that the idea can be directly applied to 
     Stokes equations which will be introduced later for the mixed FEM.  The MATLAB codes are included in Folder elasticity. 
+    
+## Variational formulation based programming for 1-D problems
 
-Undo: - high-order FEM
-   
-   
-           - mesh generation
-   
-   
-           - Solver: multigrid methods (mg)
-   
-   
-           - 3-D FEM
-      
 
-           - mixed FEM (e.g. Stokes equation)
+
+Undo: 
    
+           - high-order FEM
+	   
+           - mesh generation   
+   
+           - Solver: multigrid methods (mg)   
+   
+           - 3-D FEM      
+
+           - mixed FEM (e.g. Stokes equation)   
   
-            - time-dependent problems
-     
+            - time-dependent problems     
 
             - ... ...
