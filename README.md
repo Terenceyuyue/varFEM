@@ -1,5 +1,12 @@
 # MATLAB Programming for Finite Element Methods
 
+# Toolbox 结构安排
+之前上传的文档已经删除，本文将重新整理文档，以形成类似 iFEM 的工具箱。
+
+该工具箱有两个重要的文件夹：fem 和 variational。
+后者存放 “基于变分形式编程的程序”，目前只给出一维问题的处理。
+fem 文件夹存放常规编程的各种函数文件。作者最近在处理弹性力学问题，所以先上传该部分内容。
+
 ## 1-D problems
 
 Folder FEM1D introduces FEM programming of one dimensional problems.    
