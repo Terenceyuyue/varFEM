@@ -58,6 +58,9 @@ The MATLAB codes are in Folder AFEM2D.
 We present a variational formulation based programming for 1-D problems in Folder variational1D. The arrangement is entirely process-oriented and thus easy to understand (see Section 1.5). 
 
 
+PS:
+
+     作者最近忙于弹性力学的总结与程序实现，对前面各章节的重新整理将会在未来的适当时间完成。
 
 Undo: 
 
