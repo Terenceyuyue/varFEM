@@ -9,6 +9,12 @@
 
 - 所有案列程序放在 example 文件夹中。
 
+- 一些涉及画图、边界条件设置、网格生成以及数值积分的工具放在 tool 文件夹中。
+
+- pdedata 是一些例子的方程信息。
+
+- meshdata 给出一些用到的网格信息。
+
 ## 1-D problems
 
 Folder FEM1D introduces FEM programming of one dimensional problems.    
