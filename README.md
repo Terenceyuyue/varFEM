@@ -45,10 +45,14 @@ The newest-node bisection for the local mesh refinement was clearly stated  than
 The MATLAB codes are in Folder AFEM2D. 
 
 ## Linear elasticity equations
-We consider the programming of linear elasticity equations in Chapter 6, which is a classical vector equation arising from 
-   elastic mechanics. The assembly of stiff matrix and load vector is clearly presented following the idea of scalar equations. 
-   The presented code may be more accepatable than the one in iFEM. We remark that the idea can be directly applied to 
-    Stokes equations which will be introduced later for the mixed FEM.  The MATLAB codes are included in Folder elasticity. 
+
+线弹性问题做了较多修改。我们给出了三种变分形式的程序。
+- 第一种和第二种是线弹性问题比较常用的形式，即应变应力张量形式的变分问题。
+  - 第一种采用向量有限元空间编程，给出了 sparse 装配指标以及详细的计算说明。
+  - 第二种采用标量法编程，即从分量的角度考虑。给出了 sparse 装配指标以及详细的计算说明。
+  - 这两种形式的边界条件都包含 “Neumann” 边界和 Dirichlet 边界。
+
+- 第三种是前面变分形式的变形，双线性形式以 Laplace 算子呈现。它的程序类似第二种，但边界条件通常只考虑 Dirichlet 条件。
     
 ## Variational formulation based programming for 1-D problems
 We present a variational formulation based programming for 1-D problems in Folder variational1D. The arrangement is entirely process-oriented and thus easy to understand (see Section 1.5). 
