@@ -1,5 +1,8 @@
 # MATLAB Programming for Finite Element Methods
 
+# Toolbox 结构安排
+之前上传的文档已经删除，本文将重新整理文档，以形成类似 iFEM 的工具箱。
+
 ## 1-D problems
 
 Folder FEM1D introduces FEM programming of one dimensional problems.    
