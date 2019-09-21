@@ -53,8 +53,9 @@ For linear elasticity problems, we give a unified programming framework. Specifi
 - The entrices of stiffness matrix are given in the vectorized finite element space;
 - The assembly is accomplished in the scalar FE space of each component.
 
-线弹性问题做了较多修改。我们给出了三种变分形式的程序。
-- 第一种和第二种是线弹性问题比较常用的形式，即应变应力张量形式的变分问题。
+We consider three kinds of variational formulation. 
+  - The first and the second are commonly used in linear elastic problems in the form of strain-stress tensors. 
+  - The third is the deformation of the former variational form with Laplace operator involving.
   - 第一种采用向量有限元空间编程，给出了 sparse 装配指标以及详细的计算说明。
   - 第二种采用标量法编程，即从分量的角度考虑。给出了 sparse 装配指标以及详细的计算说明。
   - 这两种形式的边界条件都包含 “Neumann” 边界和 Dirichlet 边界。
