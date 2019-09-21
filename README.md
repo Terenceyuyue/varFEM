@@ -54,11 +54,11 @@ For linear elasticity problems, we give a unified programming framework. Specifi
 - The assembly is accomplished in the scalar FE space of each component.
 
 We consider three kinds of variational formulation. 
-  - The first and the second are commonly used in linear elastic problems in the form of strain-stress tensors. 
-  - The third is the deformation of the former variational form with Laplace operator involving.
-  - 第一种采用向量有限元空间编程，给出了 sparse 装配指标以及详细的计算说明。
-  - 第二种采用标量法编程，即从分量的角度考虑。给出了 sparse 装配指标以及详细的计算说明。
-  - 这两种形式的边界条件都包含 “Neumann” 边界和 Dirichlet 边界。
+  - The first and the second are commonly used in linear elastic problems in the form of strain and/or stress tensors. 
+  - The third is just a variant of the second one with Laplacian replacing the strain tensors.
+  - For each formulation, sparse assembling indices and detailed explanation are given.
+
+这两种形式的边界条件都包含 “Neumann” 边界和 Dirichlet 边界。
 
 - 第三种是前面变分形式的变形，双线性形式以 Laplace 算子呈现。它的程序类似第二种，但边界条件通常只考虑 Dirichlet 条件。
     
