@@ -50,7 +50,7 @@ The MATLAB codes are in Folder AFEM2D.
 ## Linear elasticity equations
 
 For linear elasticity problems, we give a unified programming framework. Specifically, 
-- The entrices of stiffness matrix are given in the vectorized finite element space;
+- The entrices of stiffness matrix are analyzed in the vectorized finite element space;
 - The assembly is accomplished in the scalar FE space of each component.
 
 We consider three kinds of variational formulation. 
