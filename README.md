@@ -49,6 +49,10 @@ The MATLAB codes are in Folder AFEM2D.
 
 ## Linear elasticity equations
 
+For linear elasticity problems, we give a unified programming framework. Specifically, 
+- The entrices of stiffness matrix are given in the vectorized finite element space;
+- The assembly is accomplished in the scalar FE space of each component.
+
 线弹性问题做了较多修改。我们给出了三种变分形式的程序。
 - 第一种和第二种是线弹性问题比较常用的形式，即应变应力张量形式的变分问题。
   - 第一种采用向量有限元空间编程，给出了 sparse 装配指标以及详细的计算说明。
