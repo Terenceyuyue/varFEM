@@ -1,19 +1,22 @@
 # MATLAB Programming for Finite Element Methods
 
-# Toolbox 结构安排
-之前上传的文档已经删除，本文将重新整理文档，以形成类似 iFEM 的工具箱。
+# Arrangement of the ongoing Toolbox
 
-- 该工具箱有两个重要的文件夹：fem 和 variational。
-  - variational 文件夹存放 “基于变分形式编程的程序”，目前只给出一维问题的处理。
-  - fem 文件夹存放常规编程的各种函数文件。作者最近在处理弹性力学问题，所以先上传该部分内容。
+ We shall estabilish an iFEM-like or a simplified iFEM package, named mFEM toolbox.
 
-- 所有案列程序放在 example 文件夹中。
+- The toolbox has two important folders：fem and variational.
 
-- 一些涉及画图、边界条件设置、网格生成以及数值积分的工具放在 tool 文件夹中。
+  - fem: It includes all kinds of source code.
+  - variational: A new feature is the variational formulation based programming. It extends the applicaton in fem folder.
+                 At present, only one-dimensional problems are provided.  
 
-- pdedata 是一些例子的方程信息。
+- example: All running programs are placed in the example folder.
 
-- meshdata 给出一些用到的网格信息。
+- tool: You can find functions involving visulization, boundary setting, mesh generation, and numerical integration and so on.
+
+- pdedata: It provides information of equations associated with examples in example folder. 
+
+- meshdata: It stories mesh data used in all kinds of examples.
 
 ## 1-D problems
 
