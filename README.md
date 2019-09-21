@@ -58,9 +58,8 @@ We consider three kinds of variational formulation.
   - The third is just a variant of the second one with Laplacian replacing the strain tensors.
   - For each formulation, sparse assembling indices and detailed explanation are given.
 
-这两种形式的边界条件都包含 “Neumann” 边界和 Dirichlet 边界。
-
-- 第三种是前面变分形式的变形，双线性形式以 Laplace 算子呈现。它的程序类似第二种，但边界条件通常只考虑 Dirichlet 条件。
+For the first two formulations,  “Neumann”  boundary conditions and Dirichlet boundary conditions are applied. 
+For the third fomulation, only Dirichlet conditions are used in view of the practical problems.
     
 ## Variational formulation based programming for 1-D problems
 We present a variational formulation based programming for 1-D problems in Folder variational1D. The arrangement is entirely process-oriented and thus easy to understand (see Section 1.5). 
