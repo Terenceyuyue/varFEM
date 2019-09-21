@@ -1,6 +1,6 @@
 # MATLAB Programming for Finite Element Methods
 
-# Arrangement of the ongoing Toolbox
+## Arrangement of the ongoing Toolbox
 
  We shall establish an iFEM-like or a simplified iFEM package, named mFEM toolbox.
 
@@ -18,12 +18,12 @@
 
 - meshdata: It stories mesh data used in all kinds of examples.
 
-# Display and marking of polygonal meshes
+## Display and marking of polygonal meshes
 Folder FEM2D-mesh presents some basic functions to show the polygonal meshes, including 
    marking of the nodes, elements and (boundary) edges.
    See chapter 3 for details.
 
-# Auxiliary mesh data and setboundary.m
+## Auxiliary mesh data and setboundary.m
 For the convenience of computation, we introduce some auxiliary mesh data in Folder FEM2D-auxstructure. 
    The idea stems from the treatment of triangulation in iFEM, which is generalized to polygonal meshes with 
 certain modifications.  One can refer to Chapter 4 for full explanation.
