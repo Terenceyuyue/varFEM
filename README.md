@@ -2,7 +2,7 @@
 
 # Arrangement of the ongoing Toolbox
 
- We shall estabilish an iFEM-like or a simplified iFEM package, named mFEM toolbox.
+ We shall establish an iFEM-like or a simplified iFEM package, named mFEM toolbox.
 
 - The toolbox has two important folders：fem and variational.
 
