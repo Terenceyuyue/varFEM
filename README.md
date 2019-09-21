@@ -53,7 +53,7 @@ For linear elasticity problems, we give a unified programming framework. Specifi
 - The entrices of stiffness matrix are analyzed in the vectorized finite element space;
 - The assembly is accomplished in the scalar FE space of each component.
 
-We consider three kinds of variational formulation. 
+We consider three forms of variational problems. 
   - The first and the second are commonly used in linear elastic problems in the form of strain and/or stress tensors. 
   - The third is just a variant of the second one with Laplacian replacing the strain tensors.
   - For each formulation, sparse assembling indices and detailed explanation are given.
