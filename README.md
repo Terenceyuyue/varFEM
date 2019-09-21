@@ -18,6 +18,16 @@
 
 - meshdata: It stories mesh data used in all kinds of examples.
 
+# Display and marking of polygonal meshes
+Folder FEM2D-mesh presents some basic functions to show the polygonal meshes, including 
+   marking of the nodes, elements and (boundary) edges.
+   See chapter 3 for details.
+
+# Auxiliary mesh data and setboundary.m
+For the convenience of computation, we introduce some auxiliary mesh data in Folder FEM2D-auxstructure. 
+   The idea stems from the treatment of triangulation in iFEM, which is generalized to polygonal meshes with 
+certain modifications.  One can refer to Chapter 4 for full explanation.
+
 ## 1-D problems
 
 Folder FEM1D introduces FEM programming of one dimensional problems.    
@@ -27,16 +37,6 @@ Folder FEM1D introduces FEM programming of one dimensional problems.
 ## 2-D Poisson equation
 Folder FEM2D includes the source codes of solving the 2-D Poisson equation.
    See chapter 2 for illustration.
-
-## Display and marking of polygonal meshes
-Folder FEM2D-mesh presents some basic functions to show the polygonal meshes, including 
-   marking of the nodes, elements and (boundary) edges.
-   See chapter 3 for details.
-
-## Auxiliary mesh data and setboundary.m
-For the convenience of computation, we introduce some auxiliary mesh data in Folder FEM2D-auxstructure. 
-   The idea stems from the treatment of triangulation in iFEM, which is generalized to polygonal meshes with 
-certain modifications.  One can refer to Chapter 4 for full explanation.
 
 ## Adaptive finite element method and Newest-node bisection
 The adpative finite element method (AFEM) is introduced in Chapter 5 for the Poisson equation with homogeneous Dirichlet's 
