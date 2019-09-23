@@ -68,7 +68,6 @@ kk = sparse(ii,jj,ss,2*N,2*N);
 % Gauss quadrature rule
 [lambda,weight] = quadpts(2);
 f1 = zeros(NT,2); f2 = f1; f3 = f1;
-weight = [weight(:),weight(:)];
 for iel = 1:NT
     vK = node(elem(iel,:),:); % vertices of K
     xy = lambda*vK;  fxy = f(xy); % fxy = [f1xy,f2xy]
@@ -76,9 +75,9 @@ for iel = 1:NT
     fv2 = fxy.*[lambda(:,2),lambda(:,2)]; % (f,phi2)
     fv3 = fxy.*[lambda(:,3),lambda(:,3)]; % (f,phi3)
 
-    f1(iel,:) = area(iel)*dot(weight,fv1);
-    f2(iel,:) = area(iel)*dot(weight,fv2);
-    f3(iel,:) = area(iel)*dot(weight,fv3);
+    f1(iel,:) = area(iel)*weight*fv1;
+    f2(iel,:) = area(iel)*weight*fv2;
+    f3(iel,:) = area(iel)*weight*fv3;
 end
 F1 = [f1(:,1),f2(:,1),f3(:,1)];
 F2 = [f1(:,2),f2(:,2),f3(:,2)];
