@@ -29,14 +29,14 @@ end
 
 % -------- Sparse assembling indices -----------
 nnz = NT*Ndof2^2;
+elem2 = zeros(NT,Ndof2);
+elem2(:,[1 3 5]) = 2*elem-1; elem2(:,[2 4 6]) = 2*elem;
 ii = zeros(nnz,1); jj = zeros(nnz,1);
 id = 0;
 for i = 1:Ndof2
     for j = 1:Ndof2
-        ix = (i==1 || i==3 || i==5);  jx = (j==1 || j==3 || j==5);
-        i1 = (i+ix)/2; j1 = (j+jx)/2;
-        ii(id+1:id+NT) = 2*elem(:,i1)-ix; % zi        
-        jj(id+1:id+NT) = 2*elem(:,j1)-jx; % zj            
+        ii(id+1:id+NT) = elem2(:,i);
+        jj(id+1:id+NT) = elem2(:,j);
         id = id + NT;
     end
 end
