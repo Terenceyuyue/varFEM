@@ -35,3 +35,5 @@ if (nargin==2) || (~isempty(varargin{1}))
 end
 bdStruct.eD = unique(bdEdge(bdFlag,:));
 bdStruct.elemN = bdEdge(~bdFlag,:);
+bdStruct.elemD = bdEdge(bdFlag,:);
+bdStruct.bdIndex = find(s==1);
