@@ -37,7 +37,7 @@ We consider the programming of linear elasticity equations in Chapter 6, which i
     
 ## Plate bending problems (Morley element)
 
-薄板弯曲问题导出著双调和方程，这是典型的四阶问题，通常用非协调元计算，以减少自由度。最简单的非协调板元是 Morley 元，它的自由度最少且刚度矩阵很容易计算。 我们给出了板弯问题的 Morley 元程序。
+薄板弯曲问题导出双调和方程，这是典型的四阶问题，通常用非协调元计算，以减少自由度。最简单的非协调板元是 Morley 元，它的自由度最少且刚度矩阵很容易计算。 我们给出了板弯问题的 Morley 元程序。
 
 需要注意的是，Morley 元边中点的法向自由度对相邻两个单元来说是异号的，因而整体节点基限制在相邻单元上会异号。通过将边符号化，这个问题很容易得到解决。
 
