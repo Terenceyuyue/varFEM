@@ -33,14 +33,15 @@ for i = 1:3
     j = 1:3;
     sb(:,i,j) = -xi(:,i).*xi(:,j) - eta(:,i).*eta(:,j);
 end
-% edge length
+% elementwise edge length
 z1 = node(edge(:,1),:); z2 = node(edge(:,2),:);
 he = sqrt(sum((z2-z1).^2,2)); L = he(elem2edge);
 % signed elementwise edge length 
-sgnL = sign([elem(:,3)-elem(:,2), elem(:,1)-elem(:,3), elem(:,2)-elem(:,1)]);
+sgnelem = sign([elem(:,3)-elem(:,2), elem(:,1)-elem(:,3), elem(:,2)-elem(:,1)]);
 bdIndex = bdStruct.bdIndex;
 E = false(NE,1); E(bdIndex) = 1; sgnbd = E(elem2edge); 
-sgnL(sgnbd) = 1; L = sgnL.*L;
+sgnelem(sgnbd) = 1; 
+sgnL = sgnelem.*L;
 
 % -------------- Compute second derivatives of phi_i --------------------
 % coefficients in the basis functions
@@ -50,8 +51,8 @@ c0 = zeros(NT,3); c1 = c0; c2 = c0;
 for i = 1:3
     j = ind(i,2); k = ind(i,3);
     c0(:,i) = 1./(2*area.^2);
-    c1(:,i) = sb(:,i,j)./L(:,j).^2;
-    c2(:,i) = sb(:,k,i)./L(:,k).^2;
+    c1(:,i) = sb(:,i,j)./sgnL(:,j).^2;
+    c2(:,i) = sb(:,k,i)./sgnL(:,k).^2;
 end
 c3 = c1+c2;
 % second derivatives of phi_i
@@ -61,7 +62,7 @@ b11(:,it) = c0.* (eta(:,it).^2 - c1.*eta(:,jt).^2 - c2.*eta(:,kt).^2);
 b22(:,it) = c0.* (xi(:,it).^2 - c1.*xi(:,jt).^2 - c2.*xi(:,kt).^2);
 b12(:,it) = -c0.* (xi(:,it).*eta(:,it) - c1.*xi(:,jt).*eta(:,jt) - c2.*xi(:,kt).*eta(:,kt));
 % i = 4,5,6
-ci = 1./(area.*L(:,it));
+ci = 1./(area.*sgnL(:,it));
 b11(:,3+it) = ci.*eta(:,it).^2;
 b22(:,3+it) = ci.*xi(:,it).^2;
 b12(:,3+it) = -ci.*xi(:,it).*eta(:,it);
@@ -91,7 +92,7 @@ for iel = 1:NT
     base(:,it) = lambda(:,it).^2 + c3(iel,:).*lambda(:,jt).*lambda(:,kt) ...
         + c2(iel,:).*lambda(:,kt).*lambda(:,it) + c1(iel,:).*lambda(:,it).*lambda(:,jt);
     % i = 4,5,6
-    ci = 2*area(iel)./L(iel,:);
+    ci = 2*area(iel)./sgnL(iel,:);
     base(:,3+it) = ci.*lambda(:,it).*(lambda(:,it)-1);
     
     for i = 1:Ndof
