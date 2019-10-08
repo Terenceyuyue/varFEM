@@ -11,7 +11,8 @@ para = pde.para;
 f = pde.f;
 
 % ----------- Plate bending Morley element --------
-w = PlateBendingMorley(node,elem,pde,bdStruct);
+w = PlateBendingMorley(node,elem,pde,bdStruct); % sign basis functions
+% w = PlateBendingMorley1(node,elem,pde,bdStruct); % sign edge
 
 % --------- error analysis -------
 uexact = pde.uexact;  we = uexact(node);
