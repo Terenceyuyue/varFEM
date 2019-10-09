@@ -62,6 +62,9 @@ end
 e = ei{J};
 end % end of Vcycle1D
 
+% ---------------------------------------------------------------------
+%                         smoother.m 
+% ---------------------------------------------------------------------
 function ei = smoother(Ai,ri,option)
 switch option
     case 'forward'

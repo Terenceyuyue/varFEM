@@ -64,6 +64,6 @@ ff = ff - kk*u;
 
 % ------------------ Solver -------------------
 %u(freeNode) = kk(freeNode,freeNode)\ff(freeNode); % direct
-A = eye(N); A(freeNode,freeNode) = kk(freeNode,freeNode);
+A = speye(N); A(freeNode,freeNode) = kk(freeNode,freeNode);
 b = u; b(freeNode) = ff(freeNode);
 u = mgVcycle1D(A,b,Pro,Res); % multigrid Vcycle
