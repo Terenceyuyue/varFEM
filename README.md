@@ -70,7 +70,9 @@ We present a variational formulation based programming for 1-D problems in Folde
 
 ## Multigrid V-cycle method for Poisson equation
 
-  添加了多重网格法的说明，目前只上传了一维问题的程序.
+  我们用逐次添加两网格的方式给出了多重网格法，从而直接得到 V-循环的伪代码. IFEM 利用许进超提出的子空间校正方法进行解析，个人觉得没有添加两网格的方式
+  直白。文章详细说明了一维问题的编程，而其中多重网格程序对线性元问题都是通用的。对二维及三维线性元问题，可以说是照抄一维问题，因为它可以直接看成一维问题。
+  详见文档说明（二维问题）。
 
 
 PS:
