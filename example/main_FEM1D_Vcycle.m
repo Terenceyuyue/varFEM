@@ -3,7 +3,7 @@ clc;clear;close all
 a = 0; b = 1;
 N0 = 3;  x = linspace(a,b,N0)'; % N0: number of initial nodes
 node0 = x; elem0 = [(1:N0-1)', (2:N0)']; % initial mesh
-J = 4; % level length, J>=2
+J = 4; % level length, solve directly when J<=1
 
 Neumann = 1; Dirichlet = N0;
 bdStruct = struct('Dirichlet', Dirichlet, 'Neumann', Neumann);

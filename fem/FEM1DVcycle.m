@@ -63,7 +63,10 @@ u = zeros(N,1); u(bdNode) = g_D(node(bdNode));
 ff = ff - kk*u;
 
 % ------------------ Solver -------------------
-%u(freeNode) = kk(freeNode,freeNode)\ff(freeNode); % direct
+if isempty(Pro)
+    u(freeNode) = kk(freeNode,freeNode)\ff(freeNode); % direct
+    return;
+end
 A = speye(N); A(freeNode,freeNode) = kk(freeNode,freeNode);
 b = u; b(freeNode) = ff(freeNode);
 u = mgVcycle1D(A,b,Pro,Res); % multigrid Vcycle

@@ -1,6 +1,10 @@
 function [node,elem,Pro,Res] = MeshVcycle(node0,elem0,J)
 
-%J = 4; % level length, J>=2
+if J<=1
+    node = node0; elem = elem0;
+    Pro = []; Res = []; return;
+end
+
 Pro = cell(J-1,1); Res = cell(J-1,1);
 for j = 2:J
     % node and elem in each level
