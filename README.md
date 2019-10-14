@@ -63,9 +63,13 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
 
     It should be noted that the normal derivative values at the midpoint of interior edge sharing by two triangles have different signs. Apparently, this feature will be inherited by the corresponding local nodal basis functions given by the global ones restricted to the adjacent elements. The problem can be easily resolved by using signed edges.
     
-    新增了更一般性的处理方法，即引入符号刚度矩阵和符号载荷向量. 这种做法可推广至任意带方向的自由度问题以及多角形剖分问题.
+    A more general method is added by introducing symbolic stiffness matrix and symbolic load vector. 
+	Such prodecure can be extended to other problems with d.o.fs varing in directions and can be furter applied to polygonal meshes.
+	
+- Besides Morley element, Zienkiewicz element and Adini element are two other commonly used nonconforming elements. 
 
-- 除了 Morley 元， Zienkiewicz 元和 Adini 元也是常用的非协调元. 前者是不完全三次三角形元，后者是不完全双三次矩形元. 除了方向性问题，这三种非协调元（以及协调元）都可用一种框架编程. 细读程序可以发现，它们的程序框架完全相同，关键在于计算基函数的二阶导数. 
+  The former is incomplete cubic triangular element and the latter is incomplete bicubic rectangular element.
+  In addition to directional problems, all three non-conforming elements (and conforming elements) can be programmed using a unified framework.
   
 
   
