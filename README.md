@@ -68,7 +68,7 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
 	
 - Besides Morley element, Zienkiewicz element and Adini element are two other commonly used nonconforming elements. 
   The former is incomplete cubic triangular element and the latter is incomplete bicubic rectangular element.
-  In addition to directional problems, all three non-conforming elements (and conforming elements) can be programmed using a unified framework.
+  In addition to directional problems, all three non-conforming elements (and conforming elements) can be programmed in the unified framework given in the document.
   
 
   
