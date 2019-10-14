@@ -74,7 +74,7 @@ We present a variational formulation based programming for 1-D problems in Folde
 
 ## Multigrid V-cycle method for Poisson equation
 
-  - We present a multi-grid method by adding two grids one by one, so that the pseudo-code of V-cycle can be obtained directly.
+  - We present a multigrid method by adding two grids one by one, so that the pseudo-code of V-cycle method can be obtained directly.
   
   - The MG method can be also analyzed by using subspace correction method proposed by Xu Jinchao (for example, iFEM). 
     However, it may be not straightforward by adding two grids.
