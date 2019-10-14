@@ -1,6 +1,6 @@
 function w = PlateBendingMorley1(node,elem,pde,bdStruct)
 
-para = pde.para; f = pde.f;
+para = pde.para; f = pde.f; D = para.D; nu = para.nu;
 % -------- Sparse assembling indices -----------
 N = size(node,1); NT = size(elem,1); Ndof = 6;
 auxT = auxstructure(node,elem);
@@ -41,8 +41,6 @@ bdIndex = bdStruct.bdIndex;
 E = false(NE,1); E(bdIndex) = 1; sgnbd = E(elem2edge); 
 sgnelem(sgnbd) = 1; 
 sgnL = sgnelem.*L;
-
-% -------------- Compute second derivatives of phi_i --------------------
 % coefficients in the basis functions
 ind = [1 2 3; 2 3 1; 3 1 2];  % rotation index
 it = ind(:,1); jt = ind(:,2); kt = ind(:,3);
@@ -54,7 +52,11 @@ for i = 1:3
     c2(:,i) = sb(:,k,i)./sgnL(:,k).^2;
 end
 c3 = c1+c2;
-% second derivatives of phi_i
+% Gauss quadrature rule
+[lambda,weight] = quadpts(2);
+nI = length(weight);
+
+% -------------- Second derivatives of basis functions --------------------
 b11 = zeros(NT,6); b22 = b11; b12 = b11; % [phi_i, i=1:6]
 % i = 1,2,3
 b11(:,it) = c0.* (eta(:,it).^2 - c1.*eta(:,jt).^2 - c2.*eta(:,kt).^2);
@@ -71,38 +73,37 @@ K = zeros(NT,Ndof^2);
 for i = 1:Ndof
     j = 1:Ndof; jd = (i-1)*Ndof+1:i*Ndof;
     K(:,jd) = b11(:,i).*b11(:,j) + b22(:,i).*b22(:,j) ...
-        + para.nu*(b11(:,i).*b22(:,j) + b22(:,i).*b11(:,j)) ...
-        + 2*(1-para.nu)*b12(:,i).*b12(:,j);
+        + nu*(b11(:,i).*b22(:,j) + b22(:,i).*b11(:,j)) ...
+        + 2*(1-nu)*b12(:,i).*b12(:,j);
 end
-K = para.D*area.*K;
+K = D*area.*K;
 
-% ----------- Second stiffness matrix -----------
-% Gauss quadrature rule
-[lambda,weight] = quadpts(2);
+% ------------- Second stiffness matrix and load vector ------------
 G = zeros(NT,Ndof^2); F = zeros(NT,Ndof);
-base = zeros(length(lambda),Ndof);
-if isa(para.c,'double'), cf = @(xy) para.c+0*xy(:,1); end
-
-for iel = 1:NT
-    vK = node(elem(iel,:),:); % vertices of K
-    xy = lambda*vK;
-    cxy = cf(xy); fxy = f(xy);  
+if isnumeric(para.c), cf = @(xy) para.c+0*xy(:,1); end
+for p = 1:nI
+    % quadrature points in the x-y coordinate
+    pxy = lambda(p,1)*node(elem(:,1),:) ...
+        + lambda(p,2)*node(elem(:,2),:) ...
+        + lambda(p,3)*node(elem(:,3),:);
+    % basis functions at the p-th quadrture point
+    base = zeros(NT,Ndof);
     % i = 1,2,3
-    base(:,it) = lambda(:,it).^2 + c3(iel,:).*lambda(:,jt).*lambda(:,kt) ...
-        + c2(iel,:).*lambda(:,kt).*lambda(:,it) + c1(iel,:).*lambda(:,it).*lambda(:,jt);
+    base(:,it) = lambda(p,it).^2 + c3.*lambda(p,jt).*lambda(p,kt) ...
+        + c2.*lambda(p,kt).*lambda(p,it) + c1.*lambda(p,it).*lambda(p,jt);
     % i = 4,5,6
-    ci = 2*area(iel)./sgnL(iel,:);
-    base(:,3+it) = ci.*lambda(:,it).*(lambda(:,it)-1);
-    
+    ci = 2*area./sgnL(:,it);
+    base(:,3+it) = ci.*lambda(p,it).*(lambda(p,it)-1);    
+    % Second stiffness matrix
     for i = 1:Ndof
         j = 1:Ndof; jd = (i-1)*Ndof+1:i*Ndof;
-        gs = cxy.*base(:,i).*base(:,j);
-        G(iel,jd) = area(iel)*weight*gs;
+        gs = cf(pxy).*base(:,i).*base(:,j);
+        G(:,jd) = G(:,jd) + weight(p)*gs;
     end
-    
-    fv = fxy.*base;
-    F(iel,:) = area(iel)*weight*fv;
+    % load vector
+    F = F + weight(p)*f(pxy).*base;
 end
+G = area.*G; F = area.*F;
 
 % ------------- Assemble stiffness matrix and load vector ------------
 kk = sparse(ii,jj,K(:)+G(:),N+NE,N+NE);

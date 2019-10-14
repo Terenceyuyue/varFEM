@@ -58,7 +58,7 @@ ss = [ss11; ss12; ss21; ss22];
 B = sparse(ii,jj,ss,2*N,2*N);
 B = (lambda+mu)*B;
 
-% stiff matrix
+% stiffness matrix
 kk = A + B;
 
 % ------------- Assemble load vector ------------

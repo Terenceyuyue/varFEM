@@ -6,7 +6,7 @@ if nargin == 0
     E = 10920; % Young's modulus (Nm/kg^2)
     nu = 0.3;  % Poisson's ratio
     D = E*t^3/12/(1-nu^2); % flexural rigidity
-    c = 1; % 弹性耦合常数
+    c = 0; % 弹性耦合常数
     para = struct('t',t, 'E',E, 'nu',nu, 'D',D, 'c',c);    
 end
 

@@ -1,5 +1,6 @@
 function u = PoissonVcycle(node,elem,pde,bdStruct,Pro,Res)
-% Poisson2D solves Poisson equation with P1 linear element.
+% Poisson2DVcycle solves Poisson equation with P1 linear element by 
+% multigrid V-cycle method.
 %
 %    - Delta u = f   in \Omega, with
 %    Dirichlet boundary conditions u = g_D on \Gamma_D,

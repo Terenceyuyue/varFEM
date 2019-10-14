@@ -33,6 +33,8 @@ uexact = pde.uexact(node);
 figure,plot(node,u,'r-',node,uexact,'k--','linewidth',1);
 xlabel('x'); ylabel('u');
 legend('Numerical solution','Exact solution')
-Err = u-uexact;
-figure, plot(node,Err,'linewidth',1); legend('Absolute error');
+Eabs = u-uexact;
+figure, plot(node,Eabs,'linewidth',1); legend('Absolute error');
+format shorte
+Err = norm(Eabs)/norm(uexact)
 toc

@@ -9,7 +9,8 @@ for j = 2:J
     % auxiliary mesh data
     aux = auxstructure(node,elem);
     edge = aux.edge; elem2edge = aux.elem2edge;
-    N = size(node,1); NT = size(elem,1); NE = size(edge,1); Ndof = 3;
+    N = size(node,1); NT = size(elem,1); 
+    NE = size(edge,1); Ndof = 3;
     
     % HB in the current level 
     HB = zeros(NE,3); 
@@ -27,13 +28,13 @@ for j = 2:J
     % add new nodes: middle points of all edges
     node(N+1:N+NE,:) = (node(edge(:,1),:)+node(edge(:,2),:))/2;
     
-    % add new elements: fefine each triangle into four triangles as follows
+    % add new elements: refine each triangle into four triangles as follows
     % 3
     % | \
     % 5- 4
     % |\ |\
     % 1- 6- 2
-    t = 1:NT; p = zeros(NT,6);
+    t = 1:NT; p = zeros(NT,2*Ndof);
     p(:,1:3) = elem;
     p(:,4:6) = elem2edge + N;
     elem(t,:) = [p(t,1), p(t,6), p(t,5)];
