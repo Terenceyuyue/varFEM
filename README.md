@@ -57,7 +57,7 @@ We consider three forms of variational problems.
 For the first two formulations,  “Neumann”  boundary conditions and Dirichlet boundary conditions are applied. 
 For the third fomulation, only Dirichlet conditions are used in view of the practical problems.
 
-## Plate bending problems (Morley element)
+## Plate bending problems
 
 - The plate bending problem is to describe the small transverse deformation of thin plates. A special case of the equilibrium equation is the biharmonic equation, which is a typical fourth-order partial differential equation. The nonconforming element is usually applied to reduce the degrees of freedom. Among the nonconforming finite elements in two dimensional case, the Morley element is perhaps the most interesting one. It has the least number of degrees of freedom on each element for fourth order boundary value problems as its shape function space consists of only quadratic polynomials.
 
@@ -85,7 +85,7 @@ We present a variational formulation based programming for 1-D problems in Folde
   - The programming of one-dimensional problems is described in detail, and the multigrid program is universal to all linear element problems.
   
   - For 2D and 3D linear elements, only slight changes of 1D problems are needed since they can be regarded as 1D problems.
-    See the documentation for details (two-dimensional problem).
+    See the document for details (two-dimensional problem).
 
 
 PS:
