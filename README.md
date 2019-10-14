@@ -61,9 +61,13 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
 
 - The plate bending problem is to describe the small transverse deformation of thin plates. A special case of the equilibrium equation is the biharmonic equation, which is a typical fourth-order partial differential equation. The nonconforming element is usually applied to reduce the degrees of freedom. Among the nonconforming finite elements in two dimensional case, the Morley element is perhaps the most interesting one. It has the least number of degrees of freedom on each element for fourth order boundary value problems as its shape function space consists of only quadratic polynomials.
 
-It should be noted that the normal derivative values at the midpoint of interior edge sharing by two triangles have different signs. Apparently, this feature will be inherited by the corresponding local nodal basis functions given by the global ones restricted to the adjacent elements. The problem can be easily resolved by using signed edges.
+    It should be noted that the normal derivative values at the midpoint of interior edge sharing by two triangles have different signs. Apparently, this feature will be inherited by the corresponding local nodal basis functions given by the global ones restricted to the adjacent elements. The problem can be easily resolved by using signed edges.
+    
+    新增了更一般性的处理方法，即引入符号刚度矩阵和符号载荷向量. 这种做法可推广至任意带方向的自由度问题以及多角形剖分问题.
+
+- 除了 Morley 元， Zienkiewicz 元和 Adini 元也是常用的非协调元. 前者是不完全三次三角形元，后者是不完全双三次矩形元. 除了方向性问题，这三种非协调元（以及协调元）都可用一种框架编程. 细读程序可以发现，它们的程序框架完全相同，关键在于计算基函数的二阶导数. 
   
-新增了更一般性的处理方法。
+
   
 ## Variational formulation based programming for 1-D problems
 We present a variational formulation based programming for 1-D problems in Folder variational1D. The arrangement is entirely process-oriented and thus easy to understand (see Section 1.5). 
