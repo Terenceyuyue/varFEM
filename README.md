@@ -75,7 +75,7 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
 ## Variational formulation based programming for 1-D problems
 We present a variational formulation based programming for 1-D problems in Folder variational1D. The arrangement is entirely process-oriented and thus easy to understand (see Section 1.5). 
 
-## Multigrid V-cycle method for Poisson equation
+## Multigrid V-cycle method for linear elements
 
   - We present a multigrid method by adding two grids one by one, so that the pseudo-code of V-cycle method can be obtained directly.
   
