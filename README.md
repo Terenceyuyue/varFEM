@@ -70,6 +70,8 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
   The former is incomplete cubic triangular element and the latter is incomplete bicubic rectangular element.
   In addition to directional problems, all three non-conforming elements (and conforming elements) can be programmed in the unified framework given in the document.
   
+- 新增双调和方程的混合元方法. 
+  
 
   
 ## Variational formulation based programming for 1-D problems
