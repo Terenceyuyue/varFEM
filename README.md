@@ -60,16 +60,6 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
   The former is incomplete cubic triangular element and the latter is incomplete bicubic rectangular element.
   In addition to directional problems, all three non-conforming elements (and conforming elements) can be programmed in the unified framework given in the document.
 
-## Adaptive finite element method and Newest-node bisection
-The adpative finite element method (AFEM) is introduced in Chapter 5 for the Poisson equation with homogeneous Dirichlet 
-   conditions.  Each step was explained in detail, viz. the loops of the form: 
-
-           SOLVE -> ESTIMATE -> MARK -> REFINE
-
-The newest-node bisection for the local mesh refinement was clearly stated  thanks to the smart idea in iFEM.  
-The MATLAB codes are in Folder AFEM2D. 
-
-
 ## Mixed FEM
   
    The mixed FEM is applied to solve the biharmonic equation, a special case of plate bending problems.
@@ -86,14 +76,21 @@ The MATLAB codes are in Folder AFEM2D.
   - At present, only Lagrange elements of order up to three are provided. 
 
   
+## Adaptive finite element method and Newest-node bisection
+The adpative finite element method (AFEM) is introduced for the Poisson equation with homogeneous Dirichlet 
+   conditions.  Each step was explained in detail, viz. the loops of the form: 
 
+           SOLVE -> ESTIMATE -> MARK -> REFINE
+
+The newest-node bisection for the local mesh refinement was clearly stated thanks to the smart idea in iFEM.  
+The MATLAB codes are in Folder afem. 
 
 ## Multigrid V-cycle method for linear elements
 
   - We present a multigrid method by adding two grids one by one, so that the pseudo-code of V-cycle method can be obtained directly.
   
-  - The MG method can be also analyzed by using subspace correction method proposed by Xu Jinchao (for example, iFEM). 
-    However, it may be not straightforward by adding two grids.
+  - The MG method can be also analyzed by using subspace correction method proposed by Xu Jinchao (for example, in iFEM). 
+    However, it may be more straightforward by adding two grids.
 
   - The programming of one-dimensional problems is described in detail, and the multigrid program is universal to all linear element problems.
   
@@ -101,19 +98,10 @@ The MATLAB codes are in Folder AFEM2D.
     See the document for details (two-dimensional problem).
 
 
-PS:
-
-     对前面各章节的重新整理将会在未来的适当时间完成。
-
 Undo: 
 
-           --- Variational formulation based toolbox
-   
-           - high-order FEM
 	   
            - mesh generation   
-   
-           - Solver: multigrid methods (mg)   
    
            - 3-D FEM      
 
