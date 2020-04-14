@@ -8,7 +8,7 @@
 
   - fem: It includes all kinds of source code.
   - variational: A new feature is the variational formulation based programming. It extends the applicaton in fem folder.
-                 At present, only one-dimensional problems are provided.  
+                 At present, P1, P2 and P3 Lagrange elements for one dimensional and two dimensional problems have been provided already.  
 
 - example: All running programs are placed in the example folder.
 
