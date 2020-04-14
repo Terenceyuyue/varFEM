@@ -1,10 +1,10 @@
 function pde = pdedata1D_variable(para)
 
-if isa(para.acoef,'double'), para.acoef = @(x) para.acoef+0*x; end
-if isa(para.bcoef,'double'), para.bcoef = @(x) para.bcoef+0*x; end
-if isa(para.ccoef,'double'), para.ccoef = @(x) para.ccoef+0*x; end
+if isnumeric(para.acoef), para.acoef = @(x) para.acoef+0*x; end
+if isnumeric(para.bcoef), para.bcoef = @(x) para.bcoef+0*x; end
+if isnumeric(para.ccoef), para.ccoef = @(x) para.ccoef+0*x; end
 
-pde = struct('f', @f, 'uexact', @u, 'g_D', @g_D, 'g_N', @g_N);
+pde = struct('f', @f, 'uexact', @u, 'g_D', @g_D, 'Du', @Du);
 
     function val = f(x)
         val = para.acoef(x).*du2(x) + para.bcoef(x).*du(x) ...
@@ -22,7 +22,7 @@ pde = struct('f', @f, 'uexact', @u, 'g_D', @g_D, 'g_N', @g_N);
     function val = g_D(x)
         val = u(x);
     end
-    function val = g_N(x)
+    function val = Du(x)
         val = du(x);
     end
 

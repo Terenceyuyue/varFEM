@@ -2,7 +2,7 @@ clc;clear;close all
 
 % -------- Mesh and boudary conditions --------
 a1 = 0; b1 = 1; a2 = 0; b2 = 1;
-Nx = 10; Ny = 10; h1 = (b1-a1)/Nx; h2 = (b2-a2)/Ny;
+Nx = 20; Ny = 20; h1 = (b1-a1)/Nx; h2 = (b2-a2)/Ny;
 [node,elem] = squaremesh([a1 b1 a2 b2],h1,h2);
 bdStruct = setboundary(node,elem);
 

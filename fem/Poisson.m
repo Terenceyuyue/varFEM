@@ -1,5 +1,5 @@
 function u = Poisson(node,elem,pde,bdStruct)
-% Poisson2D solves Poisson equation with P1 linear element.
+% Poisson solves Poisson equation with P1 linear element (2D).
 %
 %    - Delta u = f   in \Omega, with
 %    Dirichlet boundary conditions u = g_D on \Gamma_D,
@@ -7,7 +7,7 @@ function u = Poisson(node,elem,pde,bdStruct)
 
 N = size(node,1); NT = size(elem,1); Ndof = 3;
 f = pde.f;
-% -------------- sparse assembling index ----------------
+% -------------- Sparse assembling index ----------------
 nnz = NT*Ndof^2;
 ii = zeros(nnz,1); jj = zeros(nnz,1);
 id = 0;
@@ -21,33 +21,26 @@ end
 
 % -------------- Assemble stiffness matrix -------------
 [Dphi,area] = gradbasis(node,elem);
-K = zeros(NT,Ndof^2);
+K = zeros(NT,Ndof^2); % straighten
+s = 1;
 for i = 1:Ndof
-    j = 1:Ndof;    jd = (i-1)*Ndof+1:i*Ndof;
-    K(:,jd) = sum(Dphi(:,:,i).*Dphi(:,:,j),2).*area;
+    for j = 1:Ndof
+        K(:,s) = sum(Dphi(:,:,i).*Dphi(:,:,j),2).*area;
+        s = s+1;
+    end
 end
 kk = sparse(ii,jj,K(:),N,N);
 
 % ------------- Assemble load vector ------------
-% % mid-point quadrature rule
-% % coordinates of all triangles
-% z1 = node(elem(:,1),:);
-% z2 = node(elem(:,2),:);
-% z3 = node(elem(:,3),:);
-% % load vector
-% zc = 1/3*(z1+z2+z3);
-% f1 = f(zc).*area./3; f2 = f1; f3 = f1;
-% F = [f1,f2,f3];
-
 % Gauss quadrature rule
 [lambda,weight] = quadpts(2);
-F = zeros(NT,3);
+F = zeros(NT,3); % straighten
 for p = 1:length(weight)
     % quadrature points in the x-y coordinate
     pxy = lambda(p,1)*node(elem(:,1),:) ...
         + lambda(p,2)*node(elem(:,2),:) ...
         + lambda(p,3)*node(elem(:,3),:);
-    fxy = f(pxy); fv = fxy*lambda(p,:);
+    fxy = f(pxy);  fv = fxy*lambda(p,:); % [f*phi1, f*phi2, f*phi3] at (xp,yp)
     F = F + weight(p)*fv;
 end
 F = repmat(area,1,3).*F;  % F = area.*F;

@@ -8,19 +8,19 @@ bdNeumann = 'abs(x-1)<1e-4'; % string for Neumann
 bdStruct = setboundary(node,elem,bdNeumann);
 
 % ------------------ PDE data -------------------
-% pde = struct('uexact',@uexact, 'f',@f, 'Du',@Du,  'g_D',@g_D);
 pde = Poissondata();
 
 % ------------------ Poisson ---------------------
-u = Poisson(node,elem,pde,bdStruct);
+uh = Poisson(node,elem,pde,bdStruct);
 
 % --------- error analysis ---------------
 uexact = pde.uexact;
 ue = uexact(node);
 figure,
-subplot(1,2,1), showsolution(node,elem,u); 
+subplot(1,2,1), showsolution(node,elem,uh); 
 subplot(1,2,2), showsolution(node,elem,ue);
-Eabs = u-ue;  % Absolute errors
-figure,showsolution(node,elem,Eabs); zlim('auto');
+
+% L2 and H1 errors
 format shorte
-Err = norm(u-ue)/norm(ue)
+ErrL2 = getL2error(node,elem,uh,uexact)
+ErrH1 = getH1error(node,elem,uh,pde.Du)

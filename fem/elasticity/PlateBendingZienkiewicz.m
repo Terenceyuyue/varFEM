@@ -45,31 +45,39 @@ for i = 1:3
     b22(:,i,:) = DD(:,:,2);
     b12(:,i,:) = DD(:,:,3);
     % \psi (11,22,12)
-    DD = c1.*Dtri(i,i,2)+ c2.*Dtri(i,i,1) + c3(:,i).*Dquad(i,i)...
-        + c4(:,i).*Dtri(1,2,3);
+    cc1(:,:,1) = repmat(c1,1,nI);      cc1(:,:,2) = cc1(:,:,1); cc1(:,:,3) = cc1(:,:,1);
+    cc2(:,:,1) = repmat(c2,1,nI);      cc2(:,:,2) = cc2(:,:,1); cc2(:,:,3) = cc2(:,:,1);
+    cc3(:,:,1) = repmat(c3(:,i),1,nI); cc3(:,:,2) = cc3(:,:,1); cc3(:,:,3) = cc3(:,:,1);
+    cc4(:,:,1) = repmat(c4(:,i),1,nI); cc4(:,:,2) = cc4(:,:,1); cc4(:,:,3) = cc4(:,:,1);
+    DD = cc1.*Dtri(i,i,2)+ cc2.*Dtri(i,i,1) + cc3.*Dquad(i,i) + cc4.*Dtri(1,2,3);
     b11(:,3+i,:) = DD(:,:,1);
     b22(:,3+i,:) = DD(:,:,2);
     b12(:,3+i,:) = DD(:,:,3);
     % \zeta (11,22,12)
-    DD = d1.*Dtri(i,i,2) + d2.*Dtri(i,i,1) + d3(:,i).*Dquad(i,i)...
-        + d4(:,i).*Dtri(1,2,3);
+    dd1(:,:,1) = repmat(d1,1,nI);      dd1(:,:,2) = dd1(:,:,1); dd1(:,:,3) = dd1(:,:,1);
+    dd2(:,:,1) = repmat(d2,1,nI);      dd2(:,:,2) = dd2(:,:,1); dd2(:,:,3) = dd2(:,:,1);
+    dd3(:,:,1) = repmat(d3(:,i),1,nI); dd3(:,:,2) = dd3(:,:,1); dd3(:,:,3) = dd3(:,:,1);
+    dd4(:,:,1) = repmat(d4(:,i),1,nI); dd4(:,:,2) = dd4(:,:,1); dd4(:,:,3) = dd4(:,:,1);
+    DD = dd1.*Dtri(i,i,2) + dd2.*Dtri(i,i,1) + dd3.*Dquad(i,i) + dd4.*Dtri(1,2,3);
     b11(:,6+i,:) = DD(:,:,1);
     b22(:,6+i,:) = DD(:,:,2);
     b12(:,6+i,:) = DD(:,:,3);
 end
 
 % ----------- First stiffness matrix -----------
-K = zeros(NT,Ndof^2);
+K = zeros(NT,Ndof^2); s = 1; 
 for i = 1:Ndof
-    j = 1:Ndof; jd = (i-1)*Ndof+1:i*Ndof;
-    for p = 1:nI
-        Kp = b11(:,i,p).*b11(:,j,p) + b22(:,i,p).*b22(:,j,p) ...
-            + nu*(b11(:,i,p).*b22(:,j,p) + b22(:,i,p).*b11(:,j,p)) ...
-            + 2*(1-nu)*b12(:,i,p).*b12(:,j,p);
-        K(:,jd) = K(:,jd) + weight(p)*Kp;
+    for j = 1:Ndof
+        for p = 1:nI
+            Kp = b11(:,i,p).*b11(:,j,p) + b22(:,i,p).*b22(:,j,p) ...
+                + nu*(b11(:,i,p).*b22(:,j,p) + b22(:,i,p).*b11(:,j,p)) ...
+                + 2*(1-nu)*b12(:,i,p).*b12(:,j,p);
+            K(:,s) = K(:,s) + weight(p)*Kp;
+        end
+        s = s+1;
     end
 end
-K = D*area.*K;
+K = repmat(D*area,1,Ndof^2).*K;
 
 % ------------- Second stiffness matrix and load vector ------------
 G = zeros(NT,Ndof^2); F = zeros(NT,Ndof); 
@@ -93,15 +101,19 @@ for p = 1:nI
             + d4(:,i)*lam123;
     end    
     % Second stiffness matrix
+    s = 1;
     for i = 1:Ndof
-        j = 1:Ndof; jd = (i-1)*Ndof+1:i*Ndof;
-        gs = cf(pxy).*base(:,i).*base(:,j);
-        G(:,jd) = G(:,jd) + weight(p)*gs;
-    end    
+        for j = 1:Ndof
+            gs = cf(pxy).*base(:,i).*base(:,j);
+            G(:,s) = G(:,s) + weight(p)*gs;
+        end
+        s = s+1;
+    end
     % load vector
-    F = F + weight(p)*f(pxy).*base;    
+    F = F + weight(p)*repmat(f(pxy),1,Ndof).*base;    
 end
-G = area.*G; F = area.*F;
+G = repmat(area,1,Ndof^2).*G; 
+F = repmat(area,1,Ndof).*F;
 
 % ------------- Assemble stiffness matrix and load vector ------------
 kk = sparse(ii,jj,K(:)+G(:),3*N,3*N);
@@ -128,9 +140,9 @@ function Dquad = quadbasis(i,j,Dphi,lambda)
     % second derivative of lambda_i*lambda_j
     NT = size(Dphi,1); nI = size(lambda,1);
     Dquad = zeros(NT,nI,3); % [11,22,12]
-    Dquad(1:NT,:,1) = 2*Dphi(:,1,i).*Dphi(:,1,j).*ones(1,nI);
-    Dquad(1:NT,:,2) = 2*Dphi(:,2,i).*Dphi(:,2,j).*ones(1,nI);
-    Dquad(1:NT,:,3) = (Dphi(:,1,i).*Dphi(:,2,j) + Dphi(:,2,i).*Dphi(:,1,j)).*ones(1,nI);
+    Dquad(1:NT,:,1) = repmat(2*Dphi(:,1,i).*Dphi(:,1,j),1,nI);
+    Dquad(1:NT,:,2) = repmat(2*Dphi(:,2,i).*Dphi(:,2,j),1,nI);
+    Dquad(1:NT,:,3) = repmat((Dphi(:,1,i).*Dphi(:,2,j) + Dphi(:,2,i).*Dphi(:,1,j)), 1,nI);
 end
 
 function Dtri =  tribasis(i,j,k,Dphi,lambda)

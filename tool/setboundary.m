@@ -36,7 +36,11 @@ if (nargin==2) || (~isempty(varargin{1}))
         bdFlag(id) = false;
     end
 end
-bdStruct.eD = unique(bdEdge(bdFlag,:));
-bdStruct.elemN = bdEdge(~bdFlag,:);
-bdStruct.elemD = bdEdge(bdFlag,:);
-bdStruct.bdIndex = find(s==1);
+
+bdStruct.elemD = bdEdge(bdFlag,:); % Dirichlet boundary edges
+bdStruct.elemN = bdEdge(~bdFlag,:); % Neumann boundary edges
+bdStruct.eD = unique(bdEdge(bdFlag,:)); % Dirichlet boundary nodes
+bdIndex = find(s==1);      % indices of all boundary edges
+bdStruct.bdIndex = bdIndex; 
+bdStruct.bdIndexD = bdIndex(bdFlag); % indices of Dirichelt boundary edges
+bdStruct.bdIndexN = bdIndex(~bdFlag); % indices of Neumann boundary edges

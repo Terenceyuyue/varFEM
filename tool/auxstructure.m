@@ -15,8 +15,7 @@ if iscell(elem)
     % -------- elem2edge: elementwise edges -------
     [~, i1, totalJ] = unique(totalEdge,'rows');
     elemLen = cellfun('length',elem); % length of each elem
-    elem2edge = mat2cell(totalJ,elemLen,1);
-    elem2edge = cellfun(@transpose, elem2edge, 'UniformOutput', false);
+    elem2edge = mat2cell(totalJ',1,elemLen)';
     
 else % Triangulation
     totalEdge = sort([elem(:,[2,3]); elem(:,[3,1]); elem(:,[1,2])],2);
@@ -57,7 +56,7 @@ neighbor = sparse(ii,jj,ss,NT,NE);
 % end
 
 aux.node = node; aux.elem = elem;
-aux.elem2edge = elem2edge; 
+aux.elem2edge = elem2edge;
 aux.edge = edge; aux.bdEdge = bdEdge;
 aux.edge2elem = edge2elem;
 aux.neighbor = neighbor;

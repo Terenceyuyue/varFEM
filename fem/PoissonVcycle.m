@@ -1,5 +1,5 @@
 function u = PoissonVcycle(node,elem,pde,bdStruct,Pro,Res)
-% Poisson2DVcycle solves Poisson equation with P1 linear element by 
+% Poisson2DVcycle solves Poisson equation with P1 linear element by
 % multigrid V-cycle method.
 %
 %    - Delta u = f   in \Omega, with
@@ -22,10 +22,12 @@ end
 
 % -------------- Assemble stiffness matrix -------------
 [Dphi,area] = gradbasis(node,elem);
-K = zeros(NT,Ndof^2);
+K = zeros(NT,Ndof^2); s = 1;
 for i = 1:Ndof
-    j = 1:Ndof;    jd = (i-1)*Ndof+1:i*Ndof;
-    K(:,jd) = sum(Dphi(:,:,i).*Dphi(:,:,j),2).*area;
+    for j = 1:Ndof
+        K(:,s) = sum(Dphi(:,:,i).*Dphi(:,:,j),2).*area;
+        s = s+1;
+    end
 end
 kk = sparse(ii,jj,K(:),N,N);
 

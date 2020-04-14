@@ -1,29 +1,44 @@
 clc;clear;close all
-% ----------- Mesh and boudary conditions --------
+tic;
+% --------------- Mesh and boudary conditions ---------------
 a1 = 0; b1 = 1; a2 = 0; b2 = 1;
-Nx = 10; Ny = 10; h1 = (b1-a1)/Nx; h2 = (b2-a2)/Ny;
+Nx = 4; Ny = 4; h1 = (b1-a1)/Nx; h2 = (b2-a2)/Ny;
 [node,elem] = squaremesh([a1 b1 a2 b2],h1,h2);
-bdNeumann = 'abs(y-0)<1e-4 | abs(x-1)<1e-4'; % string for Neumann
-bdStruct = setboundary(node,elem,bdNeumann);
 
-% ------------ PDE data ------------
+bdNeumann = 'abs(y-0)<1e-4 | abs(x-1)<1e-4'; % string for Neumann
+
+% ------------------------ PDE data ------------------------
 lambda = 1; mu = 1;
 para.lambda = lambda; para.mu = mu;
 pde = elasticitydata(para);
 
-% ----------- elasticity --------
-u = elasticity2(node,elem,pde,bdStruct);
+% ----------------- elasticity1 ---------------------
+maxIt = 5;
+N = zeros(maxIt,1);  h = zeros(maxIt,1);
+ErrL2 = zeros(maxIt,1);  ErrH1 = zeros(maxIt,1);
+errwL2 = zeros(maxIt,1);  errwH1 = zeros(maxIt,1);
+for k = 1:maxIt
+    [node,elem] = uniformrefine(node,elem);
+    bdStruct = setboundary(node,elem,bdNeumann);
+    uh = elasticity2(node,elem,pde,bdStruct);
+    uh = reshape(uh,[],2);
+    NT = size(elem,1);    h(k) = 1/sqrt(NT);
+    
+    tru = eye(2); trDu = eye(4);
+    errL2 = zeros(1,2);  errH1 = zeros(1,2); % square
+    for id = 1:2
+        uid = uh(:,id);
+        u = @(pz) pde.uexact(pz)*tru(:, id);
+        Du = @(pz) pde.Du(pz)*trDu(:, 2*id-1:2*id);
+        errL2(:,id) = getL2error(node,elem,uid,u);
+        errH1(:,id) = getH1error(node,elem,uid,Du);
+    end
+    
+    ErrL2(k) = sqrt(sum(errL2.^2,2));
+    ErrH1(k) = sqrt(sum(errH1.^2,2));
+end
 
-% --------- error analysis -------
-u = reshape(u,[],2);
-uexact = pde.uexact;  ue = uexact(node);
-id = 1;
-figure,
-subplot(1,2,1), showsolution(node,elem,u(:,id));
-zlabel('u');
-subplot(1,2,2), showsolution(node,elem,ue(:,id));
-zlabel('ue');
-Eabs = u-ue;  % Absolute errors
-figure,showsolution(node,elem,Eabs(:,id)); zlim('auto');
-format shorte
-Err = norm(Eabs)./norm(ue)
+% ---------- Plot convergence rates -----------
+figure;
+showrateh(h, ErrL2, ErrH1);
+toc

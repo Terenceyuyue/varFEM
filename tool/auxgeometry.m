@@ -1,6 +1,6 @@
 function aux = auxgeometry(node,elem)
 
-% ------ elemCentroid, area, diameter -------
+% ------ centroid, area, diameter -------
 NT = size(elem,1);
 Centroid = zeros(NT,2); area = zeros(NT,1); diameter = zeros(NT,1);
 s = 1;

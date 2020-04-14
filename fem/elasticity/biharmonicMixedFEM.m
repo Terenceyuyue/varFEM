@@ -32,10 +32,12 @@ ii21 = ii+N; jj21 = jj;
 % -------------- Stiffness matrix B -------------
 % B: (Dphi_i, Dphi_j)_K
 [Dphi,area] = gradbasis(node,elem);
-B = zeros(NT,Ndof^2);
+B = zeros(NT,Ndof^2); s = 1;
 for i = 1:Ndof
-    j = 1:Ndof;    jd = (i-1)*Ndof+1:i*Ndof;
-    B(:,jd) = sum(Dphi(:,:,i).*Dphi(:,:,j),2).*area;
+    for j = 1:Ndof;
+        B(:,s) = sum(Dphi(:,:,i).*Dphi(:,:,j),2).*area;
+        s = s+1;
+    end
 end
 
 % -------------- Stiffness matrix A and load vector -------------
@@ -49,15 +51,18 @@ for p = 1:nI
         + lambda(p,2)*node(elem(:,2),:) ...
         + lambda(p,3)*node(elem(:,3),:);
     % Second stiffness matrix
+    s = 1;
     for i = 1:Ndof
-        j = 1:Ndof; jd = (i-1)*Ndof+1:i*Ndof;
-        gs = lambda(p,i).*lambda(p,j);
-        A(:,jd) = A(:,jd) + weight(p)*gs;
+        for j = 1:Ndof
+            gs = lambda(p,i).*lambda(p,j);
+            A(:,s) = A(:,s) + weight(p)*gs;
+            s = s+1;
+        end
     end
     % load vector
     F = F + weight(p)*pde.f(pxy)*lambda(p,:);
 end
-A = -area.*A; F = area.*F;
+A = -repmat(area,1,Ndof^2).*A; F = repmat(area,1,Ndof).*F;
 
 % ------------ Assemble stiffness matrix and load vector ---------
 ss11 = A(:);  ss12 = B(:);  B1 = B(:,[1 4 7 2 5 8 3 6 9]);
@@ -84,7 +89,7 @@ ff = ff + accumarray(elemN(:), FN(:),[2*N 1]);
 eD = bdStruct.eD; g_D = pde.g_D;
 id = eD+N;
 isBdDof = false(2*N,1); isBdDof(id) = true;
-bdDof = isBdDof; freeDof = find(~isBdDof);
+bdDof = isBdDof; freeDof = (~isBdDof);
 pD = node(eD,:);
 U = zeros(2*N,1); U(bdDof) = g_D(pD);
 ff = ff - kk*U;

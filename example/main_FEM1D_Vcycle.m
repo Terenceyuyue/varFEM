@@ -4,22 +4,22 @@ a = 0; b = 1;
 N0 = 3;  % number of initial nodes
 x = linspace(a,b,N0)'; % uniform
 %x = [a; sort(rand(N0-2,1)); b]; % random
-node = x; elem = [(1:N0-1)', (2:N0)']; % initial mesh
+node = x; elem1D = [(1:N0-1)', (2:N0)']; % initial mesh
 J = 3; % solve it directly when J<=1
 
 Neumann = [1]; Dirichlet = [N0];
 bdStruct = struct('Dirichlet', Dirichlet, 'Neumann', Neumann);
 
 % ------------- Final mesh and prolongation matrices -----------
-[node,elem,Pro,Res] = Mesh1DVcycle(node,elem,J);
+[node,elem1D,Pro,Res] = Mesh1DVcycle(node,elem1D,J);
 
 % ------------------- PDE -----------------
-acoef = -1;  bcoef = 0;  ccoef = 0;
-para = struct('acoef',acoef, 'bcoef',bcoef, 'ccoef',ccoef);
-pde = pdedata1D(para);
+a = -1;  b = 0;  c = 0;
+para = struct('a',a, 'b',b, 'c',c);
+pde = pde1D(para);
 
 % ----------- FEM1DVcycle -----------
-u = FEM1DVcycle(node,elem,pde,bdStruct,Pro,Res);
+u = FEM1DVcycle(node,elem1D,pde,bdStruct,Pro,Res);
 
 % -------- error analysis -----------
 [node,id] = sort(node);

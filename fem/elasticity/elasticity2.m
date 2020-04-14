@@ -1,5 +1,5 @@
 function u = elasticity2(node,elem,pde,bdStruct)
-%ElasticityScalar  Conforming P1 FEM of linear elasticity equation
+%Elasticity2  Conforming P1 FEM of linear elasticity equation 
 %
 %       u = [u1, u2]
 %       -div (sigma) = f in \Omega
@@ -66,20 +66,17 @@ kk = A + B;
 % ------------- Assemble load vector ------------
 % Gauss quadrature rule
 [lambda,weight] = quadpts(2);
-f1 = zeros(NT,2); f2 = f1; f3 = f1;
-for iel = 1:NT
-    vK = node(elem(iel,:),:); % vertices of K
-    xy = lambda*vK;  fxy = f(xy); % fxy = [f1xy,f2xy]
-    fv1 = fxy.*[lambda(:,1),lambda(:,1)]; % (f,phi1)
-    fv2 = fxy.*[lambda(:,2),lambda(:,2)]; % (f,phi2)
-    fv3 = fxy.*[lambda(:,3),lambda(:,3)]; % (f,phi3)
-    
-    f1(iel,:) = area(iel)*weight*fv1;
-    f2(iel,:) = area(iel)*weight*fv2;
-    f3(iel,:) = area(iel)*weight*fv3;
+F1 = zeros(NT,3); F2 = zeros(NT,3);
+for p = 1:length(weight)
+    pxy = lambda(p,1)*node(elem(:,1),:) ...
+       + lambda(p,2)*node(elem(:,2),:) ...
+       + lambda(p,3)*node(elem(:,3),:);
+    fxy = f(pxy); % fxy = [f1xy,f2xy]
+    F1 = F1 + weight(p)*fxy(:,1)*lambda(p,:);
+    F2 = F2 + weight(p)*fxy(:,2)*lambda(p,:);
 end
-F1 = [f1(:,1),f2(:,1),f3(:,1)]; 
-F2 = [f1(:,2),f2(:,2),f3(:,2)]; 
+F1 = repmat(area,1,3).*F1;  % F = area.*F;
+F2 = repmat(area,1,3).*F2;
 ff = accumarray([elem(:);elem(:)+N], [F1(:);F2(:)], [2*N 1]);
 
 % ------------ Neumann boundary condition ----------------
@@ -98,10 +95,10 @@ end
 
 % ------------ Dirichlet boundary condition ----------------
 g_D = pde.g_D;  eD = bdStruct.eD;
-isBdNode = false(N,1); isBdNode(eD) = true;
-bdNode = find(isBdNode); freeNode = find(~isBdNode);
-pD = node(bdNode,:);
-bdDof = [bdNode; bdNode+N]; freeDof = [freeNode;freeNode+N];
+id = [eD; eD+N]; 
+isBdNode = false(2*N,1); isBdNode(id) = true;
+bdDof = (isBdNode); freeDof = (~isBdNode);
+pD = node(eD,:);
 u = zeros(2*N,1); uD = g_D(pD); u(bdDof) = uD(:);
 ff = ff - kk*u;
 

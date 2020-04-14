@@ -29,8 +29,9 @@ xi = [x2-x3, x3-x1, x1-x2]; eta = [y2-y3, y3-y1, y1-y2];
 % sij
 sb = zeros(NT,3,3);
 for i = 1:3
-    j = 1:3;
-    sb(:,i,j) = -xi(:,i).*xi(:,j) - eta(:,i).*eta(:,j);
+    for j = 1:3
+        sb(:,i,j) = -xi(:,i).*xi(:,j) - eta(:,i).*eta(:,j);
+    end
 end
 % elementwise edge length
 z1 = node(edge(:,1),:); z2 = node(edge(:,2),:);
@@ -63,21 +64,24 @@ b11(:,it) = c0.* (eta(:,it).^2 - c1.*eta(:,jt).^2 - c2.*eta(:,kt).^2);
 b22(:,it) = c0.* (xi(:,it).^2 - c1.*xi(:,jt).^2 - c2.*xi(:,kt).^2);
 b12(:,it) = -c0.* (xi(:,it).*eta(:,it) - c1.*xi(:,jt).*eta(:,jt) - c2.*xi(:,kt).*eta(:,kt));
 % i = 4,5,6
-ci = 1./(area.*L(:,it));
+ci = 1./(repmat(area,1,3).*L(:,it));
 b11(:,3+it) = ci.*eta(:,it).^2;
 b22(:,3+it) = ci.*xi(:,it).^2;
 b12(:,3+it) = -ci.*xi(:,it).*eta(:,it);
 
 % ----------- First stiffness matrix and sign matrix -----------
 K = zeros(NT,Ndof^2);  sgnK = zeros(NT,Ndof^2);
+s = 1;
 for i = 1:Ndof
-    j = 1:Ndof; jd = (i-1)*Ndof+1:i*Ndof;
-    K(:,jd) = b11(:,i).*b11(:,j) + b22(:,i).*b22(:,j) ...
-        + nu*(b11(:,i).*b22(:,j) + b22(:,i).*b11(:,j)) ...
-        + 2*(1-nu)*b12(:,i).*b12(:,j);
-    sgnK(:,jd) = sgnbase(:,i).*sgnbase(:,j);
+    for j = 1:Ndof
+        K(:,s) = b11(:,i).*b11(:,j) + b22(:,i).*b22(:,j) ...
+            + nu*(b11(:,i).*b22(:,j) + b22(:,i).*b11(:,j)) ...
+            + 2*(1-nu)*b12(:,i).*b12(:,j);
+        sgnK(:,s) = sgnbase(:,i).*sgnbase(:,j);
+        s = s+1;
+    end
 end
-K = D*area.*K;
+K = D*repmat(area,1,Ndof^2).*K;
 
 % ------------- Second stiffness matrix and load vector ------------
 G = zeros(NT,Ndof^2); F = zeros(NT,Ndof);
@@ -89,22 +93,28 @@ for p = 1:nI
         + lambda(p,3)*node(elem(:,3),:);
     % basis functions at the p-th quadrture point
     base = zeros(NT,Ndof);
-    % i = 1,2,3
-    base(:,it) = lambda(p,it).^2 + c3.*lambda(p,jt).*lambda(p,kt) ...
-        + c2.*lambda(p,kt).*lambda(p,it) + c1.*lambda(p,it).*lambda(p,jt);
+    % i = 1,2,3    
+    base(:,it) = repmat(lambda(p,it).^2,NT,1) ...
+               + c3.*repmat(lambda(p,jt).*lambda(p,kt),NT,1) ...
+               + c2.*repmat(lambda(p,kt).*lambda(p,it),NT,1) ...
+               + c1.*repmat(lambda(p,it).*lambda(p,jt),NT,1);
     % i = 4,5,6
-    ci = 2*area./L(:,it);
-    base(:,3+it) = ci.*lambda(p,it).*(lambda(p,it)-1);    
+    ci = 2*repmat(area,1,3)./L(:,it);
+    base(:,3+it) = ci.*repmat(lambda(p,it).*(lambda(p,it)-1),NT,1);    
     % Second stiffness matrix
+    s = 1;
     for i = 1:Ndof
-        j = 1:Ndof; jd = (i-1)*Ndof+1:i*Ndof;
-        gs = cf(pxy).*base(:,i).*base(:,j);
-        G(:,jd) = G(:,jd) + weight(p)*gs;
+        for j = 1:Ndof
+            gs = cf(pxy).*base(:,i).*base(:,j);
+            G(:,s) = G(:,s) + weight(p)*gs;
+            s = s+1;
+        end
     end
     % load vector
-    F = F + weight(p)*f(pxy).*base;
+    F = F + weight(p)*repmat(f(pxy),1,Ndof).*base;
 end
-G = area.*G; F = area.*F;
+G = repmat(area,1,Ndof^2).*G; 
+F = repmat(area,1,Ndof).*F;
 sgnF = ones(NT,Ndof); sgnF(:,4:6) = sgnelem; % sign vector
 
 % ------------- Assemble stiffness matrix and load vector ------------
@@ -122,7 +132,7 @@ bdDof = isBdNode; freeDof = ~isBdNode;
 pD = node(eD,:); wD = g_D(pD);
 z1 = node(elemD(:,1),:); z2 = node(elemD(:,2),:); zc = (z1+z2)./2;
 e = z1-z2;  % e = z2-z1
-ne = [-e(:,2),e(:,1)];  ne = ne./he(bdIndex);
+ne = [-e(:,2),e(:,1)];  ne = ne./repmat(he(bdIndex),1,2);
 wnD = sum(Dw(zc).*ne,2);
 w = zeros(N+NE,1); w(bdDof) = [wD;wnD];
 ff = ff - kk*w;

@@ -7,7 +7,7 @@ else
     lambda = para.lambda; mu = para.mu;
 end
 
-pde = struct('lambda',lambda,'mu',mu, 'f', @f, 'uexact',@uexact, 'g_D',@g_D, 'g_N',@g_N);
+pde = struct('lambda',lambda,'mu',mu, 'f', @f, 'uexact',@uexact, 'g_D',@g_D, 'g_N',@g_N, 'Du',@Du);
 
     function val = f(p)
         val = mu*2*pi^2.*uexact(p);
@@ -15,6 +15,13 @@ pde = struct('lambda',lambda,'mu',mu, 'f', @f, 'uexact',@uexact, 'g_D',@g_D, 'g_
     function val = uexact(p)
         x = p(:,1); y = p(:,2);
         val = [cos(pi*x).*cos(pi*y), sin(pi*x).*sin(pi*y)];
+    end
+    function val = Du(p)
+        x = p(:,1); y = p(:,2);
+        val(:,1) = -pi*sin(pi*x).*cos(pi*y); % u1x
+        val(:,2) = -pi*cos(pi*x).*sin(pi*y); % u1y
+        val(:,3) = pi*cos(pi*x).*sin(pi*y);  % u2x
+        val(:,4) = pi*sin(pi*x).*cos(pi*y);  % u2y
     end
     function val = g_D(p)
         val = uexact(p);

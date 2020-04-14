@@ -4,18 +4,18 @@ tic;
 a = 0; b = 1;
 nel = 10;  N = nel+1; % numbers of elements and nodes
 node = linspace(a,b,nel+1)';
-elem = zeros(nel,2); elem(:,1) = 1:N-1; elem(:,2) = 2:N;
+elem1D = zeros(nel,2); elem1D(:,1) = 1:N-1; elem1D(:,2) = 2:N;
 
 Neumann = []; Dirichlet = [1,N];
 bdStruct = struct('Dirichlet', Dirichlet, 'Neumann', Neumann);
 
 % --------------- PDE ------------
-acoef = -1;  bcoef = 0;  ccoef = 0;
-para = struct('acoef',acoef, 'bcoef',bcoef, 'ccoef',ccoef);
-pde = pdedata1D(para);
+a = -1;  b = 0;  c = 0;
+para = struct('a',a, 'b',b, 'c',c);
+pde = pde1D(para);
 
 % ----------- FEM1D -----------
-u = FEM1D(node,elem,pde,bdStruct);
+u = FEM1D(node,elem1D,pde,bdStruct);
 
 % -------- error analysis -----------
 uexact = pde.uexact(node);

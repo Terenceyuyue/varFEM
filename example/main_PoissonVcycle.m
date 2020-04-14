@@ -12,7 +12,6 @@ bdNeumann = 'abs(x-1)<1e-4'; % string for Neumann
 bdStruct = setboundary(node,elem,bdNeumann);
 
 % ------------------ PDE data -------------------
-% pde = struct('uexact',@uexact, 'f',@f, 'g_N',@g_N,  'g_D',@g_D);
 pde = Poissondata();
 
 % ------------------ Poisson ---------------------
