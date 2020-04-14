@@ -18,7 +18,7 @@
 
 - meshdata: It stories mesh data used in all kinds of examples.
 
-- matlabupdate: Some functions in the updated version of matlab has been reconstructed with the same input and output. For example, contains.m --> mycontains.m.
+- matlabupdate: Some functions in the updated version of matlab are reconstructed with the same input and output. For example, contains.m ---> mycontains.m.
 
 ## Display and marking of polygonal meshes
 We present some basic functions to show the polygonal meshes, including 
@@ -29,8 +29,7 @@ For the convenience of computation, we introduce some auxiliary mesh data. The i
 
 ## 1-D problems
 
-Folder FEM1D introduces FEM programming of one dimensional problems. 
-The assembly of stiffness matrix and load vector is explained in detail.
+FEM1D.m and main_FEM1D.m introduce FEM programming of one dimensional problems. The assembly of stiffness matrix and load vector is explained in detail.
 
 ## 2-D Poisson equation
 Folder FEM2D includes the source codes of solving the 2-D Poisson equation.
