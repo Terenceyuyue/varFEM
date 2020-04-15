@@ -17,11 +17,16 @@ maxIt = 5;
 N = zeros(maxIt,1);  h = zeros(maxIt,1);
 ErrL2 = zeros(maxIt,1);  ErrH1 = zeros(maxIt,1);
 errwL2 = zeros(maxIt,1);  errwH1 = zeros(maxIt,1);
+
+feSpace = 'P2';
+if strcmpi(feSpace,'P1'), quadOrder = 3; end
+if strcmpi(feSpace,'P2'), quadOrder = 4; end
+if strcmpi(feSpace,'P3'), quadOrder = 5; end
 for k = 1:maxIt
     [node,elem] = uniformrefine(node,elem);
     bdStruct = setboundary(node,elem,bdNeumann);
     Th.node = node; Th.elem = elem; Th.bdStruct = bdStruct; 
-    uh = elasticity2_variational(Th,pde);
+    uh = elasticity2_variational(Th,pde,feSpace,quadOrder);
     uh = reshape(uh,[],2);
     NT = size(elem,1);    h(k) = 1/sqrt(NT);
     
@@ -31,8 +36,8 @@ for k = 1:maxIt
         uid = uh(:,id);
         u = @(pz) pde.uexact(pz)*tru(:, id);
         Du = @(pz) pde.Du(pz)*trDu(:, 2*id-1:2*id);
-        errL2(:,id) = getL2error(node,elem,uid,u);
-        errH1(:,id) = getH1error(node,elem,uid,Du);
+        errL2(:,id) = getL2error(node,elem,uid,u,feSpace,quadOrder);
+        errH1(:,id) = getH1error(node,elem,uid,Du,feSpace,quadOrder);
     end
     
     ErrL2(k) = sqrt(sum(errL2.^2,2));
