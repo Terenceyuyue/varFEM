@@ -67,7 +67,7 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
 
 ## Variational formulation based programming
 
-  - We present a variational formulation based programming for 1-D and 2-D problems in Folder variational. The arrangement is entirely       process-oriented and thus easy to understand. 
+  - A variational formulation based programming is shown for 1-D and 2-D problems in Folder variational. The arrangement is entirely       process-oriented and thus easy to understand. 
   
   - As in FreeFem++, fundamental functions --- int2d.m and int1d.m are designed to match the variational formulation of the underlying    PDEs. 
   
