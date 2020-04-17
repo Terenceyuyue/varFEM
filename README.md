@@ -73,7 +73,7 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
   
   - We also provide functions int2dvec.m and int1dvec.m to resolve vectorized problems.
   
-  - At present, only Lagrange elements of order up to three are provided. 
+  - At present, only Lagrange elements of order up to three are provided, including 1-D problems, Poisson equation, linear elasticity problem and mixed FEM of biharmonic equation. 
 
   
 ## Adaptive finite element method and Newest-node bisection
