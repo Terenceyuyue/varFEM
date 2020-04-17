@@ -10,7 +10,7 @@
   - variational: A new feature is the variational formulation based programming. It extends the applicaton in fem folder.
                  We have already provided P1, P2 and P3 Lagrange elements for one dimensional and two dimensional problems as well as    the vectorized problems, e.g. the linear elasticity problem.  
 
-- example: All running programs are placed in the example folder.
+- example: All examples corresponding to fem and variational are placed in the example folder.
 
 - tool: You can find functions involving visulization, boundary setting, mesh generation, and numerical integration and so on.
 
