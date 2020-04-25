@@ -21,10 +21,11 @@
 - matlabupdate: Some functions in the updated version of matlab are reconstructed with the same input and output. For example, contains.m ---> mycontains.m.
 
 ## Display and marking of polygonal meshes
-We present some basic functions to show the polygonal meshes, including 
-   marking of the nodes, elements and (boundary) edges.
+
+We present some basic functions to visualize the polygonal meshes, including marking of the nodes, elements and (boundary) edges.
 
 ## Auxiliary mesh data and setboundary.m
+
 For the convenience of computation, we introduce some auxiliary mesh data. The idea stems from the treatment of triangulation in iFEM, which is generalized to polygonal meshes with certain modifications.  
 
 ## 1-D problems
@@ -32,7 +33,7 @@ For the convenience of computation, we introduce some auxiliary mesh data. The i
 FEM1D.m and main_FEM1D.m introduce FEM programming of one dimensional problems. The assembly of stiffness matrix and load vector is explained in detail.
 
 ## 2-D Poisson equation
-The source codes of solving the 2-D Poisson equation are presented, see Poisson.m, PoissonP1.m, PoissonP2.m and PoissonP3.m.
+The source code of solving the 2-D Poisson equation are presented, see Poisson.m, PoissonP1.m, PoissonP2.m and PoissonP3.m.
 
 ## Linear elasticity equations
 
@@ -72,9 +73,12 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
   - As in FreeFem++, fundamental functions --- int2d.m and int1d.m are designed to match the variational formulation of the underlying    PDEs. These two functions can resolve both scalar and vector equations.
   
   - At present, only Lagrange elements of order up to three are provided, including 1-D problems, Poisson equation, linear elasticity problem, mixed FEM of biharmonic equation and Stokes problem. 
+  
+  - We remark that the current design can be adapted to find FEM solutions of most of the PDE problems.
 
   
 ## Adaptive finite element method and Newest-node bisection
+
 The adpative finite element method (AFEM) is introduced for the Poisson equation with homogeneous Dirichlet 
    conditions.  Each step was explained in detail, viz. the loops of the form: 
 
@@ -87,7 +91,7 @@ The MATLAB codes are in Folder afem.
 
   - We present a multigrid method by adding two grids one by one, so that the pseudo-code of V-cycle method can be obtained directly.
   
-  - The MG method can be also analyzed by using subspace correction method proposed by Xu Jinchao (for example, in iFEM). 
+  - The MG method can also be analyzed by using subspace correction method proposed by Xu Jinchao (for example, in iFEM). 
     However, it may be more straightforward by adding two grids.
 
   - The programming of one-dimensional problems is described in detail, and the multigrid program is universal to all linear element problems.
