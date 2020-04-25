@@ -6,15 +6,15 @@
 
 - The toolbox has two important folders：fem and variational.
 
-  - fem: It includes all kinds of source code.
+  - fem: It contains all source files for solving various partial differential equations.
   - variational: A new feature is the variational formulation based programming. It extends the applicaton in fem folder.
-                 We have already provided P1, P2 and P3 Lagrange elements for one dimensional and two dimensional problems as well as    the vectorized problems, e.g. the linear elasticity problem.  
+                 We have already provided P1, P2 and P3 Lagrange elements for one dimensional and two dimensional problems as well as                    the vectorized problems, e.g. the linear elasticity problem.  
 
-- example: All examples corresponding to fem and variational are placed in the example folder.
+- example: All running examples corresponding to fem and variational are placed in the example folder.
 
 - tool: You can find functions involving visulization, boundary setting, mesh generation, and numerical integration and so on.
 
-- pdedata: It provides information of equations associated with examples in example folder. 
+- pdedata: It provides information of PDE equations associated with examples in example folder. 
 
 - meshdata: It stories mesh data used in all kinds of examples.
 
@@ -32,7 +32,7 @@ For the convenience of computation, we introduce some auxiliary mesh data. The i
 FEM1D.m and main_FEM1D.m introduce FEM programming of one dimensional problems. The assembly of stiffness matrix and load vector is explained in detail.
 
 ## 2-D Poisson equation
-The source codes of solving the 2-D Poisson equation are presented, see Poisson.m, PoissonP2.m and PoissonP3.m.
+The source codes of solving the 2-D Poisson equation are presented, see Poisson.m, PoissonP1.m, PoissonP2.m and PoissonP3.m.
 
 ## Linear elasticity equations
 
@@ -67,13 +67,11 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
 
 ## Variational formulation based programming
 
-  - A variational formulation based programming is shown for 1-D and 2-D problems in Folder variational. The arrangement is entirely       process-oriented and thus easy to understand. 
+  - A variational formulation based programming is shown for 1-D and 2-D problems in Folder variational. The arrangement is entirely       process-oriented and thus is easy to understand. 
   
-  - As in FreeFem++, fundamental functions --- int2d.m and int1d.m are designed to match the variational formulation of the underlying    PDEs. 
+  - As in FreeFem++, fundamental functions --- int2d.m and int1d.m are designed to match the variational formulation of the underlying    PDEs. These two functions can resolve both scalar and vector equations.
   
-  - We also provide functions int2dvec.m and int1dvec.m to resolve vectorized problems.
-  
-  - At present, only Lagrange elements of order up to three are provided, including 1-D problems, Poisson equation, linear elasticity problem and mixed FEM of biharmonic equation. 
+  - At present, only Lagrange elements of order up to three are provided, including 1-D problems, Poisson equation, linear elasticity problem, mixed FEM of biharmonic equation and Stokes problem. 
 
   
 ## Adaptive finite element method and Newest-node bisection
