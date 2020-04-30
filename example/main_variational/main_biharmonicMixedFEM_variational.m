@@ -17,7 +17,7 @@ Vh = 'P2';
 if strcmpi(Vh,'P1'), quadOrder = 3; end
 if strcmpi(Vh,'P2'), quadOrder = 4; end
 if strcmpi(Vh,'P3'), quadOrder = 5; end
-Vhvec = repmat( {Vh}, 1, 2); % v = [v1,v2]
+Vhvec = repmat( {Vh}, 1, 2 ); % v = [v1,v2]
 for k = 1:maxIt
    [node,elem] = uniformrefine(node,elem);     
    bdStruct = setboundary(node,elem);

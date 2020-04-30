@@ -17,7 +17,7 @@ maxIt = 5;
 N = zeros(maxIt,1);    h = zeros(maxIt,1);
 ErrL2 = zeros(maxIt,1); ErrH1 = zeros(maxIt,1);
 
-Vh = 'P2';
+Vh = 'P1';
 if strcmpi(Vh,'P1'), quadOrder = 3; end
 if strcmpi(Vh,'P2'), quadOrder = 4; end
 if strcmpi(Vh,'P3'), quadOrder = 5; end

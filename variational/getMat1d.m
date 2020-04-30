@@ -8,7 +8,7 @@ nel = size(Th.elem1D,1);
 [lambda,weight] = quadpts1(quadOrder); ng = length(weight);
 
 z1 = node(Th.elem1D(:,1),:); z2 = node(Th.elem1D(:,2),:);
-Cmat = zeros(nel,ng);
+Cmat = zeros(nel,ng);  % size: nel * ng
 
 % function handle is pde.Du
 z0 = z1(1,:); v0 = fun(z0);
