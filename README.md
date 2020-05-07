@@ -35,8 +35,6 @@ FEM1D.m and main_FEM1D.m introduce FEM programming of one dimensional problems. 
 ## 2-D Poisson equation
 The source code of solving the 2-D Poisson equation are presented, see Poisson.m, PoissonP1.m, PoissonP2.m and PoissonP3.m.
 
-$$ - \nabla u = f $$
-
 ## Linear elasticity equations
 
 For linear elasticity problems, we give a unified programming framework. Specifically, 
