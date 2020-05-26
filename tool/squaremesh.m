@@ -15,6 +15,13 @@ node = [x(:),y(:)];
 % -------- Generate elements ---------
 nx = size(x,1); ny = size(y,2); % number of columns and rows
 
+
+% 7 --- 8 --- 9
+% |     |     |
+% 4 --- 5 --- 6
+% |     |     |
+% 1 --- 2 --- 3
+
 % 4 k+nx --- k+1+nx 3
 %    |        |
 % 1  k  ---  k+1    2

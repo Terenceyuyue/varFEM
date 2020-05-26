@@ -8,6 +8,6 @@ r2 = showrate(h,ErrH1,'r-*','k.-');
 hold on
 r1 = showrate(h,ErrL2,'b-s','k--');
 
-h_legend = legend(str2,['O (h^{' num2str(r2,2) '})'],...
-    str1,['O (h^{' num2str(r1,2) '})'],'location','best');
+h_legend = legend(str2,['O (h^{' num2str(r2,'%0.2f') '})'],...
+    str1,['O (h^{' num2str(r1,'%0.2f') '})'],'location','best');
 set(h_legend,'FontSize',10);

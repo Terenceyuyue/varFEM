@@ -85,10 +85,10 @@ end
 
 % ------------ Dirichlet boundary condition ----------------
 g_D = pde.g_D;  eD = bdStruct.eD;
-isBdNode = false(N,1); isBdNode(eD) = true;
-bdNode = find(isBdNode); freeNode = find(~isBdNode);
-pD = node(bdNode,:);
-bdDof = [bdNode; bdNode+N]; freeDof = [freeNode;freeNode+N];
+id = [eD; eD+N]; 
+isBdNode = false(2*N,1); isBdNode(id) = true;
+bdDof = (isBdNode); freeDof = (~isBdNode);
+pD = node(eD,:);
 u = zeros(2*N,1); uD = g_D(pD); u(bdDof) = uD(:);
 ff = ff - kk*u;
 

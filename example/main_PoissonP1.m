@@ -1,7 +1,7 @@
 clc;clear;close all;
 %  -------------- Mesh and boundary conditions --------------
 a1 = 0; b1 = 1; a2 = 0; b2 = 1;
-Nx = 2; Ny = 2; h1 = (b1-a1)/Nx; h2 = (b2-a2)/Ny;
+Nx = 5; Ny = 5; h1 = (b1-a1)/Nx; h2 = (b2-a2)/Ny;
 [node,elem] = squaremesh([a1 b1 a2 b2],h1,h2);
 
 bdNeumann = 'abs(x-1)<1e-4'; % string for Neumann

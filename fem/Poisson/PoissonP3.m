@@ -22,7 +22,7 @@ sgnelem(sgnelem==-1) = 0;
 elema = elem2edge + N*sgnelem + (N+NE)*(~sgnelem); % 1/3 point
 elemb = elem2edge + (N+NE)*sgnelem + N*(~sgnelem); % 2/3 point
 % local --> global
-elem2= [elem, elema, elemb, (1:NT)'+N+2*NE];
+elem2 = [elem, elema, elemb, (1:NT)'+N+2*NE];
 % ii,jj
 nnz = NT*Ndof^2;
 ii = zeros(nnz,1); jj = zeros(nnz,1);

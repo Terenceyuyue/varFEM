@@ -26,7 +26,7 @@ end
 % -------- edge, bdEdge --------
 [i,j,s] = find(sparse(totalEdge(:,2),totalEdge(:,1),1));
 edge = [j,i];
-bdEdge = edge(s==1,:);
+bdEdge = edge(s==1,:); % not counterclockwise
 
 % ------- edge2elem --------
 if iscell(elem)

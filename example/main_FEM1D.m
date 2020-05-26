@@ -6,11 +6,11 @@ nel = 10;  N = nel+1; % numbers of elements and nodes
 node = linspace(a,b,nel+1)';
 elem1D = zeros(nel,2); elem1D(:,1) = 1:N-1; elem1D(:,2) = 2:N;
 
-Neumann = []; Dirichlet = [1,N];
+Neumann = [1]; Dirichlet = [N];
 bdStruct = struct('Dirichlet', Dirichlet, 'Neumann', Neumann);
 
 % --------------- PDE ------------
-a = -1;  b = 0;  c = 0;
+a = 1;  b = 0;  c = 0;
 para = struct('a',a, 'b',b, 'c',c);
 pde = pde1D(para);
 

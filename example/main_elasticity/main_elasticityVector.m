@@ -14,9 +14,8 @@ pde = elasticitydata(para);
 
 % ----------------- elasticity1 ---------------------
 maxIt = 5;
-N = zeros(maxIt,1);  h = zeros(maxIt,1);
+h = zeros(maxIt,1);
 ErrL2 = zeros(maxIt,1);  ErrH1 = zeros(maxIt,1);
-errwL2 = zeros(maxIt,1);  errwH1 = zeros(maxIt,1);
 for k = 1:maxIt
     [node,elem] = uniformrefine(node,elem);
     bdStruct = setboundary(node,elem,bdNeumann);

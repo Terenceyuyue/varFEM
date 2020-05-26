@@ -62,10 +62,11 @@ end
 % --------- Dirichlet boundary conditions ---------------
 eD = bdStruct.eD; g_D = pde.g_D;
 isBdNode = false(N,1); isBdNode(eD) = true;
-bdNode = find(isBdNode); freeNode = find(~isBdNode);
+bdNode = (isBdNode); freeNode = (~isBdNode);
 pD = node(bdNode,:);
 u = zeros(N,1); u(bdNode) = g_D(pD);
 ff = ff - kk*u;
 
 % ------------ Solver -----------
 u(freeNode) = kk(freeNode,freeNode)\ff(freeNode);
+
