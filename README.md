@@ -43,10 +43,11 @@ For the convenience of computation, we introduce some auxiliary mesh data. The i
 
 FEM1D.m and main_FEM1D.m introduce FEM programming of one dimensional problems. The assembly of stiffness matrix and load vector is explained in detail. The final sparse assembling index is now replaced by 
 
-'''
+```
 ii = reshape(repmat(elem,Ndof,1), [], 1);
+
 jj = repmat(elem(:), Ndof,1);
-'''
+```
 
 ## 2-D Poisson equation
 The source code of solving the 2-D Poisson equation are presented, see Poisson.m, PoissonP1.m, PoissonP2.m and PoissonP3.m.
