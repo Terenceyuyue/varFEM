@@ -45,12 +45,11 @@ FEM1D.m and main_FEM1D.m introduce FEM programming of one dimensional problems. 
 
 ```
 ii = reshape(repmat(elem,Ndof,1), [], 1);
-
 jj = repmat(elem(:), Ndof,1);
 ```
 
 ## 2-D Poisson equation
-The source code of solving the 2-D Poisson equation are presented, see Poisson.m, PoissonP1.m, PoissonP2.m and PoissonP3.m.
+The source code of solving the 2-D Poisson equation are presented, see Poisson.m, PoissonP2.m and PoissonP3.m.
 
 ## Linear elasticity equations
 
@@ -85,13 +84,15 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
 
 ## Variational formulation based programming
 
-  - A variational formulation based programming is shown for 1-D and 2-D problems in Folder variational. The arrangement is entirely       process-oriented and thus is easy to understand. 
+  - A variational formulation based programming is shown for 1-D, 2-D and 3-D problems in Folder variational. The arrangement is entirely  process-oriented and thus is easy to understand. 
   
-  - As in FreeFem++, fundamental functions --- int2d.m and int1d.m are designed to match the variational formulation of the underlying    PDEs. These two functions can resolve both scalar and vector equations.
+  - As in FreeFem++, fundamental functions --- int3d.m, int2d.m and int1d.m are designed to match the variational formulation of the underlying  PDEs. These functions can resolve both scalar and vector equations.
   
   - At present, only Lagrange elements of order up to three are provided, including 1-D problems, Poisson equation, linear elasticity problem, mixed FEM of biharmonic equation and Stokes problem. 
   
   - We remark that the current design can be adapted to find FEM solutions of most of the PDE problems.
+  
+  - In the near future, this part will be integrated into iFEM.
 
   
 ## Adaptive finite element method and Newest-node bisection
@@ -111,7 +112,7 @@ The MATLAB codes are in Folder afem.
   - The MG method can also be analyzed by using subspace correction method proposed by Xu Jinchao (for example, in iFEM). 
     However, it may be more straightforward by adding two grids.
 
-  - The programming of one-dimensional problems is described in detail, and the multigrid program is universal to all linear element problems.
+  - The programming of 1-D and 2-D problems is described in detail, and the multigrid program is universal to all linear element problems.
   
   - For 2D and 3D linear elements, only slight changes of 1D problems are needed since they can be regarded as 1D problems.
     See the document for details (two-dimensional problem).
@@ -120,11 +121,7 @@ The MATLAB codes are in Folder afem.
 Undo: 
 
 	   
-           - mesh generation   
-   
-           - 3-D FEM      
-
-           - mixed FEM (e.g. Stokes equation)   
+            - mesh generation   
   
             - time-dependent problems     
 
