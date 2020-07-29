@@ -4,22 +4,26 @@
 
 We shall establish an iFEM-like package or a simplified version with certain extensions, named mFEM toolbox. 
 
+- We first review the finite element methods for classical problems, including 1-D and 2-D Poisson equations, linear elasticity problems and plate bening problems, etc. 
+
+- The basic programming style comes from iFEM. In fact, we have reviewed the computation and the assembly of stiffness matrix and load vector step by step in the PDF document. 
+
+- It should be pointed out that the package is only designed to help more people understand the hidden ideas in iFEM. In fact, a considerable part of the program is extracted from iFEM with minor changes or simplications. See Copyright in the M-lints.
+
+- On this basis, we hope to develop the "variational formulation based programming" introduced in FreeFEM, a high level multiphysics finite element software.
 
 
+## Arrangement of the ongoing Toolbox 
 
-## Arrangement of the ongoing Toolbox
+- The toolbox has two important folders：equation and variational.
 
- 
+  - equation: It contains all source files for solving various partial differential equations.
+  - variational: A new feature is the variational formulation based programming. It extends the applicaton in equation folder.
+                 We have already provided P1, P2 and P3 Lagrange elements for 1-D, 2-D and 3-D problems as well as the vectorized problems, e.g. the linear elasticity problem.  
 
-- The toolbox has two important folders：fem and variational.
+- example: All running examples corresponding to equation are placed in the example folder.
 
-  - fem: It contains all source files for solving various partial differential equations.
-  - variational: A new feature is the variational formulation based programming. It extends the applicaton in fem folder.
-                 We have already provided P1, P2 and P3 Lagrange elements for one dimensional and two dimensional problems as well as                    the vectorized problems, e.g. the linear elasticity problem.  
-
-- example: All running examples corresponding to fem and variational are placed in the example folder.
-
-- tool: You can find functions involving visulization, boundary setting, mesh generation, and numerical integration and so on.
+- tool,fem,mesh: You can find functions involving visulization, boundary setting, mesh generation, and numerical integration and so on.
 
 - pdedata: It provides information of PDE equations associated with examples in example folder. 
 
@@ -37,7 +41,12 @@ For the convenience of computation, we introduce some auxiliary mesh data. The i
 
 ## 1-D problems
 
-FEM1D.m and main_FEM1D.m introduce FEM programming of one dimensional problems. The assembly of stiffness matrix and load vector is explained in detail.
+FEM1D.m and main_FEM1D.m introduce FEM programming of one dimensional problems. The assembly of stiffness matrix and load vector is explained in detail. The final sparse assembling index is now replaced by 
+
+'''
+ii = reshape(repmat(elem,Ndof,1), [], 1);
+jj = repmat(elem(:), Ndof,1);
+'''
 
 ## 2-D Poisson equation
 The source code of solving the 2-D Poisson equation are presented, see Poisson.m, PoissonP1.m, PoissonP2.m and PoissonP3.m.
