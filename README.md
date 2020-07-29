@@ -1,8 +1,15 @@
 # MATLAB Programming for Finite Element Methods
 
+## Intentions
+
+We shall establish an iFEM-like package or a simplified version with certain extensions, named mFEM toolbox. 
+
+
+
+
 ## Arrangement of the ongoing Toolbox
 
- We shall establish an iFEM-like package or a simplified version with certain extensions, named mFEM toolbox.
+ 
 
 - The toolbox has two important folders：fem and variational.
 
