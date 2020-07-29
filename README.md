@@ -10,7 +10,7 @@ We shall establish an iFEM-like package or a simplified version with certain ext
 
 - It should be pointed out that the package is only designed to help more people understand the hidden ideas in iFEM. In fact, a considerable part of the program is extracted from iFEM with minor changes or simplications. See Copyright in the M-lints.
 
-- On this basis, we hope to develop the "variational formulation based programming" introduced in FreeFEM, a high level multiphysics finite element software.
+- On this basis, we hope to develop the "variational formulation based programming" designed in FreeFEM, a high level multiphysics finite element software.
 
 
 ## Arrangement of the ongoing Toolbox 
