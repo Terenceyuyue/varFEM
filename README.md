@@ -4,7 +4,7 @@
 
 We shall establish an iFEM-like package or a simplified version with certain extensions, named mFEM. 
 
-- We first review the finite element methods for classical problems, including 1-D and 2-D Poisson equations, linear elasticity problems and plate bening problems, etc. 
+- We first review the finite element methods for classical problems, including 1-D and 2-D Poisson equations, linear elasticity problems and plate bending problems, etc. 
 
 - The basic programming style comes from iFEM. In fact, we have reconstructed the computation and assembly of the stiffness matrix and load vector step by step in the PDF document (see FEM_MATLAB_GitHub.pdf). 
 
