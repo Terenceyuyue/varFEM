@@ -9,8 +9,8 @@ We shall establish an iFEM-like package or a simplified version with certain ext
 - The basic programming style comes from iFEM. In fact, we have reconstructed the computation and assembly of the stiffness matrix and load vector step by step in the PDF document (see FEM_MATLAB_GitHub.pdf). 
 
 - 
-```diff
-+ It should be pointed out that the package is only designed to help more people understand the underlying ideas in iFEM. In fact, a considerable part of the program is extracted from iFEM with minor changes or simplications. See Copyright in the M-lints.
+```json
+   It should be pointed out that the package is only designed to help more people understand the underlying ideas in iFEM. In fact, a considerable part of the program is extracted from iFEM with minor changes or simplications. See Copyright in the M-lints.
 ```
 
 - On this basis, we intend to develop the "variational formulation based programming"  in a similar way of FreeFEM, a high level multiphysics finite element software. The similarity here only refers to the programming style of the main program, not to the internal architecture of the software.
