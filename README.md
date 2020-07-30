@@ -123,7 +123,9 @@ Undo:
 	   
             - mesh generation   
 	    
+	    
 	    - mg V-cycle methods for higher order elements
+	    
   
             - time-dependent problems 
 
