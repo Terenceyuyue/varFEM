@@ -19,7 +19,7 @@ We shall establish an iFEM-like package or a simplified version with certain ext
 
   - fem: contains all source files for solving various partial differential equations related to the revision of FEMs for the classical problems. 
     
-  - variational: A new feature is the variational formulation based programming. It extends the applicaton in equation folder.
+  - variational: A new feature is the variational formulation based programming. It extends the applicaton in the fem folder.
 
 - example: includes all the test examples corresponding to the equation folder.
 
