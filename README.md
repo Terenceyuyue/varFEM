@@ -15,15 +15,15 @@ We shall establish an iFEM-like package or a simplified version with certain ext
 
 ## Arrangement of the ongoing Toolbox 
 
-- The toolbox has two important folders：equation and variational.
+- The toolbox has two important folders：fem and variational.
 
-  - equation: It contains all source files for solving various partial differential equations.
+  - fem: contains all source files for solving various partial differential equations related to the revision of FEMs for the classical problems. 
+    
   - variational: A new feature is the variational formulation based programming. It extends the applicaton in equation folder.
-                 We have already provided P1, P2 and P3 Lagrange elements for 1-D, 2-D and 3-D problems as well as the vectorized problems, e.g. the linear elasticity problem.  
 
-- example: All running examples corresponding to equation are placed in the example folder.
+- example: includes all the test examples corresponding to the equation folder.
 
-- tool,fem,mesh: You can find functions involving visulization, boundary setting, mesh generation, and numerical integration and so on.
+- tool, mesh: You can find functions involving visulization, boundary setting, mesh generation, and numerical integration and so on.
 
 - pdedata: It provides information of PDE equations associated with examples in example folder. 
 
@@ -83,6 +83,9 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
    
 
 ## Variational formulation based programming
+
+
+ We have already provided P1, P2 and P3 Lagrange elements for 1-D, 2-D and 3-D problems as well as the vectorized problems, e.g. the linear elasticity problem.  
 
   - A variational formulation based programming is shown for 1-D, 2-D and 3-D problems in Folder variational. The arrangement is entirely  process-oriented and thus is easy to understand. 
   
