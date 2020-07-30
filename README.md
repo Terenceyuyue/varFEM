@@ -41,7 +41,7 @@ For the convenience of computation, we introduce some auxiliary mesh data. The i
 
 ## 1-D problems
 
-FEM1D.m and main_FEM1D.m introduce FEM programming of one dimensional problems. The assembly of stiffness matrix and load vector is explained in detail. The final sparse assembling index is now replaced by 
+FEM1D.m and main_FEM1D.m introduce FEM programming of one dimensional problems. The assembly of stiffness matrix and load vector is explained in detail. The final sparse assembling index of iFEM is now replaced by 
 
 ```
 ii = reshape(repmat(elem,Ndof,1), [], 1);
@@ -59,7 +59,7 @@ For linear elasticity problems, we give a unified programming framework. Specifi
 
 We consider three forms of variational problems. 
   - The first and the second are commonly used in linear elastic problems in the form of strain and/or stress tensors. 
-  - The third is just a variant of the second one with Laplacian replacing the strain tensors.
+  - The third is just a variant of the second one with Laplacian replacing the strain tensors (named Navier form).
   - For each formulation, sparse assembling indices and detailed explanation are given.
 
 For the first two formulations,  “Neumann”  boundary conditions and Dirichlet boundary conditions are applied. 
@@ -74,7 +74,7 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
     A more general method is added by introducing signed stiffness matrix and signed load vector. Such prodecure can be extended to other problems with d.o.f.s varing in directions and can be furter applied to polygonal meshes.
 	
 - Besides Morley element, Zienkiewicz element and Adini element are two other commonly used nonconforming elements. 
-  The former is incomplete cubic triangular element and the latter is incomplete bicubic rectangular element.
+  The former is an incomplete cubic triangular element and the latter is an incomplete bicubic rectangular element.
   In addition to directional problems, all three non-conforming elements (and conforming elements) can be programmed in the unified framework given in the document.
 
 ## Mixed FEM
@@ -84,18 +84,15 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
 
 ## Variational formulation based programming
 
-
- We have already provided P1, P2 and P3 Lagrange elements for 1-D, 2-D and 3-D problems as well as the vectorized problems, e.g. the linear elasticity problem.  
-
   - A variational formulation based programming is shown for 1-D, 2-D and 3-D problems in Folder variational. The arrangement is entirely  process-oriented and thus is easy to understand. 
   
-  - As in FreeFem++, fundamental functions --- int3d.m, int2d.m and int1d.m are designed to match the variational formulation of the underlying  PDEs. These functions can resolve both scalar and vector equations.
+  - As in FreeFem, fundamental functions --- int1d.m, int2d.m and int3d.m are designed to match the variational formulation of the underlying PDEs. These functions can resolve both scalar and vector equations (see also assem1d.m, assem2d.m and assem3d.m).
   
   - At present, only Lagrange elements of order up to three are provided, including 1-D problems, Poisson equation, linear elasticity problem, mixed FEM of biharmonic equation and Stokes problem. 
   
   - We remark that the current design can be adapted to find FEM solutions of most of the PDE problems.
   
-  - In the near future, this part will be integrated into iFEM.
+  - The Folder variational will be integrated into iFEM in the near future.
 
   
 ## Adaptive finite element method and Newest-node bisection
@@ -106,7 +103,7 @@ The adpative finite element method (AFEM) is introduced for the Poisson equation
            SOLVE -> ESTIMATE -> MARK -> REFINE
 
 The newest-node bisection for the local mesh refinement was clearly stated thanks to the smart idea in iFEM.  
-The MATLAB codes are in Folder afem. 
+The MATLAB codes are in fem/afem. 
 
 ## Multigrid V-cycle method for linear elements
 
@@ -115,18 +112,20 @@ The MATLAB codes are in Folder afem.
   - The MG method can also be analyzed by using subspace correction method proposed by Xu Jinchao (for example, in iFEM). 
     However, it may be more straightforward by adding two grids.
 
-  - The programming of 1-D and 2-D problems is described in detail, and the multigrid program is universal to all linear element problems.
+  - The programming of 1-D problems is described in detail, and the multigrid program is universal to all linear element problems.
   
-  - For 2D and 3D linear elements, only slight changes of 1D problems are needed since they can be regarded as 1D problems.
-    See the document for details (two-dimensional problem).
+  - For 2-D and 3-D linear elements, only slight changes of 1-D problems are needed since they can be regarded as 1-D problems.
+    See the document for details.
 
 
 Undo: 
 
 	   
             - mesh generation   
+	    
+	    - mg V-cycle methods for higher order elements
   
-            - time-dependent problems     
+            - time-dependent problems 
 
             - ... ...
 	    
