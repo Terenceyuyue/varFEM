@@ -21,7 +21,7 @@ We shall establish an iFEM-like package or a simplified version with certain ext
     
   - variational: A new feature is the variational formulation based programming. It extends the applicaton in the fem folder.
 
-- example: includes all the test examples corresponding to the equation folder.
+- example: includes all the test examples corresponding to the fem folder.
 
 - tool, mesh: You can find functions involving visulization, boundary setting, mesh generation, and numerical integration and so on.
 
