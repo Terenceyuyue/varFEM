@@ -43,7 +43,8 @@ For the convenience of computation, we introduce some auxiliary mesh data. The i
 
 ## 1-D problems
 
-FEM1D.m and main_FEM1D.m introduce FEM programming of one dimensional problems. The assembly of stiffness matrix and load vector is explained in detail. **The final sparse assembling index of iFEM is now replaced by **
+FEM1D.m and main_FEM1D.m introduce FEM programming of one dimensional problems. The assembly of stiffness matrix and load vector is explained in detail. 
+**The final sparse assembling index of iFEM is now replaced by **
 ```
 ii = reshape(repmat(elem,Ndof,1), [], 1);
 jj = repmat(elem(:), Ndof,1);
@@ -124,7 +125,7 @@ Undo:
 	   
             - mesh generation   
 	    
-	    - mg V-cycle methods for higher order elements
+	       - mg V-cycle methods for higher order elements
 	    
   
             - time-dependent problems 
