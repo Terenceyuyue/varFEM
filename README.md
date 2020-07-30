@@ -92,7 +92,7 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
   
   - We remark that the current design can be adapted to find FEM solutions of most of the PDE problems.
   
-  - The Folder variational will be integrated into iFEM in the near future.
+  - Folder variational will be integrated into iFEM in the near future.
 
   
 ## Adaptive finite element method and Newest-node bisection
