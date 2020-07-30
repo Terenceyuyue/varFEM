@@ -2,15 +2,15 @@
 
 ## Intentions
 
-We shall establish an iFEM-like package or a simplified version with certain extensions, named mFEM toolbox. 
+We shall establish an iFEM-like package or a simplified version with certain extensions, named mFEM. 
 
 - We first review the finite element methods for classical problems, including 1-D and 2-D Poisson equations, linear elasticity problems and plate bening problems, etc. 
 
-- The basic programming style comes from iFEM. In fact, we have reviewed the computation and the assembly of stiffness matrix and load vector step by step in the PDF document. 
+- The basic programming style comes from iFEM. In fact, we have reconstructed the computation and assembly of the stiffness matrix and load vector step by step in the PDF document (see FEM_MATLAB_GitHub.pdf). 
 
-- It should be pointed out that the package is only designed to help more people understand the hidden ideas in iFEM. In fact, a considerable part of the program is extracted from iFEM with minor changes or simplications. See Copyright in the M-lints.
+- It should be pointed out that the package is only designed to help more people understand the underlying ideas in iFEM. In fact, a considerable part of the program is extracted from iFEM with minor changes or simplications. See Copyright in the M-lints.
 
-- On this basis, we hope to develop the "variational formulation based programming" designed in FreeFEM, a high level multiphysics finite element software.
+- On this basis, we intend to develop the "variational formulation based programming"  in a similar way of FreeFEM, a high level multiphysics finite element software, where the similarity here only refers to the programming style of the main program.
 
 
 ## Arrangement of the ongoing Toolbox 
