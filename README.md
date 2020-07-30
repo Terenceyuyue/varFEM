@@ -8,7 +8,7 @@ We shall establish an iFEM-like package or a simplified version with certain ext
 
 - The basic programming style comes from iFEM. In fact, we have reconstructed the computation and assembly of the stiffness matrix and load vector step by step in the PDF document (see FEM_MATLAB_GitHub.pdf). 
 
-- ```It should be pointed out that the package is only designed to help more people understand the underlying ideas in iFEM. In fact, a considerable part of the program is extracted from iFEM with minor changes or simplications. See Copyright in the M-lints.```
+- **It should be pointed out that the package is only designed to help more people understand the underlying ideas in iFEM. In fact, a considerable part of the program is extracted from iFEM with minor changes or simplications. See Copyright in the M-lints.**
 
 - On this basis, we intend to develop the "variational formulation based programming"  in a similar way of FreeFEM, a high level multiphysics finite element software. The similarity here only refers to the programming style of the main program, not to the internal architecture of the software.
 
@@ -41,8 +41,7 @@ For the convenience of computation, we introduce some auxiliary mesh data. The i
 
 ## 1-D problems
 
-FEM1D.m and main_FEM1D.m introduce FEM programming of one dimensional problems. The assembly of stiffness matrix and load vector is explained in detail. The final sparse assembling index of iFEM is now replaced by 
-
+FEM1D.m and main_FEM1D.m introduce FEM programming of one dimensional problems. The assembly of stiffness matrix and load vector is explained in detail. **The final sparse assembling index of iFEM is now replaced by **
 ```
 ii = reshape(repmat(elem,Ndof,1), [], 1);
 jj = repmat(elem(:), Ndof,1);
@@ -86,7 +85,7 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
 
   - A variational formulation based programming is shown for 1-D, 2-D and 3-D problems in Folder variational. The arrangement is entirely  process-oriented and thus is easy to understand. 
   
-  - As in FreeFem, fundamental functions --- int1d.m, int2d.m and int3d.m are designed to match the variational formulation of the underlying PDEs. These functions can resolve both scalar and vector equations (see also assem1d.m, assem2d.m and assem3d.m).
+  - **As in FreeFem, fundamental functions --- int1d.m, int2d.m and int3d.m are designed to match the variational formulation of the underlying PDEs. These functions can resolve both scalar and vector equations (see also assem1d.m, assem2d.m and assem3d.m).**
   
   - At present, only Lagrange elements of order up to three are provided, including 1-D problems, Poisson equation, linear elasticity problem, mixed FEM of biharmonic equation and Stokes problem. 
   
@@ -114,7 +113,7 @@ The MATLAB codes are in fem/afem.
 
   - The programming of 1-D problems is described in detail, and the multigrid program is universal to all linear element problems.
   
-  - For 2-D and 3-D linear elements, only slight changes of 1-D problems are needed since they can be regarded as 1-D problems.
+  - **For 2-D and 3-D linear elements, only slight changes of 1-D problems are needed since they can be regarded as 1-D problems.**
     See the document for details.
 
 
