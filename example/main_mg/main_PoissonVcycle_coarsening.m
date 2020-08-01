@@ -5,29 +5,28 @@ h = zeros(maxIt,1); NNdof = zeros(maxIt,1);
 ErrL2 = zeros(maxIt,1);
 ErrH1 = zeros(maxIt,1);
 
-%% Generate an initial mesh
-a1 = 0; b1 = 1; a2 = 0; b2 = 1;
-Nx = 4; Ny = 4; h1 = (b1-a1)/Nx; h2 = (b2-a2)/Ny;
-[node,elem] = squaremesh([a1 b1 a2 b2],h1,h2);
+%% Generate an intial mesh
+[node,elem] = squaremesh([0 1 0 1],0.25,0.25);
 bdNeumann = 'abs(x-1)<1e-4';
 
 %% Get the PDE data
 pde = Poissondata();
 
 %% Finite element method
-for k = 1:maxIt
+for k = 1:maxIt  
     % refine mesh
     [node,elem] = uniformrefine(node,elem);
-    % set boundary
+    % set boundary    
     bdStruct = setboundary(node,elem,bdNeumann);
-    % level number
-    option.J = k+1;
+    % set up solver type
+    option.solver = 'mg';
+    option.J = k+1;  
     % solve the equation
     uh = Poisson(node,elem,pde,bdStruct,option);
     % record
     NNdof(k) = length(uh);
     h(k) = 1/(sqrt(size(node,1))-1);
-    if NNdof(k)<2e3
+    if size(node,1)<2e3
         figure(1); 
         showresult(node,elem,pde.uexact,uh);
         pause(1);

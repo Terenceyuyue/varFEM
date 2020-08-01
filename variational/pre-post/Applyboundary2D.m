@@ -1,4 +1,4 @@
-function u = Applyboundary2D(Th,A,b,g_D,Vh,option)
+function u = Applyboundary2D(Th,A,b,g_D,Vh)
 %% APPLYBOUNDARY2D deals with the Dirichlet boundary conditions of 2D problems
 %
 %Ex1: g_D = pde.g_D;  % scalar

@@ -1,4 +1,4 @@
-function u = elasticity_tensor2(node,elem,pde,bdStruct)
+function u = elasticity_tensor2(node,elem,pde,bdStruct,option)
 %elasticity_tensor2 solves linear elasticity equation using P1 element with
 % bilinear form  2mu*(sigma(u), epsilon(v)) + lambda*(divu,divv)
 %
@@ -9,6 +9,9 @@ function u = elasticity_tensor2(node,elem,pde,bdStruct)
 %       \sigma = (sigma_{ij}): stress tensor, 1<=i,j<=2
 %
 % Copyright (C) Terence Yu.
+
+%% Input check
+if ~exist('option','var'), option = []; end
 
 N = size(node,1); NT = size(elem,1); Ndof = 3;
 mu = pde.mu; lambda = pde.lambda; f = pde.f;
@@ -97,17 +100,26 @@ pD = node(bdNodeIdx,:);
 u = zeros(2*N,1); uD = g_D(pD); u(bdDof) = uD(:);
 ff = ff - kk*u;
 
-%% Set solver
-solver = 'V-cycle';
-if 2*N<2e3, solver = 'direct'; end
+%% Set up solver type
+if isempty(option) || ~isfield(option,'solver')  % no option.solver
+    if 2*N <= 2e3  % Direct solver for small size systems
+        option.solver = 'direct';
+    else            % mg-Vcycle solver for large size systems
+        option.solver = 'mg';
+    end
+end
+solver = option.solver;
 switch solver
     case 'direct'
+        disp('Direct solver for small size systems');
+        fprintf('\n');
         u(freeDof) = kk(freeDof,freeDof)\ff(freeDof);
-    case 'V-cycle'
+    case 'mg'
         disp('Multigrid V-cycle Preconditioner with Gauss-Seidel Method');
         fprintf('\n');
-        J = bdStruct.J; 
-        [Pro,Res] = transferoperator(elem,J);  
+        if ~isfield(option,'J'), option.J = 2; end % at least two levels
+        J = option.J; 
+        [Pro,Res] = uniformtransferoperator(elem,J);  
         Pro = cellfun(@(Pro) blkdiag(Pro,Pro), Pro, 'UniformOutput', false);
         Res = cellfun(@(Res) blkdiag(Res,Res), Res, 'UniformOutput', false);
         A = speye(2*N); A(freeDof,freeDof) = kk(freeDof,freeDof);

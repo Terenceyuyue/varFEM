@@ -1,4 +1,4 @@
-function u = PoissonP3(node,elem,pde,bdStruct)
+function u = PoissonP3(node,elem,pde,bdStruct,option)
 % Poisson solves Poisson equation with P3 Lagrange element (2D).
 %
 %    - Delta u = f   in \Omega, with
@@ -6,6 +6,9 @@ function u = PoissonP3(node,elem,pde,bdStruct)
 %    Neumann boundary conditions   grad(u)*n = g_N on \Gamma_N.
 %
 % Copyright (C) Long Chen, modified by Terence Yu.
+
+%% Input check
+if ~exist('option','var'), option = []; end
 
 %% Get elem2dof
 % auxstructure
@@ -143,5 +146,26 @@ uD = g_D(pD); uDa = g_D(za); uDb = g_D(zb);
 u = zeros(NNdof,1); u(bdDof) = [uD; uDa; uDb];
 ff = ff - kk*u;
 
-%% Set solver
-u(freeDof) = kk(freeDof,freeDof)\ff(freeDof);
+%% Set up solver type
+if isempty(option) || ~isfield(option,'solver')  % no option.solver
+    if NNdof <= 2e3  % Direct solver for small size systems
+        option.solver = 'direct';
+    else            % mg-Vcycle solver for large size systems
+        option.solver = 'mg';
+    end
+end
+solver = option.solver;
+switch solver
+    case 'direct'
+        u(freeDof) = kk(freeDof,freeDof)\ff(freeDof);
+    case 'mg'
+        disp('Multigrid V-cycle Preconditioner with Gauss-Seidel Method');
+        fprintf('\n');
+        if ~isfield(option,'J'), option.J = 2; end  % at least two levels
+        J = option.J; 
+        [Pro,Res] = uniformtransferoperatorP3(elem,J);
+        A = speye(NNdof); A(freeDof,freeDof) = kk(freeDof,freeDof);
+        b = u; b(freeDof) = ff(freeDof);
+        u = mgVcycle(A,b,Pro,Res); % multigrid Vcycle
+end
+

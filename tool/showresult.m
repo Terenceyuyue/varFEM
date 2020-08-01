@@ -4,7 +4,6 @@ function showresult(node,elem,u,uh)
 % Copyright (C) Terence Yu.
 
 clf;  % clear figures
-
 set(gcf,'Units','normal');
 set(gcf,'Position',[0.25,0.25,0.7,0.25]);
 

@@ -11,7 +11,7 @@ pde = Poissondata();
 %% Finite element method
 for k = 1:maxIt  % level
     % generate an initial mesh
-    [node,elem] = squaremesh([0 1 0 1],0.5,0.5);
+    [node,elem] = squaremesh([0 1 0 1],0.25,0.25);
     % Final mesh and transfer matrices    
     [node,elem,Pro,Res] = Mesh2DVcycle(node,elem,k);
     % set boundary
@@ -22,7 +22,7 @@ for k = 1:maxIt  % level
     % record
     NNdof(k) = length(uh);
     h(k) = 1/(sqrt(size(node,1))-1);
-    if NNdof(k)<2e3
+    if size(node,1)<2e3
         figure(1); 
         showresult(node,elem,pde.uexact,uh);
         pause(1);

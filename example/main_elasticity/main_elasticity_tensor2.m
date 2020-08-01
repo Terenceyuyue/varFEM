@@ -22,10 +22,11 @@ for k = 1:maxIt
     [node,elem] = uniformrefine(node,elem);
     % set boundary
     bdStruct = setboundary(node,elem,bdNeumann);
-    % level number
-    bdStruct.J = k+1;
+    % set up solver type
+    option.solver = 'mg';
+    option.J = k+1;
     % solve the equation
-    uh = elasticity_tensor2(node,elem,pde,bdStruct);
+    uh = elasticity_tensor2(node,elem,pde,bdStruct,option);
     uh = reshape(uh,[],2);
     % record and plot
     NNdof(k) = length(uh);

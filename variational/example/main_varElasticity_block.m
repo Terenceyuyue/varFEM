@@ -9,7 +9,7 @@ ErrL2 = zeros(maxIt,1);
 ErrH1 = zeros(maxIt,1);
 
 %% Generate an intitial mesh
-[node,elem] = squaremesh([0 1 0 1],0.5);
+[node,elem] = squaremesh([0 1 0 1],0.25);
 bdNeumann = 'y==0 | x==1'; % string for Neumann
 
 %% Get the data of the pde

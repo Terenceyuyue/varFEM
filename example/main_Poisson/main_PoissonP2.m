@@ -20,8 +20,11 @@ for k = 1:maxIt
     [node,elem] = uniformrefine(node,elem);
     % set boundary
     bdStruct = setboundary(node,elem,bdNeumann);
+    % set up solver type
+    option.solver = 'mg';
+    option.J = k+1;
     % solve the equation
-    uh = PoissonP2(node,elem,pde,bdStruct);
+    uh = PoissonP2(node,elem,pde,bdStruct,option);
     % record
     NNdof(k) = length(uh);
     h(k) = 1/(sqrt(size(node,1))-1);

@@ -20,14 +20,15 @@ for k = 1:maxIt
     [node,elem] = uniformrefine(node,elem);
     % set boundary
     bdStruct = setboundary(node,elem,bdNeumann);
-    % level number
+    % set up solver type
+    option.solver = 'mg';
     option.J = k+1;
     % solve the equation
-    uh = Poisson(node,elem,pde,bdStruct,option);
+    uh = PoissonP2(node,elem,pde,bdStruct,option);
     % record
     NNdof(k) = length(uh);
     h(k) = 1/(sqrt(size(node,1))-1);
-    if NNdof(k)<2e3
+    if size(node,1)<2e3
         figure(1); 
         showresult(node,elem,pde.uexact,uh);
         pause(1);
@@ -48,5 +49,5 @@ disptable(colname,NNdof,[],h,'%0.3e',ErrL2,'%0.5e',ErrH1,'%0.5e');
 
 %% Conclusion
 %
-% The optimal rate of convergence of the H1-norm (1st order), L2-norm
-% (2nd order) is observed. 
+% The optimal rate of convergence of the H1-norm (2nd order), L2-norm
+% (3rd order) is observed. 

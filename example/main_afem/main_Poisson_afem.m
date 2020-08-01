@@ -15,9 +15,11 @@ pde = Poissondata_afem();
 for k = 1:maxIt
     % Step 1: SOLVE
     bdStruct = setboundary(node,elem);
-    u = Poisson(node,elem,pde,bdStruct);
+    option.solver = 'direct';
+    u = Poisson(node,elem,pde,bdStruct,option);
     figure(1); 
-    showresult(node,elem,pde.uexact,u); 
+    showresult(node,elem,pde.uexact,u);
+    pause(0.05);
     
     % Step 2: ESTIMATE
     eta = Poisson_indicator(node,elem,u,pde);
@@ -30,7 +32,7 @@ for k = 1:maxIt
     
     if (size(node,1)>maxN) || (k==maxIt)
         bdStruct = setboundary(node,elem);
-        u = Poisson(node,elem,pde,bdStruct);
+        u = Poisson(node,elem,pde,bdStruct,option);
         setp = k
         break;
     end

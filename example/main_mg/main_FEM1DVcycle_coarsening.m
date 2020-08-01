@@ -5,11 +5,10 @@ h = zeros(maxIt,1); NNdof = zeros(maxIt,1);
 ErrL2 = zeros(maxIt,1);
 ErrH1 = zeros(maxIt,1);
 
-%% Generate an initial mesh
-a = 0; b = 1;
-N = 11; % numbers of nodes
-node = linspace(a,b,N)';
-elem = [(1:N-1)', (2:N)'];
+%% Generate an intial mesh
+a = 0; b = 1; N0 = 3;
+node = linspace(a,b,N0)'; % uniform
+elem = [(1:N0-1)', (2:N0)']; 
 bdNeumann = 'abs(x-1)<1e-4';
 
 %% Get the PDE data
@@ -18,13 +17,14 @@ para = struct('a',a, 'b',b, 'c',c);
 pde = pde1D(para);
 
 %% Finite element method
-for k = 1:maxIt
+for k = 1:maxIt 
     % refine mesh
-    [node,elem] = uniformrefine1(node,elem);
-    % set boundary
-    bdStruct = setboundary1(node,elem);
-    % level number
-    option.J = k+1;
+    [node,elem] = uniformrefine1(node,elem);   
+    % set boundary    
+    bdStruct = setboundary1(node,elem,bdNeumann);
+    % set up solver type
+    option.solver = 'mg';
+    option.J = k+1;     
     % solve the equation
     uh = FEM1D(node,elem,pde,bdStruct,option);
     % record
@@ -55,3 +55,4 @@ disptable(colname,NNdof,[],h,'%0.3e',ErrL2,'%0.5e',ErrH1,'%0.5e');
 %
 % The optimal rate of convergence of the H1-norm (1st order), L2-norm
 % (2nd order) is observed. 
+

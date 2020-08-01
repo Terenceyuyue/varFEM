@@ -13,9 +13,9 @@ g = [2  2  2  2  2  2   % decomposed geometry matrix
     0  1  1 -1 -1  0
     1  1  1  1  1  1
     0  0  0  0  0  0];
-[p,e,t] = initmesh(g,'hmax',0.5); % initial mesh
-node = p';  elem = t(1:3,:)';
-bdNeumann = []; % only Dirichlet condition for elasticity_Navier
+[p,e,t] = initmesh(g,'hmax',0.25); % initial mesh
+node = p'; elem = t(1:3,:)';
+bdNeumann = []; % only Dirichlet condition for elasticityNavier
 
 %% Get the PDE data
 lambda = 1; mu = 1;
@@ -30,14 +30,14 @@ for k = 1:maxIt
     bdStruct = setboundary(node,elem,bdNeumann);
     % set up solver type
     option.solver = 'mg';
-    option.J = k+1;
+    option.J = k+1;  
     % solve the equation
     uh = elasticity_Navier(node,elem,pde,bdStruct,option);
     uh = reshape(uh,[],2);
     % record and plot
     NNdof(k) = length(uh);
     h(k) = 1/(sqrt(size(node,1))-1);
-    if NNdof(k)<2e3
+    if size(node,1)<2e3
         figure(1);
         showresult(node,elem,pde.uexact,uh(:,1));
         pause(1);

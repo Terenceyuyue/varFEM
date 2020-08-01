@@ -16,7 +16,7 @@ if ~iscell(Vh), Vh = {Vh}; end % Vh is stored in cell array
 nSpace = length(Vh);
 if nSpace == 1
     output = assem1d(Th,Coef,Test,Trial,Vh,quadOrder);
-    return;  % otherwise, vecotor case
+    return;  % otherwise, vecotorial case
 end
 
 %% extended [Coef,Test,Trial]

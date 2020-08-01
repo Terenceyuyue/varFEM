@@ -25,7 +25,7 @@ for k = 1:maxIt
     % record
     NNdof(k) = length(uh);
     h(k) = 1/(sqrt(size(node,1))-1);
-    if NNdof(k)<2e3
+    if size(node,1)<2e3
         figure(1); 
         showresult(node,elem,pde.uexact,uh);
         pause(1);

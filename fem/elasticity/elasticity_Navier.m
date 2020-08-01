@@ -1,4 +1,4 @@
-function u = elasticity_Navier(node,elem,pde,bdStruct)
+function u = elasticity_Navier(node,elem,pde,bdStruct,option)
 %elasticity_Navier solves linear elasticity equation of Navier form using P1 element 
 %
 %       u = [u1, u2]
@@ -6,6 +6,9 @@ function u = elasticity_Navier(node,elem,pde,bdStruct)
 %       Dirichlet boundary condition u = [g1_D, g2_D] on \Gamma_D.
 %
 % Copyright (C) Terence Yu.
+
+%% Input check
+if ~exist('option','var'), option = []; end
 
 N = size(node,1); NT = size(elem,1); Ndof = 3;
 mu = pde.mu; lambda = pde.lambda; f = pde.f;
@@ -75,23 +78,31 @@ g_D = pde.g_D;  bdNodeIdx = bdStruct.bdNodeIdx;
 id = [bdNodeIdx; bdNodeIdx+N]; 
 isBdNode = false(2*N,1); isBdNode(id) = true;
 bdDof = (isBdNode); freeDof = (~isBdNode);
-pD = node(bdNodeIdx,:);
-u = zeros(2*N,1); uD = g_D(pD); u(bdDof) = uD(:);
+nodeD = node(bdNodeIdx,:);
+u = zeros(2*N,1); uD = g_D(nodeD); u(bdDof) = uD(:);
 ff = ff - kk*u;
 
-%% Set solver
-solver = 'V-cycle';
-if 2*N<2e3, solver = 'direct'; end
+%% Set up solver type
+if isempty(option) || ~isfield(option,'solver')  % no option.solver
+    if 2*N <= 2e3  % Direct solver for small size systems
+        option.solver = 'direct';
+    else            % mg-Vcycle solver for large size systems
+        option.solver = 'mg';
+    end
+end
+solver = option.solver;
 switch solver
     case 'direct'
         u(freeDof) = kk(freeDof,freeDof)\ff(freeDof);
-    case 'V-cycle'
+    case 'mg'
         disp('Multigrid V-cycle Preconditioner with Gauss-Seidel Method');
         fprintf('\n');
-        J = bdStruct.J; 
-        [Pro,Res] = transferoperator(elem,J);  
-        Pro = cellfun(@(Pro) blkdiag(Pro,Pro), Pro, 'UniformOutput', false);
-        Res = cellfun(@(Res) blkdiag(Res,Res), Res, 'UniformOutput', false);
+        if ~isfield(option,'J'), option.J = 2; end % at least two levels
+        J = option.J; 
+        [Pro,Res] = uniformtransferoperator(elem,J);  
+        fun = @(mat) blkdiag(mat,mat);
+        Pro = cellfun(fun, Pro, 'UniformOutput', false);
+        Res = cellfun(fun, Res, 'UniformOutput', false);
         A = speye(2*N); A(freeDof,freeDof) = kk(freeDof,freeDof);
         b = u; b(freeDof) = ff(freeDof);
         u = mgVcycle(A,b,Pro,Res); % multigrid Vcycle

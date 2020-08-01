@@ -27,10 +27,12 @@ for k = 1:maxIt
     % solve the equation
     [uh,ph] = varStokes_block(Th,pde,Vh,quadOrder);
     % record and plot
-    N(k) = size(elem,1);
+    N(k) = size(node,1);
     h(k) = 1/(sqrt(size(node,1))-1);
     if N(k) < 2e3  % show mesh and solution for small size
-        figure(1);  showresult(node,elem,pde.uexact,uh);
+        figure(1);  
+        showresult(node,elem,pde.uexact,uh);
+        pause(1);
     end
     % compute error
     tru = eye(2); trDu = eye(4);

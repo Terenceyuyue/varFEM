@@ -1,5 +1,5 @@
 % ---------------------------------------------------------------------
-%                         MG solver: mgVcycle1D.m
+%                         MG solver: mgVcycle.m
 % ---------------------------------------------------------------------
 
 % Copyright (C) Long Chen, modified by Terence Yu.
@@ -12,20 +12,20 @@ for j = J-1:-1:1 % note that J-1:-1:1 is empty when J<=1 (solve it directly)
     Ai{j} = Res{j}*Ai{j+1}*Pro{j};
 end
 
-tol = 1e-6; tolf = tol * norm(b); % Relative tolerance
+tol = 1e-9; 
 Err = 10; u = zeros(size(b));
-iter = 0; MaxIt = 20;
-while Err>tolf && iter<=MaxIt
+iter = 0; MaxIt = 100;
+while Err>tol && iter<=MaxIt
     r = b-A*u;
     e = Vcycle(A,r,Ai,Pro,Res);
     u = u+e;
     Err = norm(e);  iter = iter + 1;
 end
 
-end % end of mgVcycle1D
+end % end of mgVcycle
 
 % ---------------------------------------------------------------------
-%                         Vcycle1D.m 
+%                         Vcycle.m 
 % ---------------------------------------------------------------------
 function e = Vcycle(A,r,Ai,Pro,Res)
 % Solve the residual equation Ae = r by multigrid V-cycle method

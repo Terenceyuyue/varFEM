@@ -17,7 +17,7 @@ if ~iscell(Vh), Vh = {Vh}; end % feSpace = 'P1'
 nSpace = length(Vh);
 if nSpace == 1
     output = assem3d(Th,Coef,Test,Trial,Vh,quadOrder);
-    return;  % otherwise, vecotor case
+    return;  % otherwise, vectorial case
 end
 
 %% extended [Coef,Trial,Test]
