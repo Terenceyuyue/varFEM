@@ -56,7 +56,7 @@ The source codes of solving the 2-D Poisson equation are presented, see Poisson.
 ## Linear elasticity equations
 
 For linear elasticity problems, we give a unified programming framework. Specifically, 
-- The entrices of stiffness matrix are analyzed in the vectorized finite element space;
+- The entrices of stiffness matrix are analyzed in the vectorial finite element space;
 - The assembly is accomplished in the scalar FE space of each component.
 
 We consider three forms of variational problems. 
