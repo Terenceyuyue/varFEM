@@ -51,7 +51,7 @@ jj = repmat(elem(:), Ndof,1);
 ```
 
 ## 2-D Poisson equation
-The source code of solving the 2-D Poisson equation are presented, see Poisson.m, PoissonP2.m and PoissonP3.m.
+The source codes of solving the 2-D Poisson equation are presented, see Poisson.m, PoissonP2.m and PoissonP3.m.
 
 ## Linear elasticity equations
 
