@@ -125,7 +125,7 @@ Undo:
 	   
             - mesh generation and optimization  
            
-	       - mg V-cycle methods for 3-D problems and bisection meshes 
+	         - mg V-cycle methods for 3-D problems and bisection meshes 
   
             - variational formulation programming for time-dependent problems and nonlinear poblems
 
