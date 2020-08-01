@@ -123,14 +123,13 @@ The MATLAB codes are in fem/afem.
 Undo: 
 
 	   
-            - mesh generation   
-	    
-	       - mg V-cycle methods for higher order elements
-	    
+            - mesh generation and optimization  
+           
+	    - mg V-cycle methods for 3-D problems and bisection meshes 
   
-            - time-dependent problems 
+            - variational formulation programming for time-dependent problems and nonlinear poblems
 
-            - ... ...
+            - various applications of finite element methods
 	    
 	    
 	 
