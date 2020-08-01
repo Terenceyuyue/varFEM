@@ -127,7 +127,7 @@ Undo:
            
 	        - mg V-cycle methods for 3-D problems and bisection meshes 
   
-            - variational formulation programming for time-dependent problems and nonlinear poblems
+            - variational formulation based programming for time-dependent problems and nonlinear poblems
 
             - various applications of finite element methods
 	    
