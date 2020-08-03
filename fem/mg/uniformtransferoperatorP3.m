@@ -23,7 +23,6 @@ allEdge = [elem(:,[2,3]); elem(:,[3,1]); elem(:,[1,2])];
 totalEdge = sort(allEdge,2);
 edge = unique(totalEdge,'rows');
 N = max(elem(:)); NE = size(edge,1); NT = size(elem,1);
-% HB in the level J
 ii = [(1:N)';        % vertices
       (1:NE)'+N;     % 1/3-v1
       (1:NE)'+N;     % 1/3-v2
