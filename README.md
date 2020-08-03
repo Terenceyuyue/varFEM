@@ -107,17 +107,19 @@ The adpative finite element method (AFEM) is introduced for the Poisson equation
 The newest-node bisection for the local mesh refinement was clearly stated thanks to the smart idea in iFEM.  
 The MATLAB codes are in fem/afem. 
 
-## Multigrid V-cycle method for linear elements
+## Multigrid V-cycle methods
 
   - We present a multigrid method by adding two grids one by one, so that the pseudo-code of V-cycle method can be obtained directly.
   
   - The MG method can also be analyzed by using subspace correction method proposed by Xu Jinchao (for example, in iFEM). 
     However, it may be more straightforward by adding two grids.
 
-  - The programming of 1-D problems is described in detail, and the multigrid program is universal to all linear element problems.
+  - The programming of 1-D problems is described in detail, and the multigrid program is universal to all nested finite element spaces.
   
   - **For 2-D and 3-D linear elements, only slight changes of 1-D problems are needed since they can be regarded as 1-D problems.**
     See the document for details.
+    
+  - For higher order elements, we still use linear elements for error corrections. In this way, only one more transfer process from P1 to P2 or P3 is needed. See P1toP2 and P1toP3 in mg function in iFEM.
 
 
 Undo: 
