@@ -17,7 +17,8 @@ function [Pro,Res] = uniformtransferoperatorP2(elem,J)
 
 Pro = cell(J,1); Res = cell(J,1);
 
-%% In the level J-1
+%% In the level J
+% P1toP2
 allEdge = [elem(:,[2,3]); elem(:,[3,1]); elem(:,[1,2])];
 totalEdge = sort(allEdge,2);
 edge = unique(totalEdge,'rows');
@@ -33,9 +34,9 @@ ss = [ones(N,1); 0.5*ones(2*NE,1)];
 Pro{J} = sparse(ii,jj,ss,N+NE,N);
 Res{J} = Pro{J}';
 
-%% In the level J-2, J-3, ..., 1
+%% In the level J-1, J-2, ..., 1
 for j = J:-1:2    
-    % HB in the level J-2
+    % HB in the level J-1
     N = max(elem(:));  NT = size(elem,1);
     NT = NT/4; % number of coarse elements
     t1 = 1:NT; t2 = t1+NT; t3 = t2+NT; t4 = t3+NT;
@@ -46,7 +47,7 @@ for j = J:-1:2
     HB(:, 3) = reshape(elem(:,[3,1,2]), [], 1);
     [~,idx] = unique(HB(:,1));
     HB = HB(idx,:);   
-    % Transfer matrices in the level J-2
+    % Transfer matrices in the level J-1
     Coarse2Fine = unique(elem(:)); CoarseId = Coarse2Fine;
     nCoarse = length(CoarseId);  nFine = N;  nf = size(HB,1);
     ii = [Coarse2Fine; HB(:,1); HB(:,1)];
