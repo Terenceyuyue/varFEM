@@ -119,7 +119,7 @@ The MATLAB codes are in fem/afem.
   - **For 2-D and 3-D linear elements, only slight changes of 1-D problems are needed since they can be regarded as 1-D problems.**
     See the document for details.
     
-  - For higher order elements, linear elements are used to approixmate the error equation Ae = r. Generally speaking, the errors of linear elements are upper bounds of the ones of higher order elements. In order to achieve the required convergence accuracy, large numbers of loops of error correction should be carried out, which, however, can be greatly reduced by using multigrid method. Moreover, the data structure of linear elements is simpler and the corresponding computational cost is relatively small. This is the reason why we use linear elements for error correction.  In this way, only one more transfer process from P1 to P2 or P3 is needed. See P1toP2 and P1toP3 in mg function in iFEM.
+  - For higher order elements, linear elements are used to approixmate the error equation Ae = r on coarse meshes. In this way, only one more transfer process from P1 to P2 or P3 is needed. See P1toP2 and P1toP3 in mg function in iFEM.
   
 
 
