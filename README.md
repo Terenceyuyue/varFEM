@@ -93,8 +93,6 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
   - At present, only Lagrange elements of order up to three are provided, including 1-D problems, Poisson equation, linear elasticity problem, mixed FEM of biharmonic equation and Stokes problem. 
   
   - We remark that the current design can be adapted to find FEM solutions of most of the PDE problems.
-  
-  - Folder variational will be integrated into iFEM in the near future.
 
   
 ## Adaptive finite element method and Newest-node bisection
