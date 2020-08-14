@@ -1,8 +1,10 @@
 function w = PlateBendingMorley(node,elem,pde,bdStruct)
 %PlateBendingMorley solves plate bending problem using Morley element,
-% a complete quadratic triangular element.
+% a complete quadratic triangular element, where,
+% the global sign is resolved by using signed stiffness matrix and load
+% vector.
 %
-%       -D_{ij} M_{ij}(w) = f in \Omega,
+%       -D_{ij} M_{ij}(w) + cw = f in \Omega,
 %       Dirichlet boundary condition:
 %               w = g1, grad(w)n = g2    on \Gamma.
 %
@@ -111,7 +113,7 @@ for p = 1:nQuad
                + c1.*repmat(lambda(p,it).*lambda(p,jt),NT,1);
     % i = 4,5,6
     ci = 2*repmat(area,1,3)./L(:,it);
-    base(:,3+it) = ci.*repmat(lambda(p,it).*(lambda(p,it)-1),NT,1);    
+    base(:,3+it) = ci.*repmat(lambda(p,it).*(lambda(p,it)-1),NT,1);  
     % Second stiffness matrix
     s = 1;
     for i = 1:Ndof

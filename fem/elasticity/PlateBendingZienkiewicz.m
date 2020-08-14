@@ -2,7 +2,7 @@ function w = PlateBendingZienkiewicz(node,elem,pde,bdStruct)
 %PlateBendingMorley solves plate bending problem using Zienkiewicz element,
 % an incomplete cubic triangular element.
 %
-%       -D_{ij} M_{ij}(w) = f in \Omega,
+%       -D_{ij} M_{ij}(w) + cw = f in \Omega,
 %       Dirichlet boundary condition:
 %               w = g1, grad(w)n = g2    on \Gamma.
 %

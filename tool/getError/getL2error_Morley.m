@@ -7,11 +7,15 @@ end
 %% elem2dof
 % numbers
 N = size(node,1); NT = size(elem,1); 
-% edge and elem2edge
+% edge,elem2edge,bdEdgeIdx
 allEdge = uint32([elem(:,[2,3]); elem(:,[3,1]); elem(:,[1,2])]);
 totalEdge = sort(allEdge,2);
-[edge,~,totalJ] = unique(totalEdge, 'rows');
+[edge,i1,totalJ] = unique(totalEdge, 'rows');  NE = size(edge,1);
 elem2edge  = reshape(totalJ, NT, 3);
+% bdEdgeIdx
+[~, i2] = unique(totalEdge(end:-1:1,:),'rows');  
+i2 = size(totalEdge,1)+1-i2;            % last occurrence
+bdEdgeIdx = (i1==i2);
 % elem2dof
 elem2dof = [elem, elem2edge+N];
 % dof numbers
@@ -37,6 +41,11 @@ end
 % elementwise edge length
 z1 = node(edge(:,1),:); z2 = node(edge(:,2),:);
 he = sqrt(sum((z2-z1).^2,2)); L = he(elem2edge);
+% elementwise sign of basis functions
+sgnelem = sign([elem(:,3)-elem(:,2), elem(:,1)-elem(:,3), elem(:,2)-elem(:,1)]);
+E = false(NE,1); E(bdEdgeIdx) = 1; sgnbd = E(elem2edge);
+sgnelem(sgnbd) = 1;
+sgnbase = ones(NT,Ndof); sgnbase(:,4:6) = sgnelem;
 % coefficients in the basis functions
 ind = [1 2 3; 2 3 1; 3 1 2];  % rotation index
 it = ind(:,1); jt = ind(:,2); kt = ind(:,3);
@@ -68,7 +77,8 @@ for p = 1:nQuad
                + c1.*repmat(lambda(p,it).*lambda(p,jt),NT,1);
     % i = 4,5,6
     ci = 2*repmat(area,1,3)./L(:,it);
-    base(:,3+it) = ci.*repmat(lambda(p,it).*(lambda(p,it)-1),NT,1); 
+    base(:,3+it) = ci.*repmat(lambda(p,it).*(lambda(p,it)-1),NT,1);
+    base = sgnbase.*base;  % equipped with global sign
     uhp = 0;
     for i = 1:Ndof
         uhp = uhp + uh(elem2dof(:,i)).*base(:,i);

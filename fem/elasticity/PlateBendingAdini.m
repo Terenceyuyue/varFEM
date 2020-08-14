@@ -1,8 +1,8 @@
 function w = PlateBendingAdini(node,elem,pde,bdStruct)
 %PlateBendingAdini solves plate bending problem using Adini-Clough-Melosh
-%element, an incomplete bicubic rectangular element.
+% element, an incomplete bicubic rectangular element.
 %
-%       -D_{ij} M_{ij}(w) = f in \Omega,
+%       -D_{ij} M_{ij}(w) +cw = f in \Omega,
 %       Dirichlet boundary condition:
 %               w = g1, grad(w)n = g2    on \Gamma.
 %
@@ -17,11 +17,13 @@ N = size(node,1); NT = size(elem,1); Ndof = 4*3;
 elem2dof = [elem, elem+N, elem + 2*N];
 
 %% parameters used in computation
+% area
 xiv = [-1 1 1 -1]; etav = [-1 -1 1 1]; % vertices of [-1,1]^2
 x1 = node(elem(:,1),1); y1 = node(elem(:,1),2);
 x2 = node(elem(:,2),1); y4 = node(elem(:,4),2);
 a = x2-x1;  b = y4-y1;
-% %  quadrature points on all elements [xa, xb]
+area = a.*b;
+% quadrature points on all elements [xa, xb]
 [lambda,weight] = quadpts1(5);
 xx = (2*lambda(:,1)-1)';  % each row corresponds to an element
 ww = weight;
@@ -29,7 +31,6 @@ nr = length(ww); nI = nr^2;
 xi = reshape(repmat(xx',nr,1),1,[]);
 eta = reshape(ones(nr,1)*xx,1,[]);
 weight = reshape(ww'*ww,1,[]);
-
 
 %% second derivatives of basis functions
 b11 = zeros(NT,Ndof,nI); b22 = b11; b12 = b11;
@@ -62,7 +63,7 @@ for i = 1:Ndof
         s = s+1;
     end
 end
-K = repmat(D*(a.*b)./4,1,Ndof^2).*K;
+K = repmat(D*(area)./4,1,Ndof^2).*K;
 
 %% Second stiffness matrix and load vector
 G = zeros(NT,Ndof^2); F = zeros(NT,Ndof);
@@ -95,8 +96,8 @@ for p = 1:nI
     % load vector
     F = F + weight(p)*repmat(f(pxy),1,Ndof).*base;
 end
-G = repmat((a.*b)./4,1,Ndof^2).*G; 
-F = repmat((a.*b)./4,1,Ndof).*F;
+G = repmat(area./4,1,Ndof^2).*G; 
+F = repmat(area./4,1,Ndof).*F;
 
 %% Assemble stiffness matrix and load vector
 ii = reshape(repmat(elem2dof, Ndof,1), [], 1);
@@ -116,4 +117,3 @@ ff = ff - kk*w;
 
 %% Solver
 w(freeDof) = kk(freeDof,freeDof)\ff(freeDof);
-w = w(1:N);

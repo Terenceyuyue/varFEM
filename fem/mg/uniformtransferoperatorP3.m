@@ -18,11 +18,12 @@ function [Pro,Res] = uniformtransferoperatorP3(elem,J)
 Pro = cell(J,1); Res = cell(J,1);
 
 %% In the level J
-% P1toP3
+%P1toP3
 allEdge = [elem(:,[2,3]); elem(:,[3,1]); elem(:,[1,2])];
 totalEdge = sort(allEdge,2);
 edge = unique(totalEdge,'rows');
 N = max(elem(:)); NE = size(edge,1); NT = size(elem,1);
+% HB in the level J
 ii = [(1:N)';        % vertices
       (1:NE)'+N;     % 1/3-v1
       (1:NE)'+N;     % 1/3-v2
@@ -67,7 +68,6 @@ for j = J:-1:2
     jj = [CoarseId; HB(:,2); HB(:,3)];
     ss = [ones(nCoarse,1); 0.5*ones(nf,1); 0.5*ones(nf,1)];
     Pro{j-1} = sparse(ii,jj,ss,nFine,nCoarse);
-    Res{j-1} = Pro{j-1}';
-    
+    Res{j-1} = Pro{j-1}';    
 end
 
