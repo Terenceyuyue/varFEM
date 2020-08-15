@@ -6,6 +6,7 @@ function u = varElasticityNavier_block(Th,pde,Vh,quadOrder)
 %       -mu \Delta u - (lambda + mu)*grad(div(u)) = f in \Omega
 %       Dirichlet boundary condition u = [g1_D, g2_D] on \Gamma_D.
 %
+% Copyright (C) Terence Yu.
 
 % Quadrature orders for int1d and assem2d
 if nargin==2, Vh = 'P1'; quadOrder = 3; end % default: P1

@@ -13,6 +13,8 @@ function [u,w] = varBiharmonicMixedFEM_block(Th,pde)
 %
 % Unlike the conforming or nonconforming FEMs, the second boundary condition
 % is an Neumann boundary condition in this case.
+%
+% Copyright (C) Terence Yu.
 
 node = Th.node; N = size(node,1);
 

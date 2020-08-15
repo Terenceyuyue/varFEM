@@ -1,5 +1,7 @@
 function [ii,jj] = getSparse(elem2dofv, elem2dofu)
 %% GETSPARSE returns the sparse indices of Aij in block matrix
+%
+% Copyright (C) Terence Yu.
 
 NT = size(elem2dofv,1);
 Ndofv = size(elem2dofv,2); Ndofu = size(elem2dofu,2);

@@ -7,6 +7,8 @@ function uh = varPoisson(Th,pde,Vh,quadOrder)
 %       -div(a*grad(u)) + cu = f  in \Omega, with 
 %       Dirichlet boundary condition u=g_D on \Gamma_D, 
 %       Robin boundary condition     g_R*u + a*grad(u)*n=g_N on \Gamma _R
+%
+% Copyright (C) Terence Yu.
 
 % Quadrature orders for int1d and int2d
 if nargin==2, Vh = 'P1'; quadOrder = 3; end % default: P1

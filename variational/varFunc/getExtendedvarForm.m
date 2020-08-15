@@ -6,6 +6,8 @@ function [Coef,Test,Trial] = getExtendedvarForm(Coef,Test,Trial)
 %  Coef  = {1, 1, 0.5, 0.5, 0.5, 0.5};
 %  Test  = {'v1.dx', 'v2.dy', 'v1.dy', 'v1.dy', 'v2.dx', 'v2.dx'};
 %  Trial = {'u1.dx', 'u2.dy', 'u1.dy', 'u2.dx', 'u1.dy', 'u2.dx'};
+%
+% Copyright (C) Terence Yu.
 
 % check the existence of linear combination
 idv = cellfun(@(str) mycontains(str,'+'), Test);  idv = sum(idv);

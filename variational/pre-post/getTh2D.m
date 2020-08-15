@@ -1,5 +1,7 @@
 function Th = getTh2D(node,elem,bdNeumann)
 %% GETTH2D gets 2D mesh information
+%
+% Copyright (C) Terence Yu.
 
 if nargin==2, bdNeumann = []; end
 

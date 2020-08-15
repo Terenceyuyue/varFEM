@@ -25,7 +25,7 @@ x3 = node(elem(:,3),1); y3 = node(elem(:,3),2);
 xi = [x2-x3, x3-x1, x1-x2]; eta = [y2-y3, y3-y1, y1-y2];
 % Gauss quadrature rule
 [lambda,weight] = quadpts(3);
-nI = length(weight); % number of integration points
+nQuad = length(weight); % number of integration points
 % coefficients in the basis functions
 c1 = xi(:,1);   d1 = eta(:,1); 
 c2 = -xi(:,2);  d2 = -eta(:,2); 
@@ -34,12 +34,12 @@ c4 = [0.5*c1-c2,  0.5*c2-c1,  0.5*(c1+c2)];
 d4 = [0.5*d1-d2,  0.5*d2-d1,  0.5*(d1+d2)];
 
 %% second derivatives of homogeneous polynomials
-[Dphi,area] = gradbasis(node,elem);
-Dquad = @(i,j) quadbasis(i,j,Dphi,lambda);
-Dtri = @(i,j,k) tribasis(i,j,k,Dphi,lambda);
+[Dlambda,area] = gradbasis(node,elem);
+Dquad = @(i,j) quadbasis(i,j,Dlambda,lambda);
+Dtri = @(i,j,k) tribasis(i,j,k,Dlambda,lambda);
 
 %% Second derivatives of basis functions
-b11 = zeros(NT,Ndof,nI); b22 = b11; b12 = b11;
+b11 = zeros(NT,Ndof,nQuad); b22 = b11; b12 = b11;
 for i = 1:3
     % \phi  (11,22,12)
     DD = 3*Dquad(i,i)-2*Dtri(i,i,i)+2*Dtri(1,2,3);
@@ -47,19 +47,19 @@ for i = 1:3
     b22(:,i,:) = DD(:,:,2);
     b12(:,i,:) = DD(:,:,3);
     % \psi (11,22,12)
-    cc1(:,:,1) = repmat(c1,1,nI);      cc1(:,:,2) = cc1(:,:,1); cc1(:,:,3) = cc1(:,:,1);
-    cc2(:,:,1) = repmat(c2,1,nI);      cc2(:,:,2) = cc2(:,:,1); cc2(:,:,3) = cc2(:,:,1);
-    cc3(:,:,1) = repmat(c3(:,i),1,nI); cc3(:,:,2) = cc3(:,:,1); cc3(:,:,3) = cc3(:,:,1);
-    cc4(:,:,1) = repmat(c4(:,i),1,nI); cc4(:,:,2) = cc4(:,:,1); cc4(:,:,3) = cc4(:,:,1);
+    cc1(:,:,1) = repmat(c1,1,nQuad);      cc1(:,:,2) = cc1(:,:,1); cc1(:,:,3) = cc1(:,:,1);
+    cc2(:,:,1) = repmat(c2,1,nQuad);      cc2(:,:,2) = cc2(:,:,1); cc2(:,:,3) = cc2(:,:,1);
+    cc3(:,:,1) = repmat(c3(:,i),1,nQuad); cc3(:,:,2) = cc3(:,:,1); cc3(:,:,3) = cc3(:,:,1);
+    cc4(:,:,1) = repmat(c4(:,i),1,nQuad); cc4(:,:,2) = cc4(:,:,1); cc4(:,:,3) = cc4(:,:,1);
     DD = cc1.*Dtri(i,i,2)+ cc2.*Dtri(i,i,1) + cc3.*Dquad(i,i) + cc4.*Dtri(1,2,3);
     b11(:,3+i,:) = DD(:,:,1);
     b22(:,3+i,:) = DD(:,:,2);
     b12(:,3+i,:) = DD(:,:,3);
     % \zeta (11,22,12)
-    dd1(:,:,1) = repmat(d1,1,nI);      dd1(:,:,2) = dd1(:,:,1); dd1(:,:,3) = dd1(:,:,1);
-    dd2(:,:,1) = repmat(d2,1,nI);      dd2(:,:,2) = dd2(:,:,1); dd2(:,:,3) = dd2(:,:,1);
-    dd3(:,:,1) = repmat(d3(:,i),1,nI); dd3(:,:,2) = dd3(:,:,1); dd3(:,:,3) = dd3(:,:,1);
-    dd4(:,:,1) = repmat(d4(:,i),1,nI); dd4(:,:,2) = dd4(:,:,1); dd4(:,:,3) = dd4(:,:,1);
+    dd1(:,:,1) = repmat(d1,1,nQuad);      dd1(:,:,2) = dd1(:,:,1); dd1(:,:,3) = dd1(:,:,1);
+    dd2(:,:,1) = repmat(d2,1,nQuad);      dd2(:,:,2) = dd2(:,:,1); dd2(:,:,3) = dd2(:,:,1);
+    dd3(:,:,1) = repmat(d3(:,i),1,nQuad); dd3(:,:,2) = dd3(:,:,1); dd3(:,:,3) = dd3(:,:,1);
+    dd4(:,:,1) = repmat(d4(:,i),1,nQuad); dd4(:,:,2) = dd4(:,:,1); dd4(:,:,3) = dd4(:,:,1);
     DD = dd1.*Dtri(i,i,2) + dd2.*Dtri(i,i,1) + dd3.*Dquad(i,i) + dd4.*Dtri(1,2,3);
     b11(:,6+i,:) = DD(:,:,1);
     b22(:,6+i,:) = DD(:,:,2);
@@ -70,7 +70,7 @@ end
 K = zeros(NT,Ndof^2); s = 1; 
 for i = 1:Ndof
     for j = 1:Ndof
-        for p = 1:nI
+        for p = 1:nQuad
             Kp = b11(:,i,p).*b11(:,j,p) + b22(:,i,p).*b22(:,j,p) ...
                 + nu*(b11(:,i,p).*b22(:,j,p) + b22(:,i,p).*b11(:,j,p)) ...
                 + 2*(1-nu)*b12(:,i,p).*b12(:,j,p);
@@ -84,7 +84,7 @@ K = repmat(D*area,1,Ndof^2).*K;
 %% Second stiffness matrix and load vector 
 G = zeros(NT,Ndof^2); F = zeros(NT,Ndof); 
 if isnumeric(para.c), cf = @(xy) para.c+0*xy(:,1); end
-for p = 1:nI
+for p = 1:nQuad
     % quadrature points in the x-y coordinate
     pxy = lambda(p,1)*node(elem(:,1),:) ...
         + lambda(p,2)*node(elem(:,2),:) ...
@@ -138,27 +138,25 @@ w(freeDof) = kk(freeDof,freeDof)\ff(freeDof);
 
 end
 
-function Dquad = quadbasis(i,j,Dphi,lambda)
-
-    % second derivative of lambda_i*lambda_j
-    NT = size(Dphi,1); nI = size(lambda,1);
-    Dquad = zeros(NT,nI,3); % [11,22,12]
-    Dquad(1:NT,:,1) = repmat(2*Dphi(:,1,i).*Dphi(:,1,j),1,nI);
-    Dquad(1:NT,:,2) = repmat(2*Dphi(:,2,i).*Dphi(:,2,j),1,nI);
-    Dquad(1:NT,:,3) = repmat((Dphi(:,1,i).*Dphi(:,2,j) + Dphi(:,2,i).*Dphi(:,1,j)), 1,nI);
+function Dquad = quadbasis(i,j,Dlambda,lambda)
+ % second derivative of lambda_i*lambda_j
+    NT = size(Dlambda,1); nQuad = size(lambda,1);
+    Dquad = zeros(NT,nQuad,3); % [11,22,12]
+    Dquad(1:NT,:,1) = repmat(2*Dlambda(:,1,i).*Dlambda(:,1,j),1,nQuad);
+    Dquad(1:NT,:,2) = repmat(2*Dlambda(:,2,i).*Dlambda(:,2,j),1,nQuad);
+    Dquad(1:NT,:,3) = repmat((Dlambda(:,1,i).*Dlambda(:,2,j) + Dlambda(:,2,i).*Dlambda(:,1,j)), 1,nQuad);
 end
 
-function Dtri =  tribasis(i,j,k,Dphi,lambda)
-
-    % second derivative of lambda_i*lambda_j*lambda_k
-    NT = size(Dphi,1); nI = size(lambda,1);
-    Dtri = zeros(NT,nI,3); % [11,22,12]
+function Dtri =  tribasis(i,j,k,Dlambda,lambda)
+% second derivative of lambda_i*lambda_j*lambda_k
+    NT = size(Dlambda,1); nQuad = size(lambda,1);
+    Dtri = zeros(NT,nQuad,3); % [11,22,12]
     ss  = [1 2 1]; tt = [1 2 2]; 
     for m = 1:3  % loop for [11,22,12]
         s = ss(m); t = tt(m);
-        b1 = (Dphi(:,s,i).*Dphi(:,t,j)+Dphi(:,t,i).*Dphi(:,s,j))*lambda(:,k)';
-        b2 = (Dphi(:,s,j).*Dphi(:,t,k)+Dphi(:,t,j).*Dphi(:,s,k))*lambda(:,i)';
-        b3 = (Dphi(:,s,i).*Dphi(:,t,k)+Dphi(:,t,i).*Dphi(:,s,k))*lambda(:,j)';
+        b1 = (Dlambda(:,s,i).*Dlambda(:,t,j)+Dlambda(:,t,i).*Dlambda(:,s,j))*lambda(:,k)';
+        b2 = (Dlambda(:,s,j).*Dlambda(:,t,k)+Dlambda(:,t,j).*Dlambda(:,s,k))*lambda(:,i)';
+        b3 = (Dlambda(:,s,i).*Dlambda(:,t,k)+Dlambda(:,t,i).*Dlambda(:,s,k))*lambda(:,j)';
         Dtri(1:NT,:,m) = b1 + b2 + b3; 
     end
 end

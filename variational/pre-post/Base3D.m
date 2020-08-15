@@ -4,6 +4,8 @@ function w = Base3D(wStr,node,elem,Vh,quadOrder)
 %  w = {w1,w2, ..., wn}, where n is the number of the basis functions
 %  wi is a matrix of size NT*nG, where NT and nG are the numbers of
 %  3D elements and quadrature points
+%
+% Copyright (C) Terence Yu.
 
 if nargin == 3, Vh = 'P1'; quadOrder = 3; end % default: P1
 if nargin == 4, quadOrder = 3; end

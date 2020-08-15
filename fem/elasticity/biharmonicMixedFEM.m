@@ -56,7 +56,8 @@ for p = 1:nG
     % load vector
     F = F + weight(p)*pde.f(pxy)*lambda(p,:);
 end
-A = -repmat(area,1,Ndof^2).*A; F = repmat(area,1,Ndof).*F;
+A = -repmat(area,1,Ndof^2).*A; 
+F = repmat(area,1,Ndof).*F;
 
 %% Assemble stiffness matrix and load vector
 ss11 = A(:);  ss12 = B(:);  B1 = B(:,[1 4 7 2 5 8 3 6 9]);
@@ -65,7 +66,6 @@ ii = [ii11; ii12; ii21];
 jj = [jj11; jj12; jj21];
 ss = [ss11; ss12; ss21];
 kk = sparse(ii,jj,ss,2*N,2*N);
-
 ff = accumarray(elem(:)+N, F(:),[2*N 1]);
 
 %% Assemble Neumann boundary conditions

@@ -4,6 +4,7 @@ function varargout = assem1d(Th,Coef,Test,Trial,Vh,quadOrder)
 % The key subroutine of int1d.m
 % FE space: Vh --> (v,u) --> ( Vh{1}, Vh{2} )
 %
+% Copyright (C) Terence Yu.
 
 %% Preparation for the input
 % default para

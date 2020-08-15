@@ -1,5 +1,7 @@
 function [elem2dof,Ndof,NNdof] = dof1d(Th,Vh)
 %% DOF1D returns elem2dof for assembling 1D part
+%
+% Copyright (C) Terence Yu.
 
 %% Mesh information
 bdType = 2;

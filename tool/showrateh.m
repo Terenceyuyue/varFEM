@@ -2,7 +2,7 @@ function showrateh(h,varargin)
 %showrateh displays convergence rates of an err sequence
 %
 %  e.g. showrateh(h,ErrL2,ErrH1,ErrH2,ErrI)
-%
+%       showrateh(h,ErrL2,'||u-uh||');
 % Copyright (C) Terence Yu.
 
 %% Determine number of Err

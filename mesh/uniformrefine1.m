@@ -1,6 +1,6 @@
 function [node,elem] = uniformrefine1(node,elem)
-%uniformrefine uniformly refines a 1-D line segments.
-
+%uniformrefine1 uniformly refines a 1-D line segments.
+%
 % Copyright (C) Terence Yu.
 
 N = size(node,1); nel = size(elem,1); np = 2;

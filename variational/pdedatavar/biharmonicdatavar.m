@@ -6,6 +6,8 @@ function pde = biharmonicdatavar
 %     w = -Delta u = 8*pi^2*sin(2*pi*x)*cos(2*pi*y);
 %     du/dn = g_N on [0,1]^2.
 %
+% Copyright (C) Terence Yu.
+
 pde = struct('f',@f,'exactu',@exactu,'Du',@Du,'exactw',@exactw,'Dw',@Dw,...
     'g_D',@g_D);
 

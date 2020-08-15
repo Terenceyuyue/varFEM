@@ -1,5 +1,7 @@
 function [elem2dof,Ndof,NNdof] = dof3d(Th,Vh)
 %% DOF3D returns elem2dof for assembling 3D part
+%
+% Copyright (C) Terence Yu.
 
 %% P1-Lagrange
 if strcmpi(Vh, 'P1') 

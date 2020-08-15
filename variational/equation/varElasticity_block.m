@@ -6,6 +6,8 @@ function u = varElasticity_block(Th,pde,Vh,quadOrder)
 %       Dirichlet boundary condition u = [g1_D, g2_D] on \Gamma_D
 %       Neumann boundary condition   \sigma*n = g  on \Gamma_N
 %       \sigma = (sigma_{ij}): stress tensor, 1<=i,j<=2
+%
+% Copyright (C) Terence Yu.
 
 % Quadrature orders for int1d and int2d
 if nargin==2, Vh = 'P1'; quadOrder = 3; end % default: P1

@@ -27,13 +27,13 @@ area = a.*b;
 [lambda,weight] = quadpts1(5);
 xx = (2*lambda(:,1)-1)';  % each row corresponds to an element
 ww = weight;
-nr = length(ww); nI = nr^2;
+nr = length(ww); nQuad = nr^2;
 xi = reshape(repmat(xx',nr,1),1,[]);
 eta = reshape(ones(nr,1)*xx,1,[]);
 weight = reshape(ww'*ww,1,[]);
 
 %% second derivatives of basis functions
-b11 = zeros(NT,Ndof,nI); b22 = b11; b12 = b11;
+b11 = zeros(NT,Ndof,nQuad); b22 = b11; b12 = b11;
 for i = 1:4
     % \phi
     b11(:,i,:) = -3./a.^2*(xiv(i)*xi.*(1+etav(i)*eta));
@@ -54,7 +54,7 @@ K = zeros(NT,Ndof^2);
 s = 1;
 for i = 1:Ndof
     for j = 1:Ndof
-        for p = 1:nI
+        for p = 1:nQuad
             Kp = b11(:,i,p).*b11(:,j,p) + b22(:,i,p).*b22(:,j,p) ...
                 + nu*(b11(:,i,p).*b22(:,j,p) + b22(:,i,p).*b11(:,j,p)) ...
                 + 2*(1-nu)*b12(:,i,p).*b12(:,j,p);
@@ -69,7 +69,7 @@ K = repmat(D*(area)./4,1,Ndof^2).*K;
 G = zeros(NT,Ndof^2); F = zeros(NT,Ndof);
 if isnumeric(para.c), cf = @(xy) para.c+0*xy(:,1); end
 x0 = (x1+x2)./2; y0 = (y1+y4)./2;
-for p = 1:nI
+for p = 1:nQuad
     % quadrature points in the x-y coordinate
     x = a*xi(p)/2 + x0; y = b*eta(p)/2 + y0;
     pxy = [x,y];

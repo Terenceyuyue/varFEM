@@ -1,4 +1,6 @@
 function pde = Poissondata3var
+%
+% Copyright (C) Terence Yu.
 
 % --------- given by the symbolic computation ------
 [af,cf,u,ux,uy,uz,rhs] = compute_rhs;

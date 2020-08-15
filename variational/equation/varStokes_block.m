@@ -4,6 +4,8 @@ function [uh,ph] = varStokes_block(Th,pde,Vh,quadOrder)
 %       u = [u1, u2]
 %       -div(mu*grad u) + grad p = f in \Omega,
 %       Dirichlet boundary condition u = [g1_D, g2_D] on \Gamma
+%
+% Copyright (C) Terence Yu.
 
 % Quadrature orders for int1d and int2d
 if nargin==2, Vh = {'P2','P2','P1'}; quadOrder = 3; end % default: Taylor-Hood

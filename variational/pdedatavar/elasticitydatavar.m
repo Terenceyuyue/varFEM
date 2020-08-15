@@ -1,4 +1,6 @@
 function pde = elasticitydatavar(para)
+%
+% Copyright (C) Terence Yu.
 
 % ------ Lame constants ------
 if nargin == 0

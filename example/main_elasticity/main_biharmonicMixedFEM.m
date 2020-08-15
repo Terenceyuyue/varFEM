@@ -39,9 +39,9 @@ end
 %% Plot convergence rates and display error table
 figure(2);
 subplot(1,2,1);
-showrateh(h, erruL2, erruH1, '|| u - u_h||', '|u - u_h|_1');
+showrateh(h, erruL2, erruH1, '||u - u_h||', '|u - u_h|_1');
 subplot(1,2,2)
-showrateh(h, errwL2, errwH1, '|| w - w_h||', '|w - w_h|_1');    
+showrateh(h, errwL2, errwH1, '||w - w_h||', '|w - w_h|_1');    
 
 fprintf('\n');
 disp('Table: Error')

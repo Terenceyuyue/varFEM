@@ -6,6 +6,7 @@ function varargout = assem3d(Th,Coef,Test,Trial,Vh,quadOrder)
 % Note: For programming in terms of block matrix, use assem3d.m rather than
 % int3d.m
 %
+% Copyright (C) Terence Yu.
 
 %% Preparation for the input
 % default para

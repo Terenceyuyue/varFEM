@@ -1,5 +1,7 @@
 function u = Applyboundary1D(Th,A,b,pde)
 %% APPLYBOUNDARY1D deals with the Neumann and Dirichlet boundary conditions of 1D problems
+%
+% Copyright (C) Terence Yu.
 
 % NNdof
 node = Th.node;  elem = Th.elem;

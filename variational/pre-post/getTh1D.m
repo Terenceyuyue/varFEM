@@ -1,6 +1,7 @@
 function Th = getTh1D(node,elem,bdNeumann)
 %% GETTH1D gets 1D mesh information
-
+%
+% Copyright (C) Terence Yu.
 
 % node, elem1D
 Th.node = node; Th.elem = elem; 

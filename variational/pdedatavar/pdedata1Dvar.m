@@ -1,4 +1,6 @@
 function pde = pdedata1Dvar
+%
+% Copyright (C) Terence Yu.
 
 % --------- given by the symbolic computation ------
 [af,bf,cf,u,ux,rhs] = compute_rhs;

@@ -1,5 +1,7 @@
 function [elem2dof,Ndof,NNdof] = dof2d(Th,Vh)
 %% DOF2D returns elem2dof for assembling 2D part
+%
+% Copyright (C) Terence Yu.
 
 %% Mesh information
 bdType = 2;
@@ -77,4 +79,26 @@ if  strcmpi(Vh, 'P3')
         elem2dof = [elem, elema, elemb, (1:NT)'+N+2*NE];
     end
     % P3-Lagrange is not provided in 3-D
+end
+
+%% Morley
+if  strcmpi(Vh, 'Morley')
+    if size(node,2) == 2 % 2-D
+        % auxstructure
+        N = Th.N; NE = Th.NE;
+        elem2edge = Th.elem2edge;
+        % d.o.f. numbers
+        Ndof = 6; NNdof = N + NE;
+        % local --> global
+        elem2dof = [elem, elem2edge+N];
+    end
+end
+
+%% Morley
+if  strcmpi(Vh, 'Zienkiewicz')
+    if size(node,2) == 2 % 2-D
+       N = size(node,1); 
+       Ndof = 9; NNdof = 3*N;
+       elem2dof = [elem, elem+N, elem+2*N];
+    end
 end

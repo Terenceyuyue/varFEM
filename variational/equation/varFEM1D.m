@@ -4,6 +4,8 @@ function uh = varFEM1D(Th,pde,Vh,quadOrder)
 %     -au'' + bu' + cu = f  in \Omega = (a,b), with
 %     Dirichlet boundary condition u = g_D  on \Gamma_D = {a}, {b} or {a,b},
 %     Neumann boundary condition   u = u' on \Gamma_N = {a,b} - \Gamma_D
+%
+% Copyright (C) Terence Yu.
 
 % Quadrature orders for int1d and int2d
 if nargin==2, Vh = 'P1'; quadOrder = 3; end % default: P1

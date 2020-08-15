@@ -15,6 +15,8 @@ function [u,w] = varBiharmonicMixedFEM(Th,pde,Vh,quadOrder)
 
 % The rate of convergence for u is optimal but for w is sub-optimal. For
 % linear element, optimal order for w is also observed.
+%
+% Copyright (C) Terence Yu.
 
 if nargin==2, Vh = repmat({'P1'},1,2); quadOrder = 3; end
 if nargin==3, quadOrder = 3; end

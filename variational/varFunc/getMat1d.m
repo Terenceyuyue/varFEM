@@ -4,6 +4,7 @@ function Cmat = getMat1d(fun,Th,quadOrder)
 %  This function is designed to deal with the terms containing normal
 %  vector, for example, fun = pde.Du*n
 %
+% Copyright (C) Terence Yu.
 
 if nargin==2, quadOrder = 3; end
 

@@ -20,8 +20,7 @@ for k = 1:maxIt
     % set boundary
     bdStruct = setboundary(node,elem);
     % solve the equation
-    w = PlateBendingAdini(node,elem,pde,bdStruct); % sign basis functions
-    %w = PlateBendingMorley(node,elem,pde,bdStruct); % sign edges
+    w = PlateBendingAdini(node,elem,pde,bdStruct); 
     % record
     NT(k) = length(w);
     h(k) = 1/(sqrt(size(node,1))-1);
@@ -36,7 +35,7 @@ end
 
 %% Plot convergence rates and display error table
 figure(2);
-showrateh(h,ErrL2);
+showrateh(h,ErrL2,'||w-w_h||');
 
 %% Conclusion
 %

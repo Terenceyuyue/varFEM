@@ -20,7 +20,7 @@ g_R = @(p) 1 + p(:,1) + p(:,2); % 1 + x + y
 pde.g_R = g_R;
 
 %% Finite Element Method
-Vh = 'P1';
+Vh = 'P2';
 if strcmpi(Vh,'P1'), quadOrder = 3; end
 if strcmpi(Vh,'P2'), quadOrder = 4; end
 if strcmpi(Vh,'P3'), quadOrder = 5; end

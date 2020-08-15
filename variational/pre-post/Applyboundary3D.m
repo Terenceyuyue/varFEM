@@ -5,6 +5,7 @@ function u = Applyboundary3D(Th,A,b,g_D,Vh)
 %Ex2: g_D = { g_D1, g_D2, g_D3 } % (u1,u2,u3)
 %Ex3: g_D = { [], [], g_D3 }
 %
+% Copyright (C) Terence Yu.
 
 %% input
 if nargin==4, Vh = {'P1'}; end  % default: P1

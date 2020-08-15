@@ -1,5 +1,7 @@
 function Th = getTh3D(node,elem,bdNeumann)
 %% GETTH3D gets 3D mesh information
+%
+% Copyright (C) Terence Yu.
 
 if nargin==2, bdNeumann = []; end
 

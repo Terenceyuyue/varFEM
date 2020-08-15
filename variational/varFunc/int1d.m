@@ -4,6 +4,7 @@ function [output,varargout] = int1d(Th,Coef,Test,Trial,Vh,quadOrder)
 % Vh --> (v1,v2,v3) or (u1,u2,u3) --> { 'P2','P2','P1' }
 % vi and ui are in the same FE spaces for i = 1,2,3
 %
+% Copyright (C) Terence Yu.
 
 %% Default input for FE space and quadrature order
 if nargin == 3,  Trial = []; Vh = {'P1'}; quadOrder = 3; end  % linear part: Trial = []

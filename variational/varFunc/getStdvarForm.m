@@ -8,6 +8,7 @@ function [Test,Trial] = getStdvarForm(vstr, ustr, Test, Trial)
 % Test  = {'v1.grad', 'v2.grad', 'v1.dx',  'v2.dy',  'q.val', 'q.val', 'q.val'};
 % Trial = {'u1.grad', 'u2.grad', 'p.val',  'p.val', 'u1.dx',  'u2.dy',  'p.val'};
 %
+% Copyright (C) Terence Yu.
 
 for i = 1:length(vstr)
     vi = sprintf('v%d',i);  ui = sprintf('u%d',i);

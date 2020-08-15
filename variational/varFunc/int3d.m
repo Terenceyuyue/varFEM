@@ -4,6 +4,7 @@ function [output,varargout] = int3d(Th,Coef,Test,Trial,Vh,quadOrder)
 % Vh --> (v1,v2,v3) or (u1,u2,u3) --> { 'P2','P2','P1' }
 % vi and ui are in the same FE space
 %
+% Copyright (C) Terence Yu.
 
 %% Preparation for the input
 % default para

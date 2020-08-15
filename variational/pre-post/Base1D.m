@@ -4,6 +4,8 @@ function w = Base1D(wStr,node,elem,Vh,quadOrder)
 %  w = {w1,w2, ..., wn}, where n is the number of the basis functions
 %  wi is a matrix of size nel*ng, where nel and ng are the numbers of
 %  1D elements and quadrature points
+%
+% Copyright (C) Terence Yu.
 
 if nargin == 3, Vh = []; quadOrder = 3; end % default: P1
 if nargin == 4, quadOrder = 3; end

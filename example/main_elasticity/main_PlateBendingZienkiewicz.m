@@ -7,7 +7,7 @@ ErrL2 = zeros(maxIt,1);
 
 %% Generate an initial mesh
 a1 = 0; b1 = 1; a2 = 0; b2 = 1;
-Nx = 4; Ny = 4; h1 = (b1-a1)/Nx; h2 = (b2-a2)/Ny;
+Nx = 5; Ny = 5; h1 = (b1-a1)/Nx; h2 = (b2-a2)/Ny;
 [node,elem] = squaremesh([a1 b1 a2 b2],h1,h2);
 
 %% Get the PDE data
@@ -20,8 +20,7 @@ for k = 1:maxIt
     % set boundary
     bdStruct = setboundary(node,elem);
     % solve the equation
-    w = PlateBendingZienkiewicz(node,elem,pde,bdStruct); % sign basis functions
-    %w = PlateBendingMorley(node,elem,pde,bdStruct); % sign edges
+    w = PlateBendingZienkiewicz(node,elem,pde,bdStruct);
     % record
     NT(k) = length(w);
     h(k) = 1/(sqrt(size(node,1))-1);
@@ -36,7 +35,7 @@ end
 
 %% Plot convergence rates and display error table
 figure(2);
-showrateh(h,ErrL2);
+showrateh(h,ErrL2,'||w-w_h||');
 
 %% Conclusion
 %
