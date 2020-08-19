@@ -11,7 +11,7 @@ Nx = 4; Ny = 4; h1 = 1/Nx; h2 = 1/Ny;
 %% Get the PDE data
 pde = Poissondata_afem();
 
-%%  Adaptive Finite Element Method 
+%% Adaptive Finite Element Method 
 for k = 1:maxIt
     % Step 1: SOLVE
     bdStruct = setboundary(node,elem);
@@ -20,6 +20,7 @@ for k = 1:maxIt
     figure(1); 
     showresult(node,elem,pde.uexact,u);
     pause(0.05);
+    ErrL2 = getL2error(node,elem,pde.uexact,u)
     
     % Step 2: ESTIMATE
     eta = Poisson_indicator(node,elem,u,pde);

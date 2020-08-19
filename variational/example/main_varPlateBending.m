@@ -15,7 +15,7 @@ pde = PlateBendingData;
 
 %% Finite element method
 Vh = 'Morley'; 
-% Vh = 'Zienkiewicz';
+%Vh = 'Zienkiewicz';
 quadOrder = 3;
 for k = 1:maxIt
     % refine mesh

@@ -1,4 +1,4 @@
-function w = PlateBendingMorley(node,elem,pde,bdStruct)
+function [w,he] = PlateBendingMorley(node,elem,pde,bdStruct)
 %PlateBendingMorley solves plate bending problem using Morley element,
 % a complete quadratic triangular element, where,
 % the global sign is resolved by using signed stiffness matrix and load

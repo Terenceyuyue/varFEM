@@ -26,8 +26,7 @@ if mycontains(wStr,'.val')
     w4 = w1; w5 = w1; w6 = w1; w7 = w1; w8 = w1; w9 = w1;
     w = {w1,w2,w3,w4,w5,w7,w8,w9};
     for p = 1:nQuad
-        % basis functions at the p-th quadrture point
-        % basis functions at the p-th quadrture point
+        % basis functions at the p-th quadrature point
         base = zeros(NT,9);
         for i = 1:3
             % \phi
@@ -48,78 +47,87 @@ end
 
 %% u.dxx
 if mycontains(wStr,'.dxx')
-    w1 = zeros(NT,nQuad); w2 = w1; w3 = w1; 
-    w4 = w1; w5 = w1; w6 = w1; w7 = w1; w8 = w1; w9 = w1;
-    w = {w1,w2,w3,w4,w5,w7,w8,w9};    
+    w = cell(1,9);  
     for i = 1:3
-        % \phi 
-        DD = 3*Dquad(i,i)-2*Dtri(i,i,i)+2*Dtri(1,2,3);
+        % preparation
+        Dquadii = Dquad(i,i);
+        Dtriiii = Dtri(i,i,i);
+        Dtriii1 = Dtri(i,i,1); Dtriii2 = Dtri(i,i,2);
+        Dtri123 = Dtri(1,2,3);
+        % \phi
+        DD = 3*Dquadii-2*Dtriiii+2*Dtri123;
         w{i} = DD(:,:,1);
         % \psi
         cc1(:,:,1) = repmat(c1,1,nQuad);      cc1(:,:,2) = cc1(:,:,1); cc1(:,:,3) = cc1(:,:,1);
         cc2(:,:,1) = repmat(c2,1,nQuad);      cc2(:,:,2) = cc2(:,:,1); cc2(:,:,3) = cc2(:,:,1);
         cc3(:,:,1) = repmat(c3(:,i),1,nQuad); cc3(:,:,2) = cc3(:,:,1); cc3(:,:,3) = cc3(:,:,1);
         cc4(:,:,1) = repmat(c4(:,i),1,nQuad); cc4(:,:,2) = cc4(:,:,1); cc4(:,:,3) = cc4(:,:,1);
-        DD = cc1.*Dtri(i,i,2)+ cc2.*Dtri(i,i,1) + cc3.*Dquad(i,i) + cc4.*Dtri(1,2,3);
+        DD = cc1.*Dtriii2+ cc2.*Dtriii1 + cc3.*Dquadii + cc4.*Dtri123;
         w{3+i} = DD(:,:,1);
         % \zeta
         dd1(:,:,1) = repmat(d1,1,nQuad);      dd1(:,:,2) = dd1(:,:,1); dd1(:,:,3) = dd1(:,:,1);
         dd2(:,:,1) = repmat(d2,1,nQuad);      dd2(:,:,2) = dd2(:,:,1); dd2(:,:,3) = dd2(:,:,1);
         dd3(:,:,1) = repmat(d3(:,i),1,nQuad); dd3(:,:,2) = dd3(:,:,1); dd3(:,:,3) = dd3(:,:,1);
         dd4(:,:,1) = repmat(d4(:,i),1,nQuad); dd4(:,:,2) = dd4(:,:,1); dd4(:,:,3) = dd4(:,:,1);
-        DD = dd1.*Dtri(i,i,2) + dd2.*Dtri(i,i,1) + dd3.*Dquad(i,i) + dd4.*Dtri(1,2,3);
+        DD = dd1.*Dtriii2 + dd2.*Dtriii1 + dd3.*Dquadii + dd4.*Dtri123;
         w{6+i} = DD(:,:,1);
     end
 end
 
 %% u.dyy
 if mycontains(wStr,'.dyy')
-    w1 = zeros(NT,nQuad); w2 = w1; w3 = w1; 
-    w4 = w1; w5 = w1; w6 = w1; w7 = w1; w8 = w1; w9 = w1;
-    w = {w1,w2,w3,w4,w5,w7,w8,w9};    
+    w = cell(1,9);   
     for i = 1:3
-        % \phi 
-        DD = 3*Dquad(i,i)-2*Dtri(i,i,i)+2*Dtri(1,2,3);
+        % preparation
+        Dquadii = Dquad(i,i);
+        Dtriiii = Dtri(i,i,i);
+        Dtriii1 = Dtri(i,i,1); Dtriii2 = Dtri(i,i,2);
+        Dtri123 = Dtri(1,2,3);
+        % \phi
+        DD = 3*Dquadii-2*Dtriiii+2*Dtri123;
         w{i} = DD(:,:,2);
         % \psi
         cc1(:,:,1) = repmat(c1,1,nQuad);      cc1(:,:,2) = cc1(:,:,1); cc1(:,:,3) = cc1(:,:,1);
         cc2(:,:,1) = repmat(c2,1,nQuad);      cc2(:,:,2) = cc2(:,:,1); cc2(:,:,3) = cc2(:,:,1);
         cc3(:,:,1) = repmat(c3(:,i),1,nQuad); cc3(:,:,2) = cc3(:,:,1); cc3(:,:,3) = cc3(:,:,1);
         cc4(:,:,1) = repmat(c4(:,i),1,nQuad); cc4(:,:,2) = cc4(:,:,1); cc4(:,:,3) = cc4(:,:,1);
-        DD = cc1.*Dtri(i,i,2)+ cc2.*Dtri(i,i,1) + cc3.*Dquad(i,i) + cc4.*Dtri(1,2,3);
+        DD = cc1.*Dtriii2+ cc2.*Dtriii1 + cc3.*Dquadii + cc4.*Dtri123;
         w{3+i} = DD(:,:,2);
         % \zeta
         dd1(:,:,1) = repmat(d1,1,nQuad);      dd1(:,:,2) = dd1(:,:,1); dd1(:,:,3) = dd1(:,:,1);
         dd2(:,:,1) = repmat(d2,1,nQuad);      dd2(:,:,2) = dd2(:,:,1); dd2(:,:,3) = dd2(:,:,1);
         dd3(:,:,1) = repmat(d3(:,i),1,nQuad); dd3(:,:,2) = dd3(:,:,1); dd3(:,:,3) = dd3(:,:,1);
         dd4(:,:,1) = repmat(d4(:,i),1,nQuad); dd4(:,:,2) = dd4(:,:,1); dd4(:,:,3) = dd4(:,:,1);
-        DD = dd1.*Dtri(i,i,2) + dd2.*Dtri(i,i,1) + dd3.*Dquad(i,i) + dd4.*Dtri(1,2,3);
+        DD = dd1.*Dtriii2 + dd2.*Dtriii1 + dd3.*Dquadii + dd4.*Dtri123;
         w{6+i} = DD(:,:,2);
     end
 end
 
 %% u.dxy
 if mycontains(wStr,'.dxy')
-    w1 = zeros(NT,nQuad); w2 = w1; w3 = w1; 
-    w4 = w1; w5 = w1; w6 = w1; w7 = w1; w8 = w1; w9 = w1;
-    w = {w1,w2,w3,w4,w5,w7,w8,w9};    
+    w = cell(1,9);
     for i = 1:3
-        % \phi 
-        DD = 3*Dquad(i,i)-2*Dtri(i,i,i)+2*Dtri(1,2,3);
+        % preparation
+        Dquadii = Dquad(i,i);
+        Dtriiii = Dtri(i,i,i);
+        Dtriii1 = Dtri(i,i,1); Dtriii2 = Dtri(i,i,2);
+        Dtri123 = Dtri(1,2,3);
+        % \phi
+        DD = 3*Dquadii-2*Dtriiii+2*Dtri123;
         w{i} = DD(:,:,3);
         % \psi
         cc1(:,:,1) = repmat(c1,1,nQuad);      cc1(:,:,2) = cc1(:,:,1); cc1(:,:,3) = cc1(:,:,1);
         cc2(:,:,1) = repmat(c2,1,nQuad);      cc2(:,:,2) = cc2(:,:,1); cc2(:,:,3) = cc2(:,:,1);
         cc3(:,:,1) = repmat(c3(:,i),1,nQuad); cc3(:,:,2) = cc3(:,:,1); cc3(:,:,3) = cc3(:,:,1);
         cc4(:,:,1) = repmat(c4(:,i),1,nQuad); cc4(:,:,2) = cc4(:,:,1); cc4(:,:,3) = cc4(:,:,1);
-        DD = cc1.*Dtri(i,i,2)+ cc2.*Dtri(i,i,1) + cc3.*Dquad(i,i) + cc4.*Dtri(1,2,3);
+        DD = cc1.*Dtriii2+ cc2.*Dtriii1 + cc3.*Dquadii + cc4.*Dtri123;
         w{3+i} = DD(:,:,3);
         % \zeta
         dd1(:,:,1) = repmat(d1,1,nQuad);      dd1(:,:,2) = dd1(:,:,1); dd1(:,:,3) = dd1(:,:,1);
         dd2(:,:,1) = repmat(d2,1,nQuad);      dd2(:,:,2) = dd2(:,:,1); dd2(:,:,3) = dd2(:,:,1);
         dd3(:,:,1) = repmat(d3(:,i),1,nQuad); dd3(:,:,2) = dd3(:,:,1); dd3(:,:,3) = dd3(:,:,1);
         dd4(:,:,1) = repmat(d4(:,i),1,nQuad); dd4(:,:,2) = dd4(:,:,1); dd4(:,:,3) = dd4(:,:,1);
-        DD = dd1.*Dtri(i,i,2) + dd2.*Dtri(i,i,1) + dd3.*Dquad(i,i) + dd4.*Dtri(1,2,3);
+        DD = dd1.*Dtriii2 + dd2.*Dtriii1 + dd3.*Dquadii + dd4.*Dtri123;
         w{6+i} = DD(:,:,3);
     end
 end

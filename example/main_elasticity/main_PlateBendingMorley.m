@@ -20,18 +20,18 @@ for k = 1:maxIt
     % set boundary
     bdStruct = setboundary(node,elem);
     % solve the equation
-    w = PlateBendingMorley(node,elem,pde,bdStruct);  % signed basis functions
-    %w = PlateBendingMorley1(node,elem,pde,bdStruct); % signed edges
+    wh = PlateBendingMorley(node,elem,pde,bdStruct);  % signed basis functions
+    %wh = PlateBendingMorley1(node,elem,pde,bdStruct); % signed edges
     % record
-    NT(k) = length(w);
+    NT(k) = length(wh);
     h(k) = 1/(sqrt(size(node,1))-1);
     if NT(k)<2e3
         figure(1); 
-        showresult(node,elem,pde.uexact,w);
+        showresult(node,elem,pde.uexact,wh);
         pause(1);
     end
     % compute error
-    ErrL2(k) = getL2error_Morley(node,elem,pde.uexact,w);
+    ErrL2(k) = getL2error_Morley(node,elem,pde.uexact,wh);
 end
 
 %% Plot convergence rates and display error table

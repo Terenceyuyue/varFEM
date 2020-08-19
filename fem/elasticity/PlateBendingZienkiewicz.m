@@ -41,8 +41,13 @@ Dtri = @(i,j,k) tribasis(i,j,k,Dlambda,lambda);
 %% Second derivatives of basis functions
 b11 = zeros(NT,Ndof,nQuad); b22 = b11; b12 = b11;
 for i = 1:3
+    % preparation
+    Dquadii = Dquad(i,i);  
+    Dtriiii = Dtri(i,i,i);
+    Dtriii1 = Dtri(i,i,1); Dtriii2 = Dtri(i,i,2); 
+    Dtri123 = Dtri(1,2,3);
     % \phi  (11,22,12)
-    DD = 3*Dquad(i,i)-2*Dtri(i,i,i)+2*Dtri(1,2,3);
+    DD = 3*Dquadii-2*Dtriiii+2*Dtri123;
     b11(:,i,:) = DD(:,:,1);
     b22(:,i,:) = DD(:,:,2);
     b12(:,i,:) = DD(:,:,3);
@@ -51,7 +56,7 @@ for i = 1:3
     cc2(:,:,1) = repmat(c2,1,nQuad);      cc2(:,:,2) = cc2(:,:,1); cc2(:,:,3) = cc2(:,:,1);
     cc3(:,:,1) = repmat(c3(:,i),1,nQuad); cc3(:,:,2) = cc3(:,:,1); cc3(:,:,3) = cc3(:,:,1);
     cc4(:,:,1) = repmat(c4(:,i),1,nQuad); cc4(:,:,2) = cc4(:,:,1); cc4(:,:,3) = cc4(:,:,1);
-    DD = cc1.*Dtri(i,i,2)+ cc2.*Dtri(i,i,1) + cc3.*Dquad(i,i) + cc4.*Dtri(1,2,3);
+    DD = cc1.*Dtriii2+ cc2.*Dtriii1 + cc3.*Dquadii + cc4.*Dtri123;
     b11(:,3+i,:) = DD(:,:,1);
     b22(:,3+i,:) = DD(:,:,2);
     b12(:,3+i,:) = DD(:,:,3);
@@ -60,7 +65,7 @@ for i = 1:3
     dd2(:,:,1) = repmat(d2,1,nQuad);      dd2(:,:,2) = dd2(:,:,1); dd2(:,:,3) = dd2(:,:,1);
     dd3(:,:,1) = repmat(d3(:,i),1,nQuad); dd3(:,:,2) = dd3(:,:,1); dd3(:,:,3) = dd3(:,:,1);
     dd4(:,:,1) = repmat(d4(:,i),1,nQuad); dd4(:,:,2) = dd4(:,:,1); dd4(:,:,3) = dd4(:,:,1);
-    DD = dd1.*Dtri(i,i,2) + dd2.*Dtri(i,i,1) + dd3.*Dquad(i,i) + dd4.*Dtri(1,2,3);
+    DD = dd1.*Dtriii2 + dd2.*Dtriii1 + dd3.*Dquadii + dd4.*Dtri123;
     b11(:,6+i,:) = DD(:,:,1);
     b22(:,6+i,:) = DD(:,:,2);
     b12(:,6+i,:) = DD(:,:,3);
