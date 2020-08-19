@@ -97,7 +97,9 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
   
 ## Adaptive finite element method and Newest-node bisection
 
-   - The adpative finite element method (AFEM) is introduced for the Poisson equation and Morley plate bending element.  Each step was explained in detail, viz. the loops of the form: 
+   - The adpative finite element method (AFEM) is introduced for Poisson equation and Morley plate bending element.  
+   
+   - Each step was explained in detail, viz. the loops of the form: 
 
            SOLVE -> ESTIMATE -> MARK -> REFINE
 
