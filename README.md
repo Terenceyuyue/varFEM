@@ -104,7 +104,7 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
    - The newest-node bisection for the local mesh refinement was clearly stated thanks to the smart idea in iFEM.  
 The MATLAB codes are in fem/afem. 
 
-   - We present a unified framwork to compute the jump terms, which greatly reduces the complexity of program design. 
+   - **We present a unified framwork to compute the jump terms, which greatly reduces the complexity of program design.** 
 
 ## Multigrid V-cycle methods
 
