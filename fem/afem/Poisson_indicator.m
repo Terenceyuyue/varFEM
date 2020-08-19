@@ -35,9 +35,7 @@ sgnelem = sign([elem(:,3)-elem(:,2), ...
 elemRes = zeros(NT,1);
 for p = 1:length(weight)
     % quadrature points in the x-y coordinate
-    pxy = lambda(p,1)*node(elem(:,1),:) ...
-        + lambda(p,2)*node(elem(:,2),:) ...
-        + lambda(p,3)*node(elem(:,3),:);
+    pxy = lambda(p,1)*z1+lambda(p,2)*z2+lambda(p,3)*z3;
     fxy = pde.f(pxy);  
     elemRes = elemRes + weight(p)*fxy.^2;
 end
