@@ -97,13 +97,14 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
   
 ## Adaptive finite element method and Newest-node bisection
 
-The adpative finite element method (AFEM) is introduced for the Poisson equation with homogeneous Dirichlet 
-   conditions.  Each step was explained in detail, viz. the loops of the form: 
+   - The adpative finite element method (AFEM) is introduced for the Poisson equation and Morley plate bending element.  Each step was explained in detail, viz. the loops of the form: 
 
            SOLVE -> ESTIMATE -> MARK -> REFINE
 
-The newest-node bisection for the local mesh refinement was clearly stated thanks to the smart idea in iFEM.  
+   - The newest-node bisection for the local mesh refinement was clearly stated thanks to the smart idea in iFEM.  
 The MATLAB codes are in fem/afem. 
+
+   - We present a unified framwork to compute the jump terms, which greatly reduces the complexity of program design. 
 
 ## Multigrid V-cycle methods
 
