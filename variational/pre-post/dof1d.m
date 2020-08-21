@@ -78,3 +78,14 @@ if  strcmpi(Vh, 'P3')
         elem2dof = [elem1D, bdEdgeIdx1D+N, bdEdgeIdx1D+N+NE];
     end
 end
+
+%% Crouzeix-Raviart linear element
+if  strcmpi(Vh, 'CR')
+    if size(Th.node,2) == 2 % 2-D boundary conditions
+        % d.o.f. numbers
+        Ndof = 1; NNdof = Th.NE;
+        % elem2dof in 1-D inherited from 2-D
+        bdStruct = Th.bdStruct;
+        elem2dof = bdStruct.bdEdgeIdxN;
+    end    
+end

@@ -8,7 +8,7 @@ Nu = size(uh,1);
 % auxstructure
 auxT = auxstructure(node,elem);
 N = size(node,1);  NT = size(elem,1);  NE = size(auxT.edge,1);
-NP1 = N;    NP2 = N + NE;   NP3 = N + 2*NE + NT;    
+NP1 = N;    NP2 = N + NE;   NP3 = N + 2*NE + NT;  NCR = NE;  
 
 %% Default quadrature orders for different elements
 if ~exist('quadOrder','var')
@@ -18,7 +18,9 @@ if ~exist('quadOrder','var')
         case NP2    % piecewise quadratic function
             quadOrder = 4;     
         case NP3    % P3 element
-            quadOrder = 5;               
+            quadOrder = 5;
+        case NCR    % Crouzeix-Raviart linear element
+            quadOrder = 3; 
     end
 end
 
@@ -72,6 +74,12 @@ if Nu == NP3
     phi(:,8) = 9/2*lambda(:,3).*lambda(:,1).*(3*lambda(:,1)-1);
     phi(:,9) = 9/2*lambda(:,2).*lambda(:,1).*(3*lambda(:,2)-1);
     phi(:,10) = 27*lambda(:,1).*lambda(:,2).*lambda(:,3);
+end
+
+%% Crouzeix-Raviart linear element
+if Nu == NCR
+    elem2dof = auxT.elem2edge; % interpolant at vertices
+    phi = 1-2*lambda; % basis functions
 end
 
 Ndof = size(elem2dof,2);

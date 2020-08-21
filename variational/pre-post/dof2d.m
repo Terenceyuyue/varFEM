@@ -81,6 +81,16 @@ if  strcmpi(Vh, 'P3')
     % P3-Lagrange is not provided in 3-D
 end
 
+%% Crouzeix-Raviart linear element
+if strcmpi(Vh, 'CR')
+    if size(node,2) == 2 % 2-D
+        % d.o.f. numbers
+        Ndof = 3; NNdof = Th.NE;
+        % local --> global
+        elem2dof = Th.elem2edge;
+    end
+end
+
 %% Morley
 if  strcmpi(Vh, 'Morley')
     if size(node,2) == 2 % 2-D
@@ -94,7 +104,7 @@ if  strcmpi(Vh, 'Morley')
     end
 end
 
-%% Morley
+%% Zienkiewicz
 if  strcmpi(Vh, 'Zienkiewicz')
     if size(node,2) == 2 % 2-D
        N = size(node,1); 

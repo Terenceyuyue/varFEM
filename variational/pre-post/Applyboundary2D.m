@@ -95,8 +95,19 @@ if  strcmpi(Vh, 'P3')
     za = (2*node(bdEdgeD(:,1),:) + node(bdEdgeD(:,2),:))/3;
     zb = (node(bdEdgeD(:,1),:) + 2*node(bdEdgeD(:,2),:))/3;
     node2 = [ node(bdNodeIdx,:); za; zb];
-    bdval = g_D(node2);
-    
+    bdval = g_D(node2);    
+end
+
+%% Crouzeix-Raviart linear element
+if  strcmpi(Vh, 'CR')
+    NNdof = Th.NE;     
+    isBdDof = false(NNdof,1);
+    fixedNode = bdStruct.bdEdgeIdxD;
+    bdEdgeD = bdStruct.bdEdgeD;
+    isBdDof(fixedNode) = true;
+    bddof = (isBdDof);
+    zm = (node(bdEdgeD(:,1),:)+node(bdEdgeD(:,2),:))/2;
+    bdval = g_D(zm);
 end
 
 end
@@ -117,6 +128,11 @@ function [NNdof,Ndof] = dofnum2d(Th,Vh)
     %% P3-Lagrange
     if  strcmpi(Vh, 'P3') 
         Ndof = 10; NNdof = Th.N + 2*Th.NE + Th.NT;
+    end
+    
+    %% Crouzeix-Raviart linear element
+    if strcmpi(Vh, 'CR') 
+        Ndof = 3; NNdof = Th.NE;
     end
 
 end

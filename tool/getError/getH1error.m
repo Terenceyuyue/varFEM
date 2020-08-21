@@ -8,7 +8,7 @@ Nu = size(uh,1);
 % auxstructure
 auxT = auxstructure(node,elem);
 N = size(node,1);  NT = size(elem,1);  NE = size(auxT.edge,1);
-NP1 = N;    NP2 = N + NE;   NP3 = N + 2*NE + NT;    
+NP1 = N;   NP2 = N + NE;   NP3 = N + 2*NE + NT;  NCR = NE;
 
 %% Default quadrature orders for different elements
 if ~exist('quadOrder','var')
@@ -18,7 +18,9 @@ if ~exist('quadOrder','var')
         case NP2    % piecewise quadratic function
             quadOrder = 4;     
         case NP3    % P3 element
-            quadOrder = 5;               
+            quadOrder = 5;
+        case NCR    % Crouzeix-Raviart linear element
+            quadOrder = 3;
     end
 end
 
@@ -129,6 +131,22 @@ if Nu == NP3
         pz =  lambda(p,1)*z1 + lambda(p,2)*z2 + lambda(p,3)*z3;
         err = err + weight(p)*sum((Du(pz)-Duh).^2,2);
     end    
+end
+
+%% Crouzeix-Raviart linear element
+if Nu == NCR
+    % elementwise d.o.f.s
+    elem2dof = auxT.elem2edge;
+    % numerical gradient  (at p-th quadrature point)
+    Duh =  repmat(uh(elem2dof(:,1)),1,2).*(-2*Dlambda1) ...
+        +  repmat(uh(elem2dof(:,2)),1,2).*(-2*Dlambda2) ...
+        +  repmat(uh(elem2dof(:,3)),1,2).*(-2*Dlambda3);
+    % elementwise error
+    err = zeros(NT,1);
+    for p = 1:nQuad
+        pz =  lambda(p,1)*z1 + lambda(p,2)*z2 + lambda(p,3)*z3;
+        err = err + weight(p)*sum((Du(pz)-Duh).^2,2);
+    end
 end
 
 %% Modification

@@ -84,3 +84,16 @@ if  strcmpi(Vh, 'P3')
     end
     w = {w1,w2,w3,w4};
 end
+
+%% Crouzeix-Raviart linear element
+if  strcmpi(Vh, 'CR') || isempty(Vh)
+    % u.val
+    if mycontains(wStr,'.val') 
+        w1 = ones(nel,ng); % % phi1 = (1-2lambda1)|e = 1  at xp, p = 1,2,...        
+    end
+    % u.dx
+    if mycontains(wStr,'.dx') 
+        w1 = 0*Dlambda1;  w1 = repmat(w1,1,ng);
+    end
+    w = {w1};
+end
