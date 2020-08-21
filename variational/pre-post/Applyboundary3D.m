@@ -87,14 +87,14 @@ if  strcmpi(Vh, 'P2')
     N = Th.N;  NE = Th.NE;  NNdof = N + NE;    
     isBdDof = false(NNdof,1);
     
-    bdNodeDIdx = bdStruct.bdNodeDIdx;
-    bdEdgeDIdx = bdStruct.bdEdgeDIdx;
+    bdNodeIdxD = bdStruct.bdNodeIdxD;
+    bdEdgeIdxD = bdStruct.bdEdgeIdxD;
     bdEdgeD = bdStruct.bdEdgeD;
-    fixedNode = [bdNodeDIdx; bdEdgeDIdx+N];
+    fixedNode = [bdNodeIdxD; bdEdgeIdxD+N];
     isBdDof(fixedNode) = true;
     bddof = (isBdDof);
     
-    node2 = [node(bdNodeDIdx,:);
+    node2 = [node(bdNodeIdxD,:);
         (node(bdEdgeD(:,1),:) + node(bdEdgeD(:,2),:))/2];
     bdval = g_D(node2);
     
