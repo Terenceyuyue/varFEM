@@ -41,6 +41,11 @@ if  strcmpi(Vh, 'P3')
     Base2D_P3; % matlab script
 end
 
+%% Crouzeix-Raviart linear element
+if  strcmpi(Vh, 'CR')
+    Base2D_CR; % matlab script
+end
+
 %% Morley
 if  strcmpi(Vh, 'Morley')
     Base2D_Morley; % matlab script

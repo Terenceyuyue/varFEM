@@ -1,5 +1,5 @@
 function u = varElasticityNavier_block(Th,pde,Vh,quadOrder)
-%% VARELASTICITYNAVIER_BLOCK  Conforming P1 elements discretization of linear elasticity equation of Navier form
+%varElasticityNavier_block Conforming P1 elements discretization of linear elasticity equation of Navier form
 % variational formulation based programming in terms of block matrix
 %
 %       u = [u1, u2]

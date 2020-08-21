@@ -1,5 +1,5 @@
 function uh = varFEM1D(Th,pde,Vh,quadOrder)
-%% VARFEM1D solves the two-point boundary value problem
+%varFEM1D solves the two-point boundary value problem
 %
 %     -au'' + bu' + cu = f  in \Omega = (a,b), with
 %     Dirichlet boundary condition u = g_D  on \Gamma_D = {a}, {b} or {a,b},

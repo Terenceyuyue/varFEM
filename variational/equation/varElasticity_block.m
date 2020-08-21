@@ -1,5 +1,5 @@
 function u = varElasticity_block(Th,pde,Vh,quadOrder)
-%% VARELASTICITY_BLOCK  Conforming P1 FEM of linear elasticity equation 
+%varElasticity_block Conforming P1 FEM of linear elasticity equation 
 % variational formulation based programming in terms of block matrix
 %       u = [u1, u2]
 %       -div (sigma) = f in \Omega

@@ -1,6 +1,5 @@
 function [u,w] = varBiharmonicMixedFEM(Th,pde,Vh,quadOrder)
-%% VARBIHARMONICMIXEDFEM solves the biharmonic equation
-% using the variational formulation based programming.
+%varBiharmonicMixedFEM solves the biharmonic equation using the variational formulation based programming.
 %     Laplace^2 u = f;   
 %               u = g_D;
 %            Dn u = g_N.

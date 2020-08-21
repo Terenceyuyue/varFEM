@@ -10,6 +10,7 @@ allFace = [elem(:,[2 4 3]);elem(:,[1 3 4]);elem(:,[1 4 2]);elem(:,[1 2 3])];
 totalFace = sort(allFace,2);
 [~,i1] = unique(totalFace,'rows');
 [~,i2] = unique(totalFace(end:-1:1,:), 'rows');
+i2 = size(totalFace,1)+1-i2;
 bdFace = allFace(i1(i1==i2),:);  %counterclockwise bdFace
 
 %% Set up boundary faces
@@ -32,16 +33,30 @@ bdStruct.bdFace = bdFace;   % all boundary faces
 bdStruct.bdFaceD = bdFace(IdxD,:); % Dirichlet boundary faces
 bdStruct.bdFaceN = bdFace(~IdxD,:); % Neumann boundary faces
 bdFaceIdx = find(i1==i2);      % indices of all boundary faces
-bdStruct.bdFaceIdx = bdFaceIdx; 
+bdStruct.bdFaceIdx = bdFaceIdx;
 bdStruct.bdFaceIdxD = bdFaceIdx(IdxD); % indices of Dirichelt boundary faces
 bdStruct.bdFaceIdxN = bdFaceIdx(~IdxD); % indices of Neumann boundary faces
 
-%% Set up boundary edges
+%% edge, elem2edge
 % edge
 allEdge = [elem(:,[1,2]); elem(:,[1,3]); elem(:,[1,4]);
            elem(:,[2,3]); elem(:,[2,4]); elem(:,[3,4])];
 totalEdge = sort(allEdge,2);
-edge = unique(totalEdge,'rows');
+[edge,~,totalJ] = unique(totalEdge,'rows');
+NT = size(elem,1);
+elem2edge = reshape(totalJ, NT, 6);
+bdStruct.edge = edge;
+bdStruct.elem2edge = elem2edge;
+
+%% face2edge
+allFace2edge = [elem2edge(:,[6,4,5]);
+                elem2edge(:,[6,3,2]);
+                elem2edge(:,[5,1,3]);
+                elem2edge(:,[4,2,1])];
+face2edge = allFace2edge(i1,:);
+bdStruct.face2edge = face2edge;
+
+%% Set up boundary edges
 % initial as Dirichlet (true for Dirichlet, false for Neumann)
 nE = size(edge,1);
 Idx = true(nE,1);
@@ -57,6 +72,6 @@ if (nargin==2) || (~isempty(varargin{1}))
     end
 end
 
-bdStruct.bdEdgeD = edge(Idx,:); % Dirichlet boundary faces
+bdStruct.bdEdgeD = edge(Idx,:); % Dirichlet boundary edges
 bdStruct.bdNodeDIdx = unique(edge(Idx,:)); % Dirichlet boundary nodes
 bdStruct.bdEdgeDIdx = find(Idx);      % index of Dirichlet boundary edges

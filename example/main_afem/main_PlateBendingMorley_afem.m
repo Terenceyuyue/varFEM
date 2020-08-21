@@ -5,7 +5,7 @@ maxN = 1e4;     theta = 0.99;    maxIt = 100;
 a1 = 0; b1 = 1; a2 = 0; b2 = 1;
 
 %% Generate an initial mesh
-Nx = 2; Ny = 2; h1 = 1/Nx; h2 = 1/Ny;
+Nx = 4; Ny = 4; h1 = 1/Nx; h2 = 1/Ny;
 [node,elem] = squaremesh([a1 b1 a2 b2],h1,h2);
 
 %% Get the PDE data

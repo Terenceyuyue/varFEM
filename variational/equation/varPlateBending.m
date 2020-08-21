@@ -1,5 +1,5 @@
 function w = varPlateBending(Th,pde,Vh,quadOrder)
-%% varPlateBending solves plate bending problem using Morley or Zienkiewicz element.
+%varPlateBending solves plate bending problem using Morley or Zienkiewicz element.
 % 
 %       -D_{ij} M_{ij}(w) + cw = f in \Omega,
 %       Dirichlet boundary condition:

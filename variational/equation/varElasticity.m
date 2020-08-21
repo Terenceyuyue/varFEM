@@ -1,5 +1,5 @@
 function u = varElasticity(Th,pde,Vh,quadOrder)
-%% VARELASTICITY  Conforming Lagrange elements for linear elasticity equation 
+%varElasticity Conforming Lagrange elements for linear elasticity equation 
 % 
 % Variational formulation based programming
 %       u = [u1, u2]

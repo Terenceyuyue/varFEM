@@ -1,5 +1,5 @@
 function [u,w] = varBiharmonicMixedFEM_block(Th,pde)
-%% VARBIHARMONICMIXEDFEM_BLOCK  solves the biharmonic equation using the mixed FEM
+%varBiharmonicMixedFEM_block solves the biharmonic equation using the mixed FEM
 % variational formulation based programming in terms of block matrix
 %
 %     Laplace^2 u = f;   [a1,b1] * [a2,b2]

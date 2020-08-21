@@ -18,17 +18,13 @@ if strcmpi(Vh, 'P1')
         elem2dof = elem;
     end
     if size(node,2) == 3 % 3-D boundary conditions
-        % elem2dof in 3-D
-        elem2dof3 = dof3d(Th,Vh);
         % d.o.f. numbers
         N = Th.N;
         Ndof = 3; NNdof = N;
         % elem2dof in 2-D inherited from 3-D
-        bdFlag = Th.bdFlag;
-        elem2dof = [elem2dof3(bdFlag(:,1)==bdType, [2,3,4]);
-            elem2dof3(bdFlag(:,2)==bdType, [1,4,3]);
-            elem2dof3(bdFlag(:,3)==bdType, [1,2,4]);
-            elem2dof3(bdFlag(:,4)==bdType, [1,3,2])];
+        bdStruct = Th.bdStruct;
+        if bdType == 1, elem2dof = bdStruct.bdFaceD; end
+        if bdType == 2, elem2dof = bdStruct.bdFaceN; end
     end
 end
 
@@ -41,20 +37,26 @@ if  strcmpi(Vh, 'P2')
         N = Th.N; NE = Th.NE;
         Ndof = 6; NNdof = N + NE;
         % local --> global
-        elem2dof = [elem, elem2edge + N];
+        elem2dof = [elem, elem2edge+N];
     end
     if size(node,2) == 3 % 3-D boundary conditions
-        % elem2dof in 3-D
-        elem2dof3 = dof3d(Th,Vh);
         % d.o.f. numbers
         N = Th.N; NE = Th.NE;
         Ndof = 6; NNdof = N + NE;
         % elem2dof in 2-D inherited from 3-D
-        bdFlag = Th.bdFlag;
-        elem2dof = [elem2dof3(bdFlag(:,1)==bdType, [2,3,4,10,9,8]);
-            elem2dof3(bdFlag(:,2)==bdType, [1,4,3,10,6,7]);
-            elem2dof3(bdFlag(:,3)==bdType, [1,2,4,9,7,5]);
-            elem2dof3(bdFlag(:,4)==bdType, [1,3,2,8,5,6])];
+        bdStruct = Th.bdStruct;
+        if bdType == 1
+            bdFaceD = bdStruct.bdFaceD;
+            bdFaceIdxD = bdStruct.bdFaceIdxD;
+            bdFace2edgeD = Th.face2edge(bdFaceIdxD,:);
+            elem2dof = [bdFaceD, bdFace2edgeD+N];
+        end
+        if bdType == 2
+            bdFaceN = bdStruct.bdFaceN;
+            bdFaceIdxN = bdStruct.bdFaceIdxN;
+            bdFace2edgeN = Th.face2edge(bdFaceIdxN,:);
+            elem2dof = [bdFaceN, bdFace2edgeN+N];
+        end
     end
 end
 

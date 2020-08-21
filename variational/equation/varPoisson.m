@@ -1,5 +1,5 @@
 function uh = varPoisson(Th,pde,Vh,quadOrder)
-%% VARPOISSON Poisson equation: Pk Lagrange element (k<=3)
+%varPoisson Poisson equation: Pk Lagrange element (k<=3)
 
 %   This function produces the finite element approximation of the 
 %   Poisson equation

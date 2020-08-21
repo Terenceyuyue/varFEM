@@ -1,5 +1,5 @@
 function [uh,ph] = varStokes_block(Th,pde,Vh,quadOrder)
-%% VARSTOKES_BLOCK  Taylor-Hood (P2-P1) FEM for Stokes problem
+%varStokes_block Taylor-Hood (P2-P1) FEM for Stokes problem
 % variational formulation based programming in terms of block matrix
 %       u = [u1, u2]
 %       -div(mu*grad u) + grad p = f in \Omega,

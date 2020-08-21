@@ -1,5 +1,5 @@
 function [uh,ph] = varStokes(Th,pde,Vh,quadOrder)
-%% VARSTOKES Taylor-Hood (P2-P1) FEM for Stokes problem
+%varStokes Taylor-Hood (P2-P1) FEM for Stokes problem
 % variational formulation based programming
 %       u = [u1, u2]
 %       -div(mu*grad u) + grad p = f in \Omega,

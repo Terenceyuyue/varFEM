@@ -5,7 +5,7 @@ maxN = 1e4;     theta = 0.4;    maxIt = 100;
 a1 = 0; b1 = 1; a2 = 0; b2 = 1;
 
 %% Generate an initial mesh
-Nx = 4; Ny = 4; h1 = 1/Nx; h2 = 1/Ny;
+Nx = 5; Ny = 5; h1 = 1/Nx; h2 = 1/Ny;
 [node,elem] = squaremesh([a1 b1 a2 b2],h1,h2);
 
 %% Get the PDE data
@@ -20,7 +20,7 @@ for k = 1:maxIt
     figure(1); 
     showresult(node,elem,pde.uexact,u);
     pause(0.05);
-    ErrL2 = getL2error(node,elem,pde.uexact,u)
+    ErrL2(k) = getL2error(node,elem,pde.uexact,u);
     
     % Step 2: ESTIMATE
     eta = Poisson_indicator(node,elem,u,pde);
@@ -36,7 +36,7 @@ for k = 1:maxIt
         u = Poisson(node,elem,pde,bdStruct,option);
         setp = k
         break;
-    end
-    
+    end    
 end
-
+figure,
+plot(1:k,ErrL2,'k.-','linewidth',1);

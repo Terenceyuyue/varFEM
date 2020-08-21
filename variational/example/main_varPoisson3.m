@@ -10,7 +10,7 @@ errH1 = zeros(maxIt,1);
 
 %% Generate an intitial mesh
 [node,elem] = cubemesh([0 1 0 1 0 1],1);
-bdNeumann = 'abs(x-0)<1e-4';
+bdNeumann = 'abs(x-1)<1e-4';
 
 %% Get the data of the pde
 pde = Poissondata3var;
@@ -36,12 +36,12 @@ for k = 1:maxIt
     if N(k) < 2e4  % show mesh and solution for small size
         options.FaceAlpha = 1;
         figure(1);  
-        showmesh(node,elem,options);
-        pause(1);
+        showmesh(node,Th.elem,options);
+        pause(0.1);
     end
     % compute error    
-    errL2(k) = getL2error3(node,elem,pde.exactu,uh); 
-    errH1(k) = getH1error3(node,elem,pde.Du,uh);
+    errL2(k) = getL2error3(node,Th.elem,pde.exactu,uh); 
+    errH1(k) = getH1error3(node,Th.elem,pde.Du,uh);
 end
 
 %% Plot convergence rates and display error table
