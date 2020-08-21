@@ -34,9 +34,8 @@ for k = 1:maxIt
     N(k) = length(uh);
     h(k) = 1/(size(node,1)^(1/3)-1);
     if N(k) < 2e4  % show mesh and solution for small size
-        options.FaceAlpha = 1;
         figure(1);  
-        showmesh(node,Th.elem,options);
+        showresult3(node,elem,pde.exactu,uh);
         pause(0.1);
     end
     % compute error    

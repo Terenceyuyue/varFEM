@@ -58,10 +58,10 @@ allFace2edge = [elem2edge(:,[6,4,5]);  % face1
 face2edge = allFace2edge(i1,:);
 bdFace2edgeD = face2edge(bdFaceIdxD,:);
 bdFace2edgeN = face2edge(bdFaceIdxN,:);
+
 bdStruct.face2edge = face2edge;
 bdStruct.bdFace2edgeD = bdFace2edgeD;
 bdStruct.bdFace2edgeN = bdFace2edgeN;
-
 
 %% Set up boundary edges
 bdEdgeIdxD = unique(bdFace2edgeD);
