@@ -90,9 +90,11 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
   
   - **As in FreeFem, fundamental functions --- int1d.m, int2d.m and int3d.m are designed to match the variational formulation of the underlying PDEs. These functions can resolve both scalar and vectorial equations (see also assem1d.m, assem2d.m and assem3d.m).**
   
-  - At present, only Lagrange elements of order up to three are provided, including 1-D problems, Poisson equation, linear elasticity problem, mixed FEM of biharmonic equation and Stokes problem. 
+  - Lagrange elements of order up to three are provided, including 1-D problems, Poisson equation, linear elasticity problem, mixed FEM of biharmonic equation and Stokes problem. 
   
   - We remark that the current design can be adapted to find FEM solutions of most of the PDE problems.
+  
+  - Newly added elements: Crouzeix-Raviart linear element for Poisson equation in 2-D;  Morley and Zienkiewicz elements for plate bending problems (more information of the basis functions should be added).
 
   
 ## Adaptive finite element method and Newest-node bisection
