@@ -32,10 +32,12 @@ end
 bdStruct.bdFace = bdFace;   % all boundary faces
 bdStruct.bdFaceD = bdFace(IdxD,:); % Dirichlet boundary faces
 bdStruct.bdFaceN = bdFace(~IdxD,:); % Neumann boundary faces
-bdFaceIdx = find(i1==i2);      % indices of all boundary faces
+bdFaceIdx = find(i1==i2);      % index of all boundary faces
+bdFaceIdxD = bdFaceIdx(IdxD); % index of Dirichelt boundary faces
+bdFaceIdxN = bdFaceIdx(~IdxD); % index of Neumann boundary faces
 bdStruct.bdFaceIdx = bdFaceIdx;
-bdStruct.bdFaceIdxD = bdFaceIdx(IdxD); % indices of Dirichelt boundary faces
-bdStruct.bdFaceIdxN = bdFaceIdx(~IdxD); % indices of Neumann boundary faces
+bdStruct.bdFaceIdxD = bdFaceIdxD;
+bdStruct.bdFaceIdxN = bdFaceIdxN;
 
 %% edge, elem2edge
 % edge
@@ -49,29 +51,22 @@ bdStruct.edge = edge;
 bdStruct.elem2edge = elem2edge;
 
 %% face2edge
-allFace2edge = [elem2edge(:,[6,4,5]);
-                elem2edge(:,[6,3,2]);
-                elem2edge(:,[5,1,3]);
-                elem2edge(:,[4,2,1])];
+allFace2edge = [elem2edge(:,[6,4,5]);  % face1
+                elem2edge(:,[6,3,2]);  % face2
+                elem2edge(:,[5,1,3]);  % face3
+                elem2edge(:,[4,2,1])]; % face4
 face2edge = allFace2edge(i1,:);
+bdFace2edgeD = face2edge(bdFaceIdxD,:);
+bdFace2edgeN = face2edge(bdFaceIdxN,:);
 bdStruct.face2edge = face2edge;
+bdStruct.bdFace2edgeD = bdFace2edgeD;
+bdStruct.bdFace2edgeN = bdFace2edgeN;
+
 
 %% Set up boundary edges
-% initial as Dirichlet (true for Dirichlet, false for Neumann)
-nE = size(edge,1);
-Idx = true(nE,1);
-nodeEdge = (node(edge(:,1),:) + node(edge(:,2),:))/2;
-x = nodeEdge(:,1); y = nodeEdge(:,2); z = nodeEdge(:,3); %#ok<NASGU>
-nvar = length(varargin); % 1 * size(varargin,2)
-% note that length(varargin) = 1 for bdNeumann = [] or ''
-if (nargin==2) || (~isempty(varargin{1})) 
-    for i = 1:nvar 
-        bdNeumann = varargin{i};
-        id = eval(bdNeumann);
-        Idx(id) = false;
-    end
-end
+bdEdgeIdxD = unique(bdFace2edgeD);
+bdEdgeD = edge(bdEdgeIdxD,:);
 
-bdStruct.bdEdgeD = edge(Idx,:); % Dirichlet boundary edges
-bdStruct.bdNodeDIdx = unique(edge(Idx,:)); % Dirichlet boundary nodes
-bdStruct.bdEdgeDIdx = find(Idx);      % index of Dirichlet boundary edges
+bdStruct.bdEdgeD = bdEdgeD; % Dirichlet boundary edges
+bdStruct.bdNodeIdxD = unique(bdEdgeD); % Dirichlet boundary nodes
+bdStruct.bdEdgeIdxD = bdEdgeIdxD;      % index of Dirichlet boundary edges
