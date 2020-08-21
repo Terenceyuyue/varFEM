@@ -47,14 +47,12 @@ if  strcmpi(Vh, 'P2')
         bdStruct = Th.bdStruct;
         if bdType == 1
             bdFaceD = bdStruct.bdFaceD;
-            bdFaceIdxD = bdStruct.bdFaceIdxD;
-            bdFace2edgeD = Th.face2edge(bdFaceIdxD,:);
+            bdFace2edgeD = bdStruct.bdFace2edgeD;
             elem2dof = [bdFaceD, bdFace2edgeD+N];
         end
         if bdType == 2
             bdFaceN = bdStruct.bdFaceN;
-            bdFaceIdxN = bdStruct.bdFaceIdxN;
-            bdFace2edgeN = Th.face2edge(bdFaceIdxN,:);
+            bdFace2edgeN = bdStruct.bdFace2edgeN;
             elem2dof = [bdFaceN, bdFace2edgeN+N];
         end
     end
