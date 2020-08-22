@@ -26,7 +26,7 @@ for k = 1:maxIt
     % get the mesh information
     Th = getTh2D(node,elem,bdNeumann);
     % solve the equation
-    uh = varPoissonCR(Th,pde,Vh,quadOrder);
+    uh = varPoisson(Th,pde,Vh,quadOrder);
     % record and plot
     N(k) = size(elem,1);
     h(k) = 1/(sqrt(size(node,1))-1);

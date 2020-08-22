@@ -83,9 +83,9 @@ end
 if  strcmpi(Vh, 'CR')
     if size(Th.node,2) == 2 % 2-D boundary conditions
         % d.o.f. numbers
-        Ndof = 1; NNdof = Th.NE;
+        Ndof = 3; NNdof = Th.NE;
         % elem2dof in 1-D inherited from 2-D
         bdStruct = Th.bdStruct;
-        elem2dof = bdStruct.bdEdgeIdxN;
+        elem2dof = bdStruct.bdElem2edgeN;
     end    
 end

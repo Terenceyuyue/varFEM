@@ -48,6 +48,28 @@ bdStruct.bdEdgeD = bdEdge(IdxD,:); % Dirichlet boundary edges
 bdStruct.bdEdgeN = bdEdge(~IdxD,:); % Neumann boundary edges
 bdStruct.bdNodeIdx = unique(bdEdge(IdxD,:)); % Dirichlet boundary nodes
 bdEdgeIdx = find(i1==i2);      % indices of all boundary edges
+bdEdgeIdxD = bdEdgeIdx(IdxD);  % indices of Dirichelt boundary edges
+bdEdgeIdxN = bdEdgeIdx(~IdxD); % indices of Neumann boundary edges
 bdStruct.bdEdgeIdx = bdEdgeIdx; 
-bdStruct.bdEdgeIdxD = bdEdgeIdx(IdxD); % indices of Dirichelt boundary edges
-bdStruct.bdEdgeIdxN = bdEdgeIdx(~IdxD); % indices of Neumann boundary edges
+bdStruct.bdEdgeIdxD = bdEdgeIdxD; 
+bdStruct.bdEdgeIdxN = bdEdgeIdxN; 
+
+%% Find boundary elements with Neumann boundary edge as the first side
+if size(elem,2)==3
+    NT = size(elem,1);
+    bdElemIdx = mod(i1(i1==i2),NT);
+    bdElemIdx(bdElemIdx==0) = NT;
+    bdElemIdxN = bdElemIdx(~IdxD);
+    
+    [~, ~, totalJ] = unique(totalEdge,'rows');
+    elem2edge = reshape(totalJ,NT,3);    
+    bdElem2edgeN = elem2edge(bdElemIdxN,:);
+    
+    %idx1 = find(bdelem2edge(:,1)-bdEdgeIdx);
+    idx2 = ((bdElem2edgeN(:,2)-bdEdgeIdxN)==0);
+    idx3 = ((bdElem2edgeN(:,3)-bdEdgeIdxN)==0);
+    bdElem2edgeN(idx2,:) = bdElem2edgeN(idx2,[2,3,1]);
+    bdElem2edgeN(idx3,:) = bdElem2edgeN(idx3,[3,1,2]);
+    
+    bdStruct.bdElem2edgeN = bdElem2edgeN;
+end

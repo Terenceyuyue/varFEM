@@ -89,11 +89,15 @@ end
 if  strcmpi(Vh, 'CR') || isempty(Vh)
     % u.val
     if mycontains(wStr,'.val') 
-        w1 = ones(nel,ng); % % phi1 = (1-2lambda1)|e = 1  at xp, p = 1,2,...        
+        w1 = ones(nel,ng); % % phi1 at xp, p = 1,2,...
+        w2 = repmat(1-2*lambda(:,1)',nel,1);
+        w3 = repmat(1-2*lambda(:,2)',nel,1);
     end
     % u.dx
     if mycontains(wStr,'.dx') 
         w1 = 0*Dlambda1;  w1 = repmat(w1,1,ng);
+        w2 = -2*Dlambda1;  w1 = repmat(w1,1,ng);
+        w3 = -2*Dlambda2;  w1 = repmat(w1,1,ng);
     end
-    w = {w1};
+    w = {w1,w2,w3};
 end
