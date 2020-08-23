@@ -1,6 +1,5 @@
 # MATLAB Programming for Finite Element Methods
 
-----
 
 ## Intentions
 
@@ -127,7 +126,7 @@ The MATLAB codes are in fem/afem.
   - For higher order elements, linear elements are used to approixmate the error equation Ae = r on coarse meshes. In this way, only one more transfer process from P1 to P2 or P3 is needed. See P1toP2 and P1toP3 in mg function in iFEM.
   
 
-
+----
 Undo: 
 
 	   
