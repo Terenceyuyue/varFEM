@@ -55,9 +55,7 @@ jj = repmat(elem(:), Ndof,1);
 
 This part is devoted to Poisson equation, which aims to make readers quickly master the basic skills of finite element method.
 
-- **Conforming elements.** 
-
-The source codes of solving the 2-D Poisson equation are presented, see Poisson.m, PoissonP2.m and PoissonP3.m.
+- **Conforming elements.** The source codes of solving the 2-D Poisson equation are presented, see Poisson.m, PoissonP2.m and PoissonP3.m.
 
 ## Linear elasticity equations
 
