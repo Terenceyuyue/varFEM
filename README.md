@@ -1,5 +1,7 @@
 # MATLAB Programming for Finite Element Methods
 
+[TOC]
+
 
 ## Intentions
 
@@ -88,7 +90,7 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
   In addition to directional problems, all three non-conforming elements (and conforming elements) can be programmed in the unified framework given in the document.
 
 - The **mixed FEM** is applied to solve the **biharmonic equation**, a special case of plate bending problems.
-   
+  
 
 ## Variational formulation based programming
 
@@ -102,7 +104,7 @@ For the third fomulation, only Dirichlet conditions are used in view of the prac
   
   - Newly added elements: Crouzeix-Raviart linear element for Poisson equation in 2-D;  Morley and Zienkiewicz elements for plate bending problems (more information of the basis functions should be added).
 
-  
+
 ## Adaptive finite element method and Newest-node bisection
 
    - The adpative finite element method (AFEM) is introduced for Poisson equation and Morley plate bending element.  
@@ -129,19 +131,20 @@ The MATLAB codes are in fem/afem.
     See the document for details.
     
   - For higher order elements, linear elements are used to approixmate the error equation Ae = r on coarse meshes. In this way, only one more transfer process from P1 to P2 or P3 is needed. See P1toP2 and P1toP3 in mg function in iFEM.
-  
+
 
 ----
 Undo: 
 
-	   
+
             - mesh generation and optimization  
            
-	        - mg V-cycle methods for 3-D problems and bisection meshes 
-  
+            - mg V-cycle methods for 3-D problems and bisection meshes 
+      
             - variational formulation based programming for time-dependent problems and nonlinear problems
-
+    
             - various applications of finite element methods
-	    
-	    
-	 
+
+
+​	    
+​	 
