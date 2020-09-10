@@ -26,7 +26,7 @@ for k = 1:maxIt
     option.solver = 'mg';
     option.J = k+1;
     % solve the equation
-    uh = elasticity_tensor2(node,elem,pde,bdStruct,option);
+    uh = elasticity(node,elem,pde,bdStruct,option);
     uh = reshape(uh,[],2);
     % record and plot
     NNdof(k) = length(uh);

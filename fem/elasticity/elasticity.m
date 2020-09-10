@@ -1,6 +1,6 @@
-function u = elasticity_tensor2(node,elem,pde,bdStruct,option)
-%elasticity_tensor2 solves linear elasticity equation using P1 element with
-% bilinear form  2mu*(sigma(u), epsilon(v)) + lambda*(divu,divv)
+function u = elasticity(node,elem,pde,bdStruct,option)
+%elasticity solves linear elasticity equation using P1 element with
+% bilinear form  2mu*(epsilon(u), epsilon(v)) + lambda*(divu,divv)
 %
 %       u = [u1, u2]
 %       -div (sigma) = f in \Omega
