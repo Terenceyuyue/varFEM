@@ -1,5 +1,5 @@
-function u = elasticity_Navier(node,elem,pde,bdStruct,option)
-%elasticity_Navier solves linear elasticity equation of Navier form using P1 element 
+function u = elasticityNavier(node,elem,pde,bdStruct,option)
+%elasticityNavier solves linear elasticity equation of Navier form using P1 element 
 %
 %       u = [u1, u2]
 %       -mu \Delta u - (lambda + mu)*grad(div(u)) = f in \Omega
@@ -59,7 +59,7 @@ kk = A + B;
 
 %% Assemble load vector
 % Gauss quadrature rule
-[lambda,weight] = quadpts(2);
+[lambda,weight] = quadpts(3);
 F1 = zeros(NT,3); F2 = zeros(NT,3);
 for p = 1:length(weight)
     pxy = lambda(p,1)*node(elem(:,1),:) ...
