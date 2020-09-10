@@ -55,7 +55,7 @@ bdStruct.bdEdgeIdxD = bdEdgeIdxD;
 bdStruct.bdEdgeIdxN = bdEdgeIdxN; 
 
 %% Find boundary elements with Neumann boundary edge as the first side
-if size(elem,2)==3
+if size(elem,2)==3 && ~isempty(bdEdgeIdxN)
     NT = size(elem,1);
     bdElemIdx = mod(i1(i1==i2),NT);
     bdElemIdx(bdElemIdx==0) = NT;
