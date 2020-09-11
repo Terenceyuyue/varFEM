@@ -65,17 +65,15 @@ This part is devoted to Poisson equation, which aims to make readers quickly mas
 
 ## Linear elasticity equations
 
-For linear elasticity problems, we give a unified programming framework. Specifically, 
-- The entrices of stiffness matrix are analyzed in the vectorial finite element space;
-- The assembly is accomplished in the scalar FE space of each component.
+For linear elasticity problems, we give a unified programming framework by showing how the assembly is accomplished in the scalar FE space of each component.
 
-We consider three forms of variational problems. 
-  - The first and the second are commonly used in linear elastic problems in the form of strain and/or stress tensors. 
-  - The third is just a variant of the second one with Laplacian replacing the strain tensors (named Navier form).
+We consider two forms of variational problems. 
+  - The first is commonly used in linear elastic problems in the form of strain and/or stress tensors (named Traction form). 
+  - The second is just a variant of the second one with Laplacian replacing the strain tensors (named Navier form).
   - For each formulation, sparse assembling index and detailed explanation are given.
 
-For the first two formulations,  “Neumann”  boundary conditions and Dirichlet boundary conditions are applied. 
-For the third fomulation, only Dirichlet conditions are used in view of the practical problems.
+For the first formulation,  “Neumann”  boundary conditions and Dirichlet boundary conditions are applied. 
+For the second fomulation, only Dirichlet conditions are used in view of the practical problems.
 
 ## Plate bending problems
 
