@@ -1,4 +1,4 @@
-clc; close all; 
+%clc; close all; 
 clear variables;
 
 %% Parameters
@@ -10,7 +10,7 @@ ErrH1 = zeros(maxIt,1);
 
 %% Generate an intitial mesh
 [node,elem] = squaremesh([0 1 0 1],0.5);
-bdNeumann = 'abs(x-1)<1e-4';
+bdNeumann = 'abs(x-0)<1e-4';
 
 %% Get the data of the pde
 pde = Poissondatavar;
@@ -18,7 +18,7 @@ g_R = @(p) 1 + p(:,1) + p(:,2); % 1 + x + y
 pde.g_R = g_R;
 
 %% Finite Element Method
-Vh = 'P2';
+Vh = 'P1';
 if strcmpi(Vh,'P1'), quadOrder = 3; end
 if strcmpi(Vh,'P2'), quadOrder = 4; end
 if strcmpi(Vh,'P3'), quadOrder = 5; end

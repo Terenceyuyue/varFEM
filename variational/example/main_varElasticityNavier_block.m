@@ -39,7 +39,7 @@ for k = 1:maxIt
     h(k) = 1/(sqrt(size(node,1))-1);
     if N(k) < 2e3  % show mesh and solution for small size
         figure(1);  
-        showresult(node,elem,pde.exactu,uh(:,1));
+        showresult(node,elem,pde.uexact,uh(:,1));
         pause(1);
     end
     % compute error
@@ -47,7 +47,7 @@ for k = 1:maxIt
     errL2 = zeros(1,2);  errH1 = zeros(1,2); % square
     for id = 1:2
         uid = uh(:,id);
-        u = @(pz) pde.exactu(pz)*tru(:, id);
+        u = @(pz) pde.uexact(pz)*tru(:, id);
         Du = @(pz) pde.Du(pz)*trDu(:, 2*id-1:2*id);
         errL2(:,id) = getL2error(node,elem,u,uid);
         errH1(:,id) = getH1error(node,elem,Du,uid);

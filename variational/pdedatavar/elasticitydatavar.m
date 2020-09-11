@@ -9,7 +9,7 @@ else
     lambda = para.lambda; mu = para.mu;
 end
 
-pde = struct('lambda',lambda,'mu',mu, 'f', @f, 'exactu',@exactu, 'g_D',@g_D, 'g_N',@g_N, 'Du',@Du);
+pde = struct('lambda',lambda,'mu',mu, 'f', @f, 'uexact',@exactu, 'g_D',@g_D, 'g_N',@g_N, 'Du',@Du);
 
     function val = f(p)
         val = mu*2*pi^2.*exactu(p);

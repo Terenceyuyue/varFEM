@@ -9,8 +9,8 @@ ErrL2 = zeros(maxIt,1);
 ErrH1 = zeros(maxIt,1);
 
 %% Generate an intitial mesh
-[node,elem] = squaremesh([0 1 0 1],0.5);
-bdNeumann = 'abs(x-0)<1e-4';
+[node,elem] = squaremesh([0 1 0 1],0.25);
+bdNeumann = 'abs(x-1)<1e-4';
 
 %% Get the data of the pde
 pde = Poissondatavar;

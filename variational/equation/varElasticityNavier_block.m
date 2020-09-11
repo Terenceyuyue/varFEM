@@ -19,20 +19,26 @@ mu = pde.mu; lambda = pde.lambda;
 cf = 1;
 Coef  = {cf};  Test  = {'v.grad'};  Trial = {'u.grad'};  
 A = assem2d(Th,Coef,Test,Trial,Vh,quadOrder);
-
-% (v1.dx, u1.dx) and (v2.dx, u1.dx)
+% (v1.dx, u1.dx)
 cf = 1;
 Coef  = {cf};  Test  = {'v.dx'};  Trial = {'u.dx'};  
 B1 = assem2d(Th,Coef,Test,Trial,Vh,quadOrder);
-
-% (v1.dx, u2.dy) and (v2.dx, u2.dy)
+% (v1.dx, u2.dy)
 cf = 1;
 Coef  = {cf};  Test  = {'v.dx'};  Trial = {'u.dy'};  
 B2 = assem2d(Th,Coef,Test,Trial,Vh,quadOrder);
+% (v2.dy, u1.dx)
+cf = 1;
+Coef  = {cf};  Test  = {'v.dy'};  Trial = {'u.dx'};  
+B3 = assem2d(Th,Coef,Test,Trial,Vh,quadOrder);
+% (v2.dy, u2.dy)
+cf = 1;
+Coef  = {cf};  Test  = {'v.dy'};  Trial = {'u.dy'};  
+B4 = assem2d(Th,Coef,Test,Trial,Vh,quadOrder);
 
 % kk
 kk = [  mu*A+(lambda+mu)*B1,         (lambda+mu)*B2;
-             (lambda+mu)*B1,    mu*A+(lambda+mu)*B2   ];
+             (lambda+mu)*B3,    mu*A+(lambda+mu)*B4   ];
     
 %% Assemble right hand side
 % F1
