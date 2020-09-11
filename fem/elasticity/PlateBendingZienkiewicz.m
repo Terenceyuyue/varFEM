@@ -19,10 +19,9 @@ elem2dof = [elem, elem+N, elem+2*N];
 
 %% parameters used in computation
 % xi, eta
-x1 = node(elem(:,1),1); y1 = node(elem(:,1),2);
-x2 = node(elem(:,2),1); y2 = node(elem(:,2),2);
-x3 = node(elem(:,3),1); y3 = node(elem(:,3),2);
-xi = [x2-x3, x3-x1, x1-x2]; eta = [y2-y3, y3-y1, y1-y2];
+z1 = node(elem(:,1),:); z2 = node(elem(:,2),:); z3 = node(elem(:,3),:); 
+xi = [z2(:,1)-z3(:,1), z3(:,1)-z1(:,1), z1(:,1)-z2(:,1)]; 
+eta = [z2(:,2)-z3(:,2), z3(:,2)-z1(:,2), z1(:,2)-z2(:,2)];
 % Gauss quadrature rule
 [lambda,weight] = quadpts(3);
 nQuad = length(weight); % number of integration points
@@ -91,20 +90,18 @@ G = zeros(NT,Ndof^2); F = zeros(NT,Ndof);
 if isnumeric(para.c), cf = @(xy) para.c+0*xy(:,1); end
 for p = 1:nQuad
     % quadrature points in the x-y coordinate
-    pxy = lambda(p,1)*node(elem(:,1),:) ...
-        + lambda(p,2)*node(elem(:,2),:) ...
-        + lambda(p,3)*node(elem(:,3),:);    
+    pxy = lambda(p,1)*z1+lambda(p,2)*z2+lambda(p,3)*z3;    
     % basis functions at the p-th quadrture point
     base = zeros(NT,Ndof); 
     for i = 1:3
         % \phi
-        lam123 = lambda(p,1).*lambda(p,2).*lambda(p,3);
-        base(:,i) = lambda(p,i).^2.*(3-2*lambda(p,i)) + 2*lam123;
+        lam123 = lambda(p,1)*lambda(p,2)*lambda(p,3);
+        base(:,i) = lambda(p,i)^2*(3-2*lambda(p,i)) + 2*lam123;
         % \psi
-        base(:,3+i) = lambda(p,i).^2.*(c1*lambda(p,2) + c2*lambda(p,1) + c3(:,i)) ...
+        base(:,3+i) = lambda(p,i)^2*(c1*lambda(p,2) + c2*lambda(p,1) + c3(:,i)) ...
             + c4(:,i)*lam123;
         % \zeta
-        base(:,6+i) = lambda(p,i).^2.*(d1*lambda(p,2) + d2*lambda(p,1) + d3(:,i)) ...
+        base(:,6+i) = lambda(p,i)^2*(d1*lambda(p,2) + d2*lambda(p,1) + d3(:,i)) ...
             + d4(:,i)*lam123;
     end    
     % Second stiffness matrix
@@ -144,7 +141,7 @@ w(freeDof) = kk(freeDof,freeDof)\ff(freeDof);
 end
 
 function Dquad = quadbasis(i,j,Dlambda,lambda)
- % second derivative of lambda_i*lambda_j
+ % second derivatives of lambda_i*lambda_j
     NT = size(Dlambda,1); nQuad = size(lambda,1);
     Dquad = zeros(NT,nQuad,3); % [11,22,12]
     Dquad(1:NT,:,1) = repmat(2*Dlambda(:,1,i).*Dlambda(:,1,j),1,nQuad);
@@ -153,7 +150,7 @@ function Dquad = quadbasis(i,j,Dlambda,lambda)
 end
 
 function Dtri =  tribasis(i,j,k,Dlambda,lambda)
-% second derivative of lambda_i*lambda_j*lambda_k
+% second derivatives of lambda_i*lambda_j*lambda_k
     NT = size(Dlambda,1); nQuad = size(lambda,1);
     Dtri = zeros(NT,nQuad,3); % [11,22,12]
     ss  = [1 2 1]; tt = [1 2 2]; 

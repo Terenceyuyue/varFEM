@@ -86,7 +86,7 @@ if  strcmpi(Vh, 'P3')
 end
 
 %% Crouzeix-Raviart linear element
-if  strcmpi(Vh, 'CR') || isempty(Vh)
+if  strcmpi(Vh, 'CR') 
     % u.val
     if mycontains(wStr,'.val') 
         w1 = ones(nel,ng); % % phi1 at xp, p = 1,2,...

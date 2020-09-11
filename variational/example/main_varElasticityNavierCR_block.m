@@ -1,4 +1,5 @@
-clc; clear; close all;
+clc; close all;
+clear variables;
 
 %% Parameters
 maxIt = 5;
@@ -9,7 +10,7 @@ ErrH1 = zeros(maxIt,1);
 
 %% Generate an intitial mesh
 [node,elem] = squaremesh([0 1 0 1],0.25);
-bdNeumann = []; % only Dirichlet condition for elasticityNavier
+%bdNeumann = []; % only Dirichlet condition for elasticityNavier
 
 %% Get the data of the pde
 lambda = 1e8; mu = 1;
@@ -20,10 +21,10 @@ pde = elasticitydataLocking(para);
 for k = 1:maxIt
     % refine mesh
     [node,elem] = uniformrefine(node,elem);
-     % set boundary
-    bdStruct = setboundary(node,elem,bdNeumann);
+    % get the mesh information
+    Th = getTh2D(node,elem);
     % solve the equation
-    uh = elasticityNavierCR(node,elem,pde,bdStruct);
+    uh = varElasticityNavierCR_block(Th,pde);
     uh = reshape(uh,[],2);
     % record and plot
     N(k) = size(elem,1);
@@ -42,15 +43,17 @@ for k = 1:maxIt
     tru = eye(2); trDu = eye(4);
     errL2 = zeros(1,2);  errH1 = zeros(1,2); % square
     for id = 1:2
-        uhid = uh(:,id);
-        uid = @(pz) pde.uexact(pz)*tru(:, id);
+        uid = uh(:,id);
+        u = @(pz) pde.uexact(pz)*tru(:, id);
         Du = @(pz) pde.Du(pz)*trDu(:, 2*id-1:2*id);
-        errL2(:,id) = getL2error(node,elem,uid,uhid);
-        errH1(:,id) = getH1error(node,elem,Du,uhid);
+        errL2(:,id) = getL2error(node,elem,u,uid);
+        errH1(:,id) = getH1error(node,elem,Du,uid);
     end
+    
     ErrL2(k) = sqrt(sum(errL2.^2,2));
     ErrH1(k) = sqrt(sum(errH1.^2,2));
 end
+
 %% Plot convergence rates and display error table
 figure(2);
 showrateh(h,ErrH1,ErrL2);

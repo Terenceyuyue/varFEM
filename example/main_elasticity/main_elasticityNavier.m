@@ -15,7 +15,7 @@ g = [2  2  2  2  2  2   % decomposed geometry matrix
     0  0  0  0  0  0];
 [p,e,t] = initmesh(g,'hmax',0.5); % initial mesh
 node = p';  elem = t(1:3,:)';
-bdNeumann = []; % only Dirichlet condition for elasticity_Navier
+bdNeumann = []; % only Dirichlet condition for elasticityNavier
 
 %% Get the PDE data
 lambda = 1; mu = 1;
