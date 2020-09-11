@@ -65,7 +65,7 @@ if size(elem,2)==3 && ~isempty(bdEdgeIdxN)
     elem2edge = reshape(totalJ,NT,3);    
     bdElem2edgeN = elem2edge(bdElemIdxN,:);
     
-    %idx1 = find(bdelem2edge(:,1)-bdEdgeIdx);
+    %idx1 = find((bdElem2edgeN(:,1)-bdEdgeIdx)==0);
     idx2 = ((bdElem2edgeN(:,2)-bdEdgeIdxN)==0);
     idx3 = ((bdElem2edgeN(:,3)-bdEdgeIdxN)==0);
     bdElem2edgeN(idx2,:) = bdElem2edgeN(idx2,[2,3,1]);
