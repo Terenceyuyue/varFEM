@@ -59,7 +59,11 @@ This part is devoted to Poisson equation, which aims to make readers quickly mas
 
 - **Conforming element** :  The P1,P2 and P3 Lagrange elements for solving the 2-D Poisson equation are presented, see  Poisson.m, PoissonP2.m and PoissonP3.m.
 
-- **Nonconforming element**: See PoissonCR.m for the approximation of the Crouzeix-Raviart element. In iFEM, the Neumann boundary condition seems to be assembled for only one 1-D basis function, i.e., the constant function $\phi(s) = 1, s\in e \subset \Gamma_N$.  On the basis of my own observations, however,  all three local basis functions have contribution to the integral.  We find that both treatments yield satisfactory numerical results. 
+- **Nonconforming element**: See PoissonCR.m for the approximation of the Crouzeix-Raviart element. In iFEM, the Neumann boundary condition seems to be assembled for only one 1-D basis function, i.e., the constant function $\phi(s) = 1, s\in e \subset \Gamma_N$.  However,  all three local basis functions corresponding to the boundary cells have contribution to the integral.  Surprisingly,  both treatments give satisfactory numerical results.  This is because the other two basis functions are zero at the midpoint of the edge and note that the quadrature error of the composite midpoint  formula is 
+  $$
+  \frac{1}{{24}}{f''} (\xi){h^2},
+  $$
+  which is comparable to the CR approximation.
 
 ​        
 
