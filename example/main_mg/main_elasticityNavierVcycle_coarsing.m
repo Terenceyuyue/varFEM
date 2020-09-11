@@ -31,7 +31,7 @@ for k = 1:maxIt
     % level number
     bdStruct.J = k+1;  % used in the mg solver
     % solve the equation
-    uh = elasticity_Navier(node,elem,pde,bdStruct);
+    uh = elasticityNavier(node,elem,pde,bdStruct);
     uh = reshape(uh,[],2);
     % record and plot
     NNdof(k) = length(uh);
