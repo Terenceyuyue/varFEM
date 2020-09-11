@@ -1,12 +1,12 @@
 function bdStruct= setboundary(node,elem,varargin)
-% setboundary sets type of boundary edges and returns structure of boundary
+%setboundary sets type of boundary edges and returns structure of boundary
 % information. 
 % varargin: string for Neumann boundary
 %
 % Copyright (C) Terence Yu.
 
 %% Find boundary edges
-% ------- totalEdge ---------
+% totalEdge 
 if size(elem,2) == 4
     elem = mat2cell(elem,ones(size(elem,1),1), 4); % rectangle element
 end
@@ -21,7 +21,7 @@ else % Triangulation
 end
 totalEdge = sort(allEdge,2);
 
-% --------  counterclockwise bdEdge --------
+% counterclockwise bdEdge
 [~, i1] = unique(totalEdge,'rows');     % first occurrence
 [~, i2] = unique(totalEdge(end:-1:1,:),'rows');  
 i2 = size(totalEdge,1)+1-i2;            % last occurrence

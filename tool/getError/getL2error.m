@@ -78,7 +78,7 @@ end
 
 %% Crouzeix-Raviart linear element
 if Nu == NCR
-    elem2dof = auxT.elem2edge; % interpolant at vertices
+    elem2dof = auxT.elem2edge; 
     phi = 1-2*lambda; % basis functions
 end
 
