@@ -3,6 +3,8 @@
 [TOC]
 
  Tool of reading Markdown: Typora
+ 
+ Note: Forking is not recommended. You may not be able to follow up on the progress of the ongoing project.
 
 ## Intentions
 
