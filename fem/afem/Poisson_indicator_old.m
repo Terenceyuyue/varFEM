@@ -40,7 +40,7 @@ gradLu = gradu(node,elem(k1,:),u,Dlambda(k1,:,:));
 gradRu = gradu(node,elem(k2,:),u,Dlambda(k2,:,:));
 % jump of gradu
 Jumpu = gradLu-gradRu;
-Jumpu(k1==k2,:) = gradLu(k1==k2,:);
+Jumpu(k1==k2,:) = 0;
 % edgeJump
 edgeJump = dot(Jumpu',ne').^2; edgeJump = edgeJump';
 % elemJump
