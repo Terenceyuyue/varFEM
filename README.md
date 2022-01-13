@@ -4,7 +4,7 @@
 
  Tool of reading Markdown: Typora
  
- Note: Forking is not recommended. You may not be able to follow up on the progress of the ongoing project.
+ --------------
 
 ## Intentions
 
@@ -39,15 +39,23 @@ We shall establish an iFEM-like package or a simplified version with certain ext
 
 - matlabupdate: Some functions in the updated version of matlab are reconstructed with the same input and output. For example, contains.m ---> mycontains.m.
 
-## Display and marking of polygonal meshes
+
+ --------------
+ 
+## MESH
+
+### Display and marking of polygonal meshes
 
 We present some basic functions to visualize the polygonal meshes, including marking of the nodes, elements and (boundary) edges.
 
-## Auxiliary mesh data and setboundary.m
+### Auxiliary mesh data and setboundary.m
 
 For the convenience of computation, we introduce some auxiliary mesh data. The idea stems from the treatment of triangulation in iFEM, which is generalized to polygonal meshes with certain modifications.  
 
-## 1-D problems
+------------------------
+## Model Problems
+
+### 1-D problems
 
 FEM1D.m and main_FEM1D.m introduce FEM programming of one dimensional problems. **The assembly of stiffness matrix and load vector is explained in detail.**
 The final sparse assembling index of iFEM is now replaced by 
@@ -56,7 +64,7 @@ ii = reshape(repmat(elem,Ndof,1), [], 1);
 jj = repmat(elem(:), Ndof,1);
 ```
 
-## 2-D Poisson equation
+### 2-D Poisson equation
 
 This part is devoted to finite element methods of Poisson equation, which aims to make readers quickly master the basic skills of finite element method.
 
@@ -68,11 +76,11 @@ This part is devoted to finite element methods of Poisson equation, which aims t
   $$
   which is comparable to the CR approximation.
 
-​        
+    
 
 - **Mixed element**
 
-## Linear elasticity equations
+### Linear elasticity equations
 
 For linear elasticity problems, we give a unified programming framework by showing how the assembly is accomplished in the scalar FE space of each component.
 
@@ -84,7 +92,7 @@ We consider two forms of variational problems.
 For the first formulation,  “Neumann”  boundary conditions and Dirichlet boundary conditions are applied. 
 For the second fomulation, only Dirichlet conditions are used in view of the practical problems.
 
-## Plate bending problems
+### Plate bending problems
 
 - The plate bending problem is to describe the small transverse deformation of thin plates. A special case of the equilibrium equation is the biharmonic equation, which is a typical fourth-order partial differential equation. The nonconforming element is usually applied to reduce the degrees of freedom. Among the nonconforming finite elements in two dimensional case, the **Morley element** is perhaps the most interesting one. It has the least number of degrees of freedom on each element for fourth order boundary value problems as its shape function space consists of only quadratic polynomials.
 
@@ -99,6 +107,8 @@ For the second fomulation, only Dirichlet conditions are used in view of the pra
 - The **mixed FEM** is applied to solve the **biharmonic equation**, a special case of plate bending problems.
   
 
+------------------------
+
 ## Variational formulation based programming
 
   - A variational formulation based programming is shown for 1-D, 2-D and 3-D problems in Folder variational. The arrangement is entirely  process-oriented and thus is easy to understand. 
@@ -111,8 +121,10 @@ For the second fomulation, only Dirichlet conditions are used in view of the pra
   
   - Newly added elements: Crouzeix-Raviart linear element for Poisson equation in 2-D;  Morley and Zienkiewicz elements for plate bending problems (more information of the basis functions should be added).
 
+------------------------------------
+## FEM Solvers
 
-## Adaptive finite element method and Newest-node bisection
+### Adaptive finite element method and Newest-node bisection
 
    - The adpative finite element method (AFEM) is introduced for Poisson equation and Morley plate bending element.  
    
@@ -125,7 +137,7 @@ The MATLAB codes are in fem/afem.
 
    - **A unified framwork is presented to compute the jump terms in error indicator, which helps to reduce the complexity of designing a new program.** 
 
-## Multigrid V-cycle methods
+### Multigrid V-cycle methods
 
   - We present a multigrid method by adding two grids one by one, so that the pseudo-code of V-cycle method can be obtained directly.
   
@@ -154,6 +166,4 @@ Undo:
 	    
 	    - PDF document is under revision.
 
-
-​	    
-​	 
+ 
