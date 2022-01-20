@@ -27,7 +27,7 @@ We shall establish an iFEM-like package or a simplified version with certain ext
 
   - fem: contains all source files for solving various partial differential equations related to the revision of FEMs for the classical problems. 
     
-  - variational: A new feature is the variational formulation based programming. It extends the applicaton in the fem folder.
+  - varFEM: A new feature is the variational formulation based programming. It extends the applicaton in the fem folder.
 
 - example: includes all the test examples corresponding to the fem folder.
 
@@ -111,7 +111,7 @@ For the second fomulation, only Dirichlet conditions are used in view of the pra
 
 ## Variational formulation based programming
 
-  - A variational formulation based programming is shown for 1-D, 2-D and 3-D problems in Folder variational. The arrangement is entirely  process-oriented and thus is easy to understand. 
+  - A variational formulation based programming is shown for 1-D, 2-D and 3-D problems in Folder varFEM. The arrangement is entirely process-oriented and thus is easy to understand. 
   
   - **As in FreeFem, fundamental functions --- int1d.m, int2d.m and int3d.m are designed to match the variational formulation of the underlying PDEs. These functions can resolve both scalar and vectorial equations (see also assem1d.m, assem2d.m and assem3d.m).**
   
@@ -153,7 +153,7 @@ The MATLAB codes are in fem/afem.
 
 
 ----
-Undo: 
+TO DO: 
 
 
             - mesh generation and optimization  
