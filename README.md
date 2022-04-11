@@ -23,7 +23,7 @@ We shall establish an iFEM-like package or a simplified version with certain ext
 
 ## Arrangement of the ongoing Toolbox 
 
-- The toolbox has two important folders：fem and variational.
+- The toolbox has two important folders：fem and varFEM.
 
   - fem: contains all source files for solving various partial differential equations related to the revision of FEMs for the classical problems. 
     
