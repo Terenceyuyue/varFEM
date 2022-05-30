@@ -111,6 +111,8 @@ For the second fomulation, only Dirichlet conditions are used in view of the pra
 
 ## Variational formulation based programming
 
+  It will be redesigned.
+
   - A variational formulation based programming is shown for 1-D, 2-D and 3-D problems in Folder varFEM. The arrangement is entirely process-oriented and thus is easy to understand. 
   
   - **As in FreeFem, fundamental functions --- int1d.m, int2d.m and int3d.m are designed to match the variational formulation of the underlying PDEs. These functions can resolve both scalar and vectorial equations (see also assem1d.m, assem2d.m and assem3d.m).**
