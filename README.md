@@ -1,8 +1,10 @@
-# MATLAB Programming for Finite Element Methods
+# varFEM: MATLAB Programming for Finite Element Methods
 
 [TOC]
 
  Tool of reading Markdown: Typora
+ 
+ **The pacakge has been renamed as varFEM.**
  
  --------------
 
