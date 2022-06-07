@@ -111,7 +111,7 @@ For the second fomulation, only Dirichlet conditions are used in view of the pra
 
 ## Variational formulation based programming
 
-  It will be redesigned.
+  Major revision has been made in varFEM. It provides the implementation of various problems in 2-D in FreeFEM++.
 
   - A variational formulation based programming is shown for 1-D, 2-D and 3-D problems in Folder varFEM. The arrangement is entirely process-oriented and thus is easy to understand. 
   
