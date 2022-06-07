@@ -1,4 +1,4 @@
-# varFEM: MATLAB Programming for Finite Element Methods
+# varFEM: Variational formulation based programming for Finite Element Methods in MATLAB
 
 [TOC]
 
