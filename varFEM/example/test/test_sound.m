@@ -1,5 +1,5 @@
 clc; clear; close all
-%%% This is an exmple given in FreeFem++: Release 4.0
+%%% This is an exmple given in FreeFem Documentation: Release 4.0
 %   Subsection 2.5 - Acoustics (sound.edp)
 
 %% Mesh

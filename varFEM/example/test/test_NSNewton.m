@@ -1,5 +1,5 @@
 clc;clear;close all
-%%% This is an exmple given in FreeFem++: Release 4.6
+%%% This is an exmple given in FreeFem Documentation: Release 4.6
 %   Subsection 2.12 - Newton Method for the Steady Navier-Stokes equations
 %   (see NSNewton.edp)
 %

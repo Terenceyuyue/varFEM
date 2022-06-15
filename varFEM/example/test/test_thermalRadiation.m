@@ -1,5 +1,5 @@
 clc; clear; close all
-%%% This is an exmple given in FreeFem++: Release 4.6
+%%% This is an exmple given in FreeFem Documentation: Release 4.6
 %   Subsection 2.6.2 - A Nonlinear Problem : Radiation (thermic.edp)
 % note: In FreeFEM, the code in thermic.edp was misplaced as the 
 %       code in heatex.edp 
