@@ -1,5 +1,5 @@
 clc; clear; close all
-%%% This is an exmple given in FreeFem++: Release 4.0
+%%% This is an exmple given in FreeFEM Documentation: Release 4.6
 %   Subsection 2.3 - Membrane (membrane.edp)
 
 %% Mesh

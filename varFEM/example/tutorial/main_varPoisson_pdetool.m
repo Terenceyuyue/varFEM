@@ -11,7 +11,7 @@ ErrH1 = zeros(maxIt,1);
 g = 'circleg'; %'lshapeg';
 [p,e,t] = initmesh(g,'hmax',0.5);
 node = p'; elem = t(1:3,:)';
-bdNeumann = 'x>0'; % string for Neumann
+bdStr = 'x>0'; % string for Neumann
 
 %% Get PDE data
 pde = Poissondatavar;
@@ -27,7 +27,7 @@ for k = 1:maxIt
     [p,e,t] = refinemesh(g,p,e,t);
     % get the mesh information
     node = p'; elem = t(1:3,:)';
-    Th = FeMesh2d(node,elem,bdNeumann);
+    Th = FeMesh2d(node,elem,bdStr);
     % solve the equation
     uh = varPoisson(Th,pde,Vh,quadOrder);
     % record and plot

@@ -1,5 +1,5 @@
 clc; clear; close all
-%%% This is an exmple given in FreeFem++: Release 4.6
+%%% This is an exmple given in FreeFem Documentation: Release 4.6
 %   Subsection 2.7 - Irrotational Fan Blade Flow and Thermal effects 
 %   (see potential.edp)
 %
@@ -37,7 +37,7 @@ bdStr = 'x.^2 + y.^2 > 4.5^2'; % 1-C
 Th = FeMesh2d(node,elem,bdStr);
 
 %% Bilinear form
-Vh = 'P1';  quadOrder = 7;
+Vh = 'P2';  quadOrder = 7;
 Coef  = 1;
 Test  = 'v.grad';
 Trial = 'u.grad';
@@ -55,11 +55,11 @@ uh = apply2d(on,Th,kk,ff,Vh,gBc1,gBc2);
 %% Interpolate to a 2D cartesian grid 
 tic;
 figure, 
-subplot(2,1,1),
+subplot(1,2,1),
 x = -0.5:0.005:1.5; y = -0.5:0.005:0.5;
 varcontourf(x,y,node,elem,uh(1:Th.N),20); 
 title('Numerical solution of varFEM');
-subplot(2,1,2),
+subplot(1,2,2),
 load sol_airfoil.mat ufh
 load meshdata_airfoil node elem
 varcontourf(x,y,node,elem,ufh(1:size(node,1)),20); 

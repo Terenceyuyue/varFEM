@@ -8,7 +8,7 @@ function [uh,ph] = varStokes(Th,pde,Vh,quadOrder)
 
 % Quadrature orders for int1d and int2d
 if nargin==2
-    Vh = {'P2','P2','P1'}; quadOrder = 4; 
+    Vh = {'P2','P2','P1'}; quadOrder = 5; 
 end % default: Taylor-Hood
 if nargin==3, quadOrder = 4; end
 

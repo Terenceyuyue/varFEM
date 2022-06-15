@@ -9,7 +9,7 @@ ErrH1 = zeros(maxIt,1);
 
 %% Generate an intitial mesh
 [node,elem] = squaremesh([0 1 0 1],0.5);
-bdNeumann = 'x==0';
+bdStr = 'x==0';
 
 %% Get PDE data
 pde = Poissondatavar;
@@ -24,7 +24,7 @@ for k = 1:maxIt
     % refine mesh
     [node,elem] = uniformrefine(node,elem);    
     % get the mesh information
-    Th = FeMesh2d(node,elem,bdNeumann);
+    Th = FeMesh2d(node,elem,bdStr);
     % solve the equation
     uh = varPoisson(Th,pde,Vh,quadOrder);
     % record and plot

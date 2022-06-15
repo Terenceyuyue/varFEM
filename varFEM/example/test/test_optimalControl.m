@@ -1,6 +1,6 @@
 function test_optimalControl
 clc;clear;close all
-%%% This is an exmple given in FreeFem++: Release 4.6
+%%% This is an exmple given in FreeFem Documentation: Release 4.6
 %   Subsection 2.15 - Optimal Control (see optimcontrol.edp)
 %   For this M-file, the gradient is not provided.
 %

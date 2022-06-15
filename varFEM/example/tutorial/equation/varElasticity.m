@@ -31,9 +31,9 @@ A = int2d(Th,Coef,Test,Trial,Vh,quadOrder);
 A = 2*mu*A;
 
 % (div u,div v) 
-Coef = { 1 }; 
-Test  = { 'v1.dx + v2.dy' };
-Trial = { 'u1.dx + u2.dy' };
+Coef = 1; 
+Test  = 'v1.dx + v2.dy' ;
+Trial = 'u1.dx + u2.dy';
 B = int2d(Th,Coef,Test,Trial,Vh,quadOrder);
 B = lambda*B;
 

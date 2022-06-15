@@ -17,7 +17,7 @@ pde = Stokesdatavar;
 
 %% Finite Element Method
 Vh = {'P2','P2','P1'}; % v = [v1,v2,q] --> [v1,v2,v3]
-quadOrder = 4;
+quadOrder = 5;
 for k = 1:maxIt
     % refine mesh
     [node,elem] = uniformrefine(node,elem);
@@ -59,8 +59,8 @@ subplot(1,2,2)
 showrateh(h,ErrpH1,ErrpL2);
 fprintf('\n');
 disp('Table: Error of uh')
-colname = {'#Dof','h','||u-u_h||','||Du-Du_h||'};
-disptable(colname,N,[],h,'%0.3e',ErruL2,'%0.5e',ErruH1,'%0.5e');
+colname = {'#Dof','h','||u-u_h||','||Du-Du_h||', '||p-p_h||'};
+disptable(colname,N,[],h,'%0.3e',ErruL2,'%0.5e',ErruH1,'%0.5e',ErrpL2,'%0.5e');
 
 fprintf('\n');
 disp('Table: Error of ph')

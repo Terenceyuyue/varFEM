@@ -28,12 +28,12 @@ pde = heatData();
 Vh = 'P1';  quadOrder = 7;
 Coef  = {1/dt, 1};
 Test  = {'v.val', 'v.grad'};
-Trial = Test; %{'u.val', 'u.grad'};
-kk = assem2d(Th,Coef,Test,Trial,Vh,quadOrder); % stiffness matrix
+Trial = {'u.val', 'u.grad'};
+kk = assem2d(Th,Coef,Test,Trial,Vh,quadOrder); 
 
 %% Backward Euler
 u0 = @(p) pde.uexact(p,t(1));
-uh0 = interp2d(u0,Th,Vh);
+uh0 = interp2d(u0,Th,Vh); % dof vector
 uf = zeros(Nt+1,2);  % record solutions at p-th point
 p = 2*Nx;
 uf(1,:) = [uh0(p),uh0(p)]; 

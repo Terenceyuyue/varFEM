@@ -1,7 +1,6 @@
 function u = solFreeFEM(filename)
 
-u = importdata(filename);
-u = u'; u = u(:);
-ind = ~isnan(u);
-u = u(ind);
-u(1) = [];
+fid = fopen(filename,'r');
+N = fscanf(fid, '%d', 1);
+u = fscanf(fid, '%f', N);
+fclose(fid);

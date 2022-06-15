@@ -20,25 +20,18 @@ quadOrder = 5;
 
 %% Assemble stiffness matrix
 % matrix A 
-cf = @(p) 1 + 0*p(:,1); 
-Coef = {cf}; 
-Test = {'v.val'}; 
-Trial = {'u.val'}; 
+Coef = 1;  Test = 'v.val';  Trial = 'u.val'; 
 A = -assem2d(Th,Coef,Test,Trial,'P1',quadOrder);
 % matrix B
-cf = @(p) 1 + 0*p(:,1); 
-Coef = {cf}; 
-Test = {'v.grad'}; 
-Trial = {'u.grad'}; 
+Coef = 1;  Test = 'v.grad';  Trial = 'u.grad'; 
 B = assem2d(Th,Coef,Test,Trial,'P1',quadOrder);
 % kk 
 O = zeros(size(B));
 kk = [A,  B;  B', O];
 kk = sparse(kk);
 
-%% Assemble right hand side
-Coef = pde.f; 
-Test = 'v.val';
+%% Assemble right-hand side
+Coef = pde.f;  Test = 'v.val';
 ff = assem2d(Th,Coef,Test,[],'P1',quadOrder);
 O = zeros(size(ff));
 ff = [O; ff];

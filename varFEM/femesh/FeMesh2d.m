@@ -1,5 +1,5 @@
 function Th = FeMesh2d(node,elem,bdStr)
-%%FEMESH2D   mesh-related info in 2-D
+%%FeMesh2d  mesh-related info in 2-D
 
 if nargin==2, bdStr = [];  end
 

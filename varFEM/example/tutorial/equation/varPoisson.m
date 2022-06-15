@@ -17,19 +17,19 @@ if nargin==3, quadOrder = 3; end
 % Omega
 Coef  = {pde.a, pde.c};
 Test  = {'v.grad', 'v.val'};
-Trial = Test; %{'u.grad', 'u.val'};
-kk = int2d(Th,Coef,Test,Trial,Vh,quadOrder); % or assem2d
+Trial = {'u.grad', 'u.val'};
+kk = assem2d(Th,Coef,Test,Trial,Vh,quadOrder); % or assem2d
 
-% Robin boundary condition
+% Robin data
 bdStr = Th.bdStr;
 if ~isempty(bdStr)
     Th.elem1d = Th.bdEdgeType{1};
     Th.elem1dIdx = Th.bdEdgeIdxType{1};
 
-    Coef  = {pde.g_R};
-    Test  = {'v.val'};
-    Trial = {'u.val'};
-    kk = kk + int1d(Th,Coef,Test,Trial,Vh,quadOrder); % or assem1d
+    Coef  = pde.g_R;
+    Test  = 'v.val';
+    Trial = 'u.val';
+    kk = kk + assem1d(Th,Coef,Test,Trial,Vh,quadOrder); % or assem1d
 end
 
 %% Assemble the right hand side 
@@ -37,7 +37,7 @@ end
 Coef = pde.f;
 Test = 'v.val';
 ff = int2d(Th,Coef,Test,[],Vh,quadOrder);
-% Neumann boundary condition
+% Neumann data
 if ~isempty(bdStr)
     %Coef = @(p) pde.g_R(p).*pde.uexact(p) + pde.a(p).*(pde.Du(p)*n');
 
@@ -47,10 +47,10 @@ if ~isempty(bdStr)
     Cmat2 = interpEdgeMat(fun,Th,quadOrder);
     Coef = Cmat1 + Cmat2;
 
-    ff = ff + int1d(Th,Coef,Test,[],Vh,quadOrder);
+    ff = ff + assem1d(Th,Coef,Test,[],Vh,quadOrder);
 end
 
-%% Apply Dirichlet boundary value conditions
+%% Apply Dirichlet boundary conditions
 g_D = pde.g_D;
-on = 2 - 1*isempty(bdStr);
+on = 2 - 1*isempty(bdStr); % 1 for bdStr= [], 2 for bdStr = 'x==0'
 uh = apply2d(on,Th,kk,ff,Vh,g_D);

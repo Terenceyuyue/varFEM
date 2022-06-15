@@ -16,6 +16,7 @@ if ~iscell(Vh) % 'P1'
     Vh = repmat( {Vh}, 1, 2);
 end
 
+if ~iscell(Coef), Coef = {Coef}; end 
 if ~isempty(Test) && ~iscell(Test), Test = {Test}; end
 if ~isempty(Trial) && ~iscell(Trial), Trial = {Trial}; end
 
@@ -48,7 +49,6 @@ ii = reshape(repmat(elem2dofv, Ndofu,1), [], 1);
 jj = repmat(elem2dofu(:), Ndofv, 1);
 
 %% Coef matrix
-if ~iscell(Coef), Coef = {Coef}; end % linear form
 CoefMat = cell(length(Coef),1);
 for ss = 1:length(Coef)
     cf = Coef{ss};

@@ -12,6 +12,13 @@ if nargin == 4,  Vh = {'P1'}; quadOrder = 3; end % default: P1
 if nargin == 5, quadOrder = 3; end
 
 if ~iscell(Vh), Vh = {Vh}; end % feSpace = 'P1'
+if isnumeric(Coef) && length(Coef)==1 % a constant
+    Coef = @(p) Coef+0*p(:,1);
+end
+if ~iscell(Coef), Coef = {Coef}; end 
+if ~isempty(Test) && ~iscell(Test), Test = {Test}; end
+if ~isempty(Trial) && ~iscell(Trial), Trial = {Trial}; end
+
 
 %% Scalar case
 nSpace = length(Vh);
@@ -80,8 +87,8 @@ end
 ff = zeros(NNdofvv,1);
 
 % Test --> v.val = [v1.val, v2.val, v3.val]
-if strcmpi(Test, 'v.val')
-    trf = eye(nSpace); f = Coef;
+if length(Test)==1 && strcmpi(Test{1}, 'v.val')
+    trf = eye(nSpace); f = Coef{1};
     for i = 1:nSpace
         Coef = @(pz) f(pz)*trf(:, i);  
         Test = sprintf('v%d.val',i);

@@ -1,6 +1,6 @@
 clc; clear; close all
-%%% This is an exmple given in FreeFem++: Third Edition, Version 3.58-1
-%   Example 3.3 (heatex.edp)
+%%% This is an exmple given in FreeFEM Documentation: Release 4.6
+%   Subsection 2.4 - Heat Exchanger (heatex.edp)
 
 %% Mesh
 id = 1;
@@ -24,7 +24,7 @@ bdStr = C0;
 Th = FeMesh2d(node,elem,bdStr);
 
 %% PDE data
-kappa = @(p) 1 + 4*(p(:,1)<-1).*(p(:,1)>-2).*(p(:,2)<3).*(p(:,2)>-3);
+kappa = @(p) 1 + 2*(p(:,1)<-1).*(p(:,1)>-2).*(p(:,2)<3).*(p(:,2)>-3); % p = [x,y]
 
 %% Bilinear form
 Vh = 'P1'; quadOrder = 5;

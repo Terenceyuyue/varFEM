@@ -9,7 +9,7 @@ ErrH1 = zeros(maxIt,1);
 
 %% Generate an intitial mesh
 [node,elem] = squaremesh([0 1 0 1],0.5);
-bdNeumann = 'y==0 | x==1'; % string for Neumann
+bdStr = 'y==0 | x==1'; % string for Neumann
 
 %% Get the data of the pde
 lambda = 1; mu = 1;
@@ -25,7 +25,7 @@ for k = 1:maxIt
     % refine mesh
     [node,elem] = uniformrefine(node,elem);
     % get the mesh information
-    Th = FeMesh2d(node,elem,bdNeumann); 
+    Th = FeMesh2d(node,elem,bdStr); 
     % solve the equation
     uh = varElasticity(Th,pde,Vhvec,quadOrder);
     uh = reshape(uh,[],2);
