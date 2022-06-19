@@ -11,7 +11,7 @@ function [node,elem,bdFlag,HB] = uniformrefine3(node,elem,bdFlag,HB)
 % useful for nodal interpolation. Unlike bisect3, HB is not useful for the
 % coarsening. See uniformcoarsen3red.
 %
-% Warning: uniform refine in 3D is not orientation presereved. Some volumes
+% Warning: uniform refine in 3D is not orientation preserved. Some volumes
 % of the sub-tetrahedron are negative. The ordering is special such that
 % the refinement can be easy. See uniformrefine3doc for details.
 %

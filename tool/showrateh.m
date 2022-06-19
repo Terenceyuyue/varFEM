@@ -3,7 +3,7 @@ function showrateh(h,varargin)
 %
 %  e.g. showrateh(h,ErrL2,ErrH1,ErrH2,ErrI)
 %       showrateh(h,ErrL2,'||u-uh||');
-% Copyright (C) Terence Yu.
+%
 
 %% Determine number of Err
 n = 0;

@@ -77,4 +77,3 @@ switch option
 end
 ei = Ri\ri;
 end % end of smoother;
-
