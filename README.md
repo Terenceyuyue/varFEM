@@ -11,7 +11,7 @@ We intend to develop the "variational formulation based programming"  in a simil
 
 e.g  The stiffness matrix for the bilinear form 
 
-![](http://latex.codecogs.com/svg.latex?\int_{T_h}uv\ d\sigma)  
+![](http://latex.codecogs.com/svg.latex?\int_{T_h}uvd\sigma)  
 
 can be computed as follows.
 
