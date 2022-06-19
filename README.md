@@ -9,7 +9,9 @@
 We intend to develop the "variational formulation based programming"  in a similar way of FreeFEM, a high level multiphysics finite element software. The similarity here only refers to the programming style of the main program, not to the internal architecture of the software.
 
 
-![](http://latex.codecogs.com/svg.latex?\int_{T_h}uvd\sigma)
+---
+e.g  The stiffness matrix for the bilinear form 
+![](http://latex.codecogs.com/svg.latex?\int_{T_h}uvd\sigma)  can be computed as follows.
 
 ```
   Vh = 'P1';  quadOrder = 5;
