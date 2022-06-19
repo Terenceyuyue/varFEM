@@ -7,19 +7,19 @@ function [uh,ph] = varStokes_block(Th,pde,Vh,quadOrder)
 %
 
 % Quadrature orders for int1d and int2d
-if nargin==2, Vh = {'P2','P2','P1'}; quadOrder = 3; end % default: Taylor-Hood
+if nargin==2, Vh = {'P2','P2','P1'}; quadOrder = 5; end % default: Taylor-Hood
 if nargin==3, quadOrder = 4; end
 
 %% Assemble stiffness matrix
 % A1,A2
-Coef = { 1 };  Test = {'v1.grad'};  Trial = {'u1.grad'};  
+Coef = 1;  Test = 'v1.grad';  Trial = 'u1.grad';  
 A1 = assem2d(Th,Coef,Test,Trial,Vh(1),quadOrder);
 A2 = A1;
 
 % B1,B2
-Coef = { -1 };  Test = {'v1.dx'}; Trial = {'p.val'};  
+Coef = -1;  Test = 'v1.dx'; Trial = 'p.val';  
 B1 = assem2d(Th,Coef,Test,Trial,Vh([1,3]),quadOrder);
-Coef = { -1 };  Test = {'v2.dy'}; Trial = {'p.val'};  
+Coef = -1;  Test = 'v2.dy'; Trial = 'p.val';  
 B2 = assem2d(Th,Coef,Test,Trial, Vh([1,3]), quadOrder); 
 
 % C1,C2
@@ -27,7 +27,7 @@ C1 = B1'; C2 = B2';
 
 % D
 eps = 1e-10;
-Coef = { -eps };  Test = {'p.val'}; Trial = {'q.val'};  
+Coef = -eps;  Test = 'p.val'; Trial = 'q.val';  
 D = assem2d(Th,Coef,Test,Trial,Vh(3),quadOrder);
 
 % stiffness matrix

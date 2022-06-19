@@ -30,7 +30,8 @@ Test  = {'v.val', 'v.grad'};
 Trial = {'u.val', 'u.grad'};
 kk = assem2d(Th,Coef,Test,Trial,Vh,quadOrder); % stiffness matrix
 % Robin1
-Th.elem1d = Th.bdEdgeType{1};
+Th.on = 1;
+%Th.elem1d = Th.bdEdgeType{1};
 %Th.elem1dIdx = Th.bdEdgeIdxType{1};
 
 Coef = alpha;

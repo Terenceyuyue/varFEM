@@ -1,4 +1,4 @@
-function w = Base2D_P3(wStr,node,elem,quadOrder)
+function w = Base2d_P3(wStr,node,elem,quadOrder)
 %      3
 %      |  \
 %      5    7

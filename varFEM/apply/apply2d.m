@@ -53,8 +53,8 @@ freedof = true(NNdof,1);  freedof(bddof) = false;
 u(freedof) = kk(freedof,freedof)\ff(freedof);
 
 % if ~isfield(Th, 'solver')
-%     solver = 'amg';
-%     if NNdof <= 2e3, solver = 'direct'; end
+%     solver = 'cg';
+%     if NNdof <= 1e4, solver = 'direct'; end
 % else
 %     solver = Th.solver;  % amg
 % end
@@ -63,6 +63,15 @@ u(freedof) = kk(freedof,freedof)\ff(freedof);
 %     u(freedof) = kk(freedof,freedof)\ff(freedof);
 %     return;
 % end
+% % else: cg
+% tol = 1e-12; maxIt = NNdof;
+% [u(freedof),flag] = cgs(kk(freedof,freedof),ff(freedof),tol,maxIt);
+% if flag>0
+%     fprintf(2,'The iterative method does not converge !\n');
+%     fprintf(2,'Direct Solver Is Used Instead !\n');
+%     u(freedof) = kk(freedof,freedof)\ff(freedof);
+% end
+
 % % else: AMG algebraic multi-grid solvers
 % option.solver = 'CG';
 % [u(freedof),info] = amg(kk(freedof,freedof),ff(freedof),option);
@@ -79,8 +88,8 @@ function [bddof,bdval] = getbd2D(on,Th,g_D,Vh)
 % g_D: Dirichlet function handle
 
 if nargin==2, Vh = 'P1'; end % default: P1
-
 node = Th.node; 
+
 %% P1-Lagrange
 if  strcmpi(Vh, 'P1')  
     fixedNode = Th.bdNodeIdxType{on};

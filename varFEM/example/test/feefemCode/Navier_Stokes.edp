@@ -1,0 +1,93 @@
+// File: Navier_Stokes4.edp (vectorized FE2)
+
+verbosity = 0; // 让输出更简洁
+
+// ------ Step 1: 定义区域，并进行网格剖分 ------
+int n = 10;
+mesh Th = square(n,n); 
+//plot(Th,ps="Stokesmesh1.eps");
+
+// ------ Step 2: 定义有限元空间 ------
+fespace VPh(Th,[P2,P2,P1]); // Taylor Hood FE
+VPh [u1,u2,p], [v1,v2,q];
+VPh [u10,u20,p0];
+
+
+// ------ Step 3: 定义变分形式 ------
+real nu = 10;
+func f1 = 4*y - 4*nu*(2*y - 1)*(3*x^4 - 6*x^3 + 6*x^2*y^2 - 6*x^2*y + 3*x^2
+    - 6*x*y^2 + 6*x*y + y^2 - y) + 8*x^3*y^2*(x - 1)^2*(2*x^2 - 3*x + 1)*(2*y^2 - 3*y + 1)^2
+   - 4*x^3*y^2*(x - 1)^2*(y - 1)^2*(2*x^2 - 3*x + 1)*(6*y^2 - 6*y + 1) - 2;
+func f2 = 4*x + 4*nu*(2*x - 1)*(6*x^2*y^2 - 6*x^2*y + x^2 - 6*x*y^2 +
+    6*x*y - x + 3*y^4 - 6*y^3 + 3*y^2) + 8*x^2*y^3*(y - 1)^2*(2*x^2 - 3*x + 1)^2*(2*y^2 - 3*y + 1)
+    - 4*x^2*y^3*(x - 1)^2*(y - 1)^2*(6*x^2 - 6*x + 1)*(2*y^2 - 3*y + 1) - 2;
+
+macro Grad(u) [dx(u),dy(u)] // EOM
+macro a(u1,u2,v1,v2) (nu*Grad(u1)'*Grad(v1)+ nu*Grad(u2)'*Grad(v2)) // EOM
+macro N(u1,u2,u10,u20,v1,v2) 
+    ((u1*dx(u10)+u2*dy(u10))*v1 + (u1*dx(u20)+u2*dy(u20))*v2) // EOM
+macro div(u1,u2) (dx(u1)+dy(u2)) // EOM
+macro b(u1,u2,q) -div(u1,u2)*q // EOM
+macro f(v1,v2) (f1*v1 + f2*v2) // EOM
+
+macro u [u1,u2,p] // EOM
+macro v [v1,v2,q] // EOM
+macro u0 [u10,u20,p0] // EOM
+
+real eps = 1e-10;
+varf NavierStokes1(u,v) =
+       int2d(Th)(
+                 a(u1,u2,v1,v2)
+                + b(v1,v2,p)
+                + b(u1,u2,q)
+                - eps*p*q             
+                 ) 
+     + on(1,2,3,4,u1=0,u2=0);
+
+varf rhs1(u,v) = int2d(Th)(f(v1,v2))
+                 + on(1,2,3,4,u1=0,u2=0);
+
+matrix A1 = NavierStokes1(VPh,VPh);
+real[int] F1 = rhs1(0,VPh);
+
+varf NavierStokes2(u,v) =
+       int2d(Th)(
+                 N(u1,u2,u10,u20,v1,v2)
+                + N(u10,u20,u1,u2,v1,v2)
+             )
+       + on(1,2,3,4,u1=0,u2=0);
+
+varf rhs2(u,v) = int2d(Th)(N(u10,u20,u10,u20,v1,v2))
+                 + on(1,2,3,4,u1=0,u2=0);
+
+// ------ Step 4: 求解 ------
+int niter = 100;
+u = [0,0,0]; // 初值
+real cpu=clock();
+for(int i=0;i<=niter;i++) 
+{
+    u0 = u;
+    matrix A2 = NavierStokes2(VPh,VPh);
+    matrix A = A1+A2;
+    set(A,solver=UMFPACK);
+    real[int] F2 = rhs2(0,VPh);
+    real[int] F = F1+F2;
+    u1[] = A^-1*F; // u1,u2,p 存储相同, 使用哪个都一样
+}
+cout<<"Time for iteration = "<<clock()-cpu<<endl;
+
+
+// ------ Step 5: 画图与误差分析 ------
+func ue1 = 2*x^2*y*(x - 1)^2*(2*y^2 - 3*y + 1);
+func ue2 = -2*x*y^2*(y - 1)^2*(2*x^2 - 3*x + 1);
+func pe = (2*x-1)*(2*y-1);
+
+real L2erroru1 = sqrt(int2d(Th)((u1-ue1)^2));
+real L2erroru2 = sqrt(int2d(Th)((u2-ue2)^2));
+real L2errorp = sqrt(int2d(Th)((p-pe)^2));
+
+cout<<" L2erroru1=: "<< L2erroru1<<endl;
+cout<<" L2erroru2=: "<< L2erroru2<<endl;
+cout<<" L2errorp=: "<< L2errorp<<endl;
+
+plot(p,[u1,u2],fill=1);

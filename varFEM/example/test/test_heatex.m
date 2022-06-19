@@ -28,8 +28,7 @@ kappa = @(p) 1 + 2*(p(:,1)<-1).*(p(:,1)>-2).*(p(:,2)<3).*(p(:,2)>-3); % p = [x,y
 
 %% Bilinear form
 Vh = 'P1'; quadOrder = 5;
-Coef = kappa;  
-Test = {'v.grad'};  Trial = {'u.grad'};
+Coef = kappa;  Test = 'v.grad';  Trial = 'u.grad';
 kk = assem2d(Th,Coef,Test,Trial,Vh,quadOrder); 
 
 %% Linear form

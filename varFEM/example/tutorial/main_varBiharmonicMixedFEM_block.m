@@ -41,9 +41,9 @@ end
 %% Plot convergence rates and display error table
 figure(2);
 subplot(1,2,1)
-showrateh(h,ErruH1,ErruL2);
+showrateErr(h,ErruH1,ErruL2);
 subplot(1,2,2)
-showrateh(h,ErrwH1,ErrwL2);
+showrateErr(h,ErrwH1,ErrwL2);
 
 fprintf('\n');
 disp('Table: Error of uh')

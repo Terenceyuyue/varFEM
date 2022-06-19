@@ -14,42 +14,35 @@ if nargin==3, quadOrder = 3; end
 
 mu = pde.mu; lambda = pde.lambda; 
 
-%% Get 1D mesh for boundary integrals
-Th.elem1d = Th.bdEdgeType{1}; 
-Th.bdEdgeIdx1d = Th.bdEdgeIdxType{1};
-bdStr = Th.bdStr;
-
 %% Get matrices of all pairs
 % (vi.dx, uj.dx) 
 cf = 1;
-Coef  = {cf};  Test  = {'v.dx'};  Trial = {'u.dx'};  
-A1 = assem2d(Th,Coef,Test,Trial,Vh,quadOrder);
+Coef  = cf;  Test  = 'v.dx';  Trial = 'u.dx';  
+Axx = assem2d(Th,Coef,Test,Trial,Vh,quadOrder);
 % (vi.dx, uj.dy) 
 cf = 1;
-Coef  = {cf};  Test  = {'v.dx'};  Trial = {'u.dy'};  
-A2 = assem2d(Th,Coef,Test,Trial,Vh,quadOrder);
+Coef  = cf;  Test  = 'v.dx';  Trial = 'u.dy';  
+Axy = assem2d(Th,Coef,Test,Trial,Vh,quadOrder);
 % (vi.dy, uj.dx) 
 cf = 1;
-Coef  = {cf};  Test  = {'v.dy'};  Trial = {'u.dx'};  
-A3 = assem2d(Th,Coef,Test,Trial,Vh,quadOrder);
+Coef  = cf;  Test  = 'v.dy';  Trial = 'u.dx';  
+Ayx = assem2d(Th,Coef,Test,Trial,Vh,quadOrder);
 % (vi.dy, uj.dy) 
 cf = 1;
-Coef  = {cf};  Test  = {'v.dy'}; Trial = {'u.dy'};  
-A4 = assem2d(Th,Coef,Test,Trial,Vh,quadOrder);
+Coef  = cf;  Test  = 'v.dy'; Trial = 'u.dy';  
+Ayy = assem2d(Th,Coef,Test,Trial,Vh,quadOrder);
 
 %% Get block stiffness matrix 
 % (Eij(u):Eij(v))
-A = [ A1 + 0.5*A4         0.5*A3;
-           0.5*A2         0.5*A1 + A4 ];
-A = 2*mu*A;
+A = [ Axx + 0.5*Ayy         0.5*Ayx;
+           0.5*Axy         0.5*Axx + Ayy ];
 
 % (div u,div v) 
-B = [ A1    A2;
-      A3    A4 ];
-B = lambda*B;
+B = [ Axx    Axy;
+      Ayx    Ayy ];
 
 % stiffness matrix
-kk = sparse(A + B);
+kk = sparse(2*mu*A + lambda*B);
 
 %% Assmeble right hand side
 % F1
@@ -63,7 +56,8 @@ Coef = @(pz) pde.f(pz)*trf(:, 2);  Test = 'v.val';
 F2 = assem2d(Th,Coef,Test,[],Vh,quadOrder);
 
 %% Assemble Neumann boundary conditions
-if ~isempty(Th.elem1d)
+if ~isempty(Th.bdStr)
+    Th.on = 1;
     g_N = pde.g_N; trg = eye(3);
     
     g1 = @(p) g_N(p)*trg(:,[1,3]);
@@ -81,7 +75,7 @@ end
 ff = [F1; F2];
 
 %% Apply Dirichlet boundary conditions
-on = 2 - 1*isempty(bdStr);
+on = 2 - 1*isempty(Th.bdStr);
 g_D = pde.g_D;  
 g_D1 = @(p) g_D(p)*[1;0];
 g_D2 = @(p) g_D(p)*[0;1];

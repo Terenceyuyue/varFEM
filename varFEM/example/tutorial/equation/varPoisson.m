@@ -18,25 +18,22 @@ if nargin==3, quadOrder = 3; end
 Coef  = {pde.a, pde.c};
 Test  = {'v.grad', 'v.val'};
 Trial = {'u.grad', 'u.val'};
-kk = assem2d(Th,Coef,Test,Trial,Vh,quadOrder); % or assem2d
+kk = assem2d(Th,Coef,Test,Trial,Vh,quadOrder); 
 
 % Robin data
 bdStr = Th.bdStr;
 if ~isempty(bdStr)
-    Th.elem1d = Th.bdEdgeType{1};
-    Th.elem1dIdx = Th.bdEdgeIdxType{1};
-
-    Coef  = pde.g_R;
-    Test  = 'v.val';
-    Trial = 'u.val';
-    kk = kk + assem1d(Th,Coef,Test,Trial,Vh,quadOrder); % or assem1d
+    Th.on = 1;
+    %Th.elem1d = Th.bdEdgeType{1};
+    %Th.elem1dIdx = Th.bdEdgeIdxType{1};
+    Coef  = pde.g_R;  Test  = 'v.val';  Trial = 'u.val';
+    kk = kk + assem1d(Th,Coef,Test,Trial,Vh,quadOrder); 
 end
 
 %% Assemble the right hand side 
 % Omega
-Coef = pde.f;
-Test = 'v.val';
-ff = int2d(Th,Coef,Test,[],Vh,quadOrder);
+Coef = pde.f;  Test = 'v.val';
+ff = assem2d(Th,Coef,Test,[],Vh,quadOrder);
 % Neumann data
 if ~isempty(bdStr)
     %Coef = @(p) pde.g_R(p).*pde.uexact(p) + pde.a(p).*(pde.Du(p)*n');

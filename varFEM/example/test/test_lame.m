@@ -7,18 +7,15 @@ Vhvec = repmat( {Vh}, 1, 2 ); % v = [v1,v2]
 E = 21e5; nu = 0.28; 
 lambda =  E*nu/((1 + nu)*(1 - 2*nu));
 mu = E/(2*(1 + nu));
-f = @(p) -1 + 0*p;
+f = -1;
 
 %% Mesh
 [node,elem] = getMeshFreeFEM('meshdata_lame.msh');
-%load meshdata_lame
-%figure, showmesh(node,elem);
 % mesh info
 bdStr = 'x==0'; % 1-Dirichlet
 Th = FeMesh2d(node,elem,bdStr);
 % 1-D mesh
-Th.elem1d = Th.bdEdgeType{2};
-Th.elem1dIdx = Th.bdEdgeIdxType{2};
+Th.on = 2;
 
 %% Assemble stiffness matrix 
 % (Eij(u):Eij(v))
@@ -39,7 +36,7 @@ B = lambda*B;
 kk = A + B;
 
 %% Assemble the right hand side 
-Coef = f;  Test = 'v.val';
+Coef = f;  Test = 'v2.val';
 ff = int2d(Th,Coef,Test,[],Vhvec,quadOrder);
 
 %% Assemble Neumann boundary conditions

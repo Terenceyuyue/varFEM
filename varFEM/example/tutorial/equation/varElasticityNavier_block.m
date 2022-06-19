@@ -42,13 +42,11 @@ kk = sparse(kk);
     
 %% Assemble right hand side
 % F1
-trf = eye(2); 
-Coef = @(pz) pde.f(pz)*trf(:, 1);  Test = 'v.val';
+Coef = @(pz) pde.f(pz)*[1;0];  Test = 'v.val';
 F1 = assem2d(Th,Coef,Test,[],Vh,quadOrder);
 
 % F2
-trf = eye(2); 
-Coef = @(pz) pde.f(pz)*trf(:, 2);  Test = 'v.val';
+Coef = @(pz) pde.f(pz)*[0;1];  Test = 'v.val';
 F2 = assem2d(Th,Coef,Test,[],Vh,quadOrder);
 
 % F

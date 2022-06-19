@@ -7,14 +7,19 @@ function Cmat = interpEdgeMat(fun,Th,quadOrder)
 
 if nargin==2, quadOrder = 3; end
 
-node = Th.node; 
-nel = size(Th.elem1d,1); % 1-D mesh on the boundary
+node = Th.node;
+if isfield(Th,'on')
+    on = Th.on;
+    elem1d = Th.bdEdgeType{on};
+end
+if isfield(Th,'elem1d'), elem1d = Th.elem1d; end
+nel = size(elem1d,1); % 1-D mesh on the boundary
 
 % Guass-Quadrature
 [lambda,weight] = quadpts1(quadOrder); ng = length(weight);
 
-za = node(Th.elem1d(:,1),:);
-zb = node(Th.elem1d(:,2),:);
+za = node(elem1d(:,1),:);
+zb = node(elem1d(:,2),:);
 Cmat = zeros(nel,ng);  % size: nel * ng
 
 % function handle is pde.Du
@@ -39,4 +44,3 @@ for p = 1:ng
     pz = lambda(p,1)*za + lambda(p,2)*zb;
     Cmat(:,p) = fun(pz);
 end
-

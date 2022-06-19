@@ -1,0 +1,37 @@
+// Parameters
+real E = 21e5, nu = 0.28;
+real mu = E/(2*(1 + nu));
+real lambda = E*nu/((1 + nu)*(1 - 2*nu));
+real f = -1;
+
+// Mesh
+mesh Th = square(10, 10, [20*x, 2*y-1]);
+//savemesh(Th, "meshdata_lame.msh");
+
+// Fespace
+fespace Vh(Th, P1);
+Vh u1, u2, v1, v2;
+
+// Macro
+real sqrt2 = sqrt(2.);
+macro epsilon(u1, u2) [dx(u1), dy(u2), (dy(u1)+dx(u2))/sqrt2] // EOM
+// Remark: the 1/sqrt2 term in (dy(u1)+dx(u2)) is here
+// to obtain a 1/2 when we use epsilon(u1, u2)'*epsilon(v1, v2)
+macro div(u, v) (dx(u) + dy(v)) // EOM
+
+// Problem
+solve lame([u1,u2], [v1,v2])
+  = int2d(Th)(
+      lambda*div(u1,u2)*div(v1,v2)
+    + 2.*mu*(epsilon(u1,u2)'*epsilon(v1,v2))
+  )
+  - int2d(Th)(f*v2)
+  + on(4, u1=0, u2=0);
+
+// Plot
+real coef = 100;
+plot([u1, u2], wait=1);
+
+// Move mesh
+mesh th1 = movemesh(Th, [x+u1*coef, y+u2*coef]);
+plot(th1, wait=1);

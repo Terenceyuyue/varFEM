@@ -17,7 +17,7 @@ function pde = Poissondata3var
     end
 
 % exact solution
-    function val = exactu(p)
+    function val = uexact(p)
         x = p(:,1); y = p(:,2); z = p(:,3);
         val = u(x,y,z);
     end
@@ -28,7 +28,7 @@ function pde = Poissondata3var
     end
 % Dirichlet boundary conditions
     function val = g_D(p)
-        val = exactu(p);
+        val = uexact(p);
     end
 % for Neumann boundary conditions
     function val = Du(p)
@@ -36,16 +36,16 @@ function pde = Poissondata3var
         val = [ux(x,y,z), uy(x,y,z), uz(x,y,z)];
     end
 
-pde = struct('exactu',@exactu, 'f',@f, 'g_D',@g_D, 'Du',@Du, 'a',@a, 'c',@c);
+pde = struct('uexact',@uexact, 'f',@f, 'g_D',@g_D, 'Du',@Du, 'a',@a, 'c',@c);
 end
 
 function [a,c,u,ux,uy,uz,f] = compute_rhs()
     syms x y z;
     % coef
-    a = 1 + 0*x; % + x + y + z;
+    a = 1 + 0*x; 
     c = 1 + 0*x;
     % exact solution
-    u = cos(pi*x)*cos(pi*y)*cos(pi*z); % invalid for singular domains 
+    u = cos(pi*x)*cos(pi*y)*cos(pi*z);  
     % derivative
     ux = diff(u,x);  uy = diff(u,y); uz = diff(u,z);
     aux = a*ux;  auy = a*uy; auz = a*uz;

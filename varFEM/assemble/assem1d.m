@@ -21,7 +21,15 @@ if ~isempty(Trial) && ~iscell(Trial), Trial = {Trial}; end
 
 % 1-D mesh info
 node = Th.node;
-elem1d = Th.elem1d;
+if size(node,2)==1
+    elem1d = Th.elem1d;
+end
+if size(node,2)==2 && isfield(Th,'on')
+    on = Th.on;
+    elem1d = Th.bdEdgeType{on};
+    Th.elem1d = elem1d;
+end
+if isfield(Th,'elem1d'), elem1d = Th.elem1d; end  % provided by user
 nel = size(elem1d,1);
 
 % Guass-Quadrature

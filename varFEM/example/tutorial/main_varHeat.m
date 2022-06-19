@@ -17,7 +17,7 @@ pde.t0 = 0; pde.tf = 1;
 pde.tn = 0.05; % compute values at t = tn
 
 %% Finite Element 
-iq = 3; % 1,2,3
+iq = 1; % 1,2,3
 Vh = ['P', num2str(iq)];
 quadOrder = iq+2;
 for k = 1:maxIt

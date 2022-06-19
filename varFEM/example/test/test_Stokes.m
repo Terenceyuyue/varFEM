@@ -1,4 +1,8 @@
 clc;clear;close all
+%%% This is an exmple given in FreeFem Documentation: Release 4.6
+%   Subsection 2.10 - The System of Stokes for Fluids
+%   The Mini element is considered there, which is now replaced by the 
+%   Taylor-Hood element since we do not provide the Mini element at present.
 
 Vh = {'P2','P2','P1'}; % v = [v1,v2,q] --> [v1,v2,v3]
 quadOrder = 5;

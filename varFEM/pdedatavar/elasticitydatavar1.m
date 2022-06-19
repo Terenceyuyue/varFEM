@@ -26,13 +26,13 @@ para = struct('lambda',lambda,'mu',mu);
         val = uexact(p);
     end
 % derivative of the exact solution
-    function val =  Dw(p)  % w = [u1,u2]
+    function val =  Du(p)  % u = [u1,u2]
         x = p(:,1); y = p(:,2);
         val(:,1) = u1x(x,y);  val(:,2) = u1y(x,y); 
         val(:,3) = u2x(x,y);  val(:,4) = u2y(x,y);
     end
 
-pde = struct('lambda',lambda, 'mu',mu, 'f', @f, 'exactu',@uexact,'g_D',@g_D,'Du',@Dw);
+pde = struct('lambda',lambda, 'mu',mu, 'f', @f, 'exactu',@uexact,'g_D',@g_D,'Du',@Du);
 end
 
 function [u1,u2,f1,f2,u1x,u1y,u2x,u2y] = compute_rhs(para)    

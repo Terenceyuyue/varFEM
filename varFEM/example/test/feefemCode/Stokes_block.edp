@@ -1,0 +1,91 @@
+// block matrix
+
+verbosity = 0; // 让输出更简洁
+
+real[int] L2erroru(5);
+real[int] L2errorp(5);
+
+for (int i=0; i<5; i++){
+
+// ------ Step 1: Mesh ------
+int n = 2^(i+2);
+mesh Th = square(n,n); 
+//plot(Th,ps="Stokesmesh1.eps");
+
+// ------ Step 2: FE spaces ------
+fespace Vh(Th,P2); fespace Ph(Th,P1);  // Taylor Hood FE
+Vh u1,u2,v1,v2;
+Ph p,q;
+
+
+// ------ Step 3: variational formulation ------
+func f1 = 2^10*((1-6*x+6*x^2)*(y-3*y^2+2*y^3)+(x^2-2*x^3+x^4)*(-3+6*y)-
+            (-3+6*x)*(y^2-2*y^3+y^4) );
+func f2 = -(2^10)*( (-3+6*x)*(y^2-2*y^3 + y^4)+(x-3*x^2+2*x^3)*(1-6*y+6*y^2)+
+            (1-6*x+6*x^2)*(y-3*y^2+2*y^3) );
+
+macro lap(u,v) (dx(u)*dx(v)+dy(u)*dy(v)) // EOM
+
+real eps = 1e-10;
+
+varf a1(u1,v1) = int2d(Th)(lap(u1,v1))+on(1,2,3,4,u1=0);
+varf a2(u2,v2) = int2d(Th)(lap(u2,v2))+on(1,2,3,4,u2=0);
+varf b1(v1,p) = int2d(Th)(-p*dx(v1));
+varf b2(v2,p) = int2d(Th)(-p*dy(v2));
+varf stab(p,q) = int2d(Th)(-eps*p*q);
+
+varf Fu1(u1,v1) = int2d(Th)(f1*v1)+on(1,2,3,4,u1=0);
+varf Fu2(u2,v2) = int2d(Th)(f2*v2)+on(1,2,3,4,u2=0);
+
+matrix A1 = a1(Vh,Vh);
+matrix A2 = a2(Vh,Vh);
+matrix B1 = b1(Vh,Ph);
+matrix B2 = b2(Vh,Ph);
+matrix C1 = B1,C2 = B2;
+matrix D = stab(Ph,Ph);
+
+real[int] F1 = Fu1(0,Vh);
+real[int] F2 = Fu2(0,Vh);
+
+matrix A = [            
+            [A1,0,B1'],
+            [0,A2,B2'],
+            [C1,C2,D]
+             ]; 
+
+
+int ndofu = u1.n;   // size of u1
+int ndofp = p.n; // size of p
+int ndof = 2*ndofu+ndofp; // size of total unknown (u1,u2,p)
+
+real[int] F(ndof), sol(ndof); // vectors to keep rhs and solution
+
+F(0:ndofu-1) = F1; 
+F(ndofu:2*ndofu-1) = F2;
+F(2*ndofu:ndof-1) = 0;
+
+// ------ Step 4: solve ------
+set(A,solver=UMFPACK);
+sol = A^-1*F;
+
+u1[] = sol(0:ndofu-1);
+u2[] = sol(ndofu:2*ndofu-1);
+p[] = sol(2*ndofu:ndof-1);
+
+// ------ Step 5: error ------
+func ue1 = -(2^8)*(x^2-2*x^3+x^4)*(2*y-6*y^2+4*y^3);
+func ue2 = 2^8*(2*x-6*x^2+4*x^3)*(y^2-2*y^3+y^4);
+func pe = -(2^8)*(2-12*x+12*x^2)*(y^2-2*y^3+y^4);
+
+
+L2erroru[i] = sqrt( int2d(Th)((u1-ue1)^2) + int2d(Th)((u2-ue2)^2) );
+L2errorp[i] = sqrt( int2d(Th)((p-pe)^2) );
+
+cout<<" L2erroru=: "<< L2erroru[i]<<" \t L2errorp=: "<< L2errorp[i]<<endl;
+// plot(u1,fill=1);
+
+}
+
+for (int i=0; i<4; i++){
+cout <<" convergence rate = " << log(L2erroru[i]/L2erroru[i+1])/log(2.)<<endl ;
+}

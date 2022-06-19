@@ -35,8 +35,9 @@ ff = int2d(Th,Coef,Test,[],Vh,quadOrder);
 
 %% Assemble Neumann boundary conditions
 % Get 1D mesh for boundary integrals 
-Th.elem1d = Th.bdEdgeType{1}; 
-Th.elem1dIdx = Th.bdEdgeIdxType{1};
+Th.on = 1;
+% Th.elem1d = Th.bdEdgeType{1}; 
+% Th.elem1dIdx = Th.bdEdgeIdxType{1};
 
 % Coef = @(p) pde.Du(p)*n;
 Coef = interpEdgeMat(pde.Du,Th,quadOrder);  

@@ -1,6 +1,4 @@
 function pde = Stokesdatavar()
-%
-% Copyright (C) Terence Yu.
 
 % --------- given by the symbolic computation ------
 [u1,u1x,u1y,u2,u2x,u2y,pe,px,py,f1,f2] = compute_rhs();

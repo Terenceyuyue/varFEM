@@ -66,7 +66,7 @@ while 1
     %% Newton Loop
     for n = 1:15
 
-        % FEM functions for Coef
+        % transorm FEM functions to Coef matrix
 
         u1c = interp2dMat(uh1,'u1.val',Th,Vh{1},quadOrder);
         u2c = interp2dMat(uh2,'u2.val',Th,Vh{2},quadOrder);

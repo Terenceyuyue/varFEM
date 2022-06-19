@@ -21,7 +21,14 @@ if ~isempty(Test) && ~iscell(Test), Test = {Test}; end
 if ~isempty(Trial) && ~iscell(Trial), Trial = {Trial}; end
 
 % 2-D mesh info
-node = Th.node;   elem = Th.elem;
+node = Th.node;   
+if size(node,2)==2
+    elem = Th.elem;
+end
+if size(node,2)==3 && isfield(Th,'on')
+    elem = Th.bdFaceType{1}; 
+    Th.elem = elem;
+end
 NT = size(elem,1);
 
 % Guassian quadrature

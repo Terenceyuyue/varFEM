@@ -48,9 +48,7 @@ for n = 1:Nt
 
     % Neumann boundary condition
     if ~isempty(bdStr)
-        Th.elem1d = Th.bdEdgeType{1};
-        Th.elem1dIdx = Th.bdEdgeIdxType{1};
-
+        Th.on = 1;
         fun = @(p) pde.Du(p,t(n+1));
         Coef = interpEdgeMat(fun,Th,quadOrder);
         %[fh,Nh] = interpEdge(fun,Th,Vh);

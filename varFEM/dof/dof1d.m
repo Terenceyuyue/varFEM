@@ -1,11 +1,18 @@
 function [elem2dof,Ndof,NNdof] = dof1d(Th,Vh)
-%% DOF1D returns elem2dof for assembling 1D part
+%%dof1d returns elem2dof for assembling 1-D part
 %
 
-% Copyright (C) Terence Yu.
-
-
-node = Th.node;  elem1d = Th.elem1d;
+node = Th.node; 
+if size(node,2)==1
+    elem1d = Th.elem1d;
+end
+if size(node,2)==2 && isfield(Th,'on')
+    on = Th.on;
+    elem1d = Th.bdEdgeType{on};
+    elem1dIdx = Th.bdEdgeIdxType{on};
+end
+if isfield(Th,'elem1d'), elem1d = Th.elem1d; end
+if isfield(Th,'elem1dIdx'), elem1dIdx = Th.elem1dIdx; end
 N = size(node,1); nel = size(elem1d,1);
 
 %% P1-Lagrange
@@ -33,7 +40,6 @@ if  strcmpi(Vh, 'P2')
         NE = Th.NE;
         Ndof = 3; 
         NNdof = N + NE;
-        elem1dIdx = Th.elem1dIdx;
         elem2dof = [elem1d, elem1dIdx + N];
     end    
 end
@@ -51,7 +57,6 @@ if  strcmpi(Vh, 'P3')
         Ndof = 4; 
         NNdof = N + 2*NE + NT;
         % elem2dof
-        elem1dIdx = Th.elem1dIdx;
         elem2dof = [elem1d, elem1dIdx+N, elem1dIdx+N+NE];
     end
 end

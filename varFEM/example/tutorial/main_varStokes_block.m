@@ -17,7 +17,8 @@ pde = Stokesdatavar;
 
 %% Finite Element Method
 
-Vh = {'P2','P2','P1'}; quadOrder = 4;
+Vh = {'P2','P2','P1'}; % [u1,u2,p]
+quadOrder = 5;
 for k = 1:maxIt
     % refine mesh
     [node,elem] = uniformrefine(node,elem);
@@ -54,9 +55,9 @@ end
 %% Plot convergence rates and display error table
 figure(2);
 subplot(1,2,1)
-showrateh(h,ErruH1,ErruL2);
+showrateErr(h,ErruH1,ErruL2);
 subplot(1,2,2)
-showrateh(h,ErrpH1,ErrpL2);
+showrateErr(h,ErrpH1,ErrpL2);
 fprintf('\n');
 disp('Table: Error of uh')
 colname = {'#Dof','h','||u-u_h||','||Du-Du_h||'};

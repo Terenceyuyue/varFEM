@@ -1,0 +1,60 @@
+verbosity = 0; // 让输出更简洁
+
+
+real[int] L2erroru(5);
+real[int] L2errorp(5);
+
+for (int i=0; i<5; i++){
+
+// Step 1: generate a meshe 
+int n = 2^(i+2);
+mesh Th = square(n,n); 
+//plot(Th);
+
+// Step 2: define finite element space 
+fespace Vh(Th,P2); fespace Ph(Th,P1);  // Taylor Hood FE
+Vh u1,u2,v1,v2;
+Ph p,q;
+
+// Step 3: define the variational formulation 
+func f1 = 2^10*((1-6*x+6*x^2)*(y-3*y^2+2*y^3)+(x^2-2*x^3+x^4)*(-3+6*y)-
+            (-3+6*x)*(y^2-2*y^3+y^4) );
+func f2 = -(2^10)*( (-3+6*x)*(y^2-2*y^3 + y^4)+(x-3*x^2+2*x^3)*(1-6*y+6*y^2)+
+            (1-6*x+6*x^2)*(y-3*y^2+2*y^3) );
+
+macro Grad(u) [dx(u),dy(u)] // EOM
+macro a(u1,u2,v1,v2) (Grad(u1)'*Grad(v1)+Grad(u2)'*Grad(v2)) // EOM
+macro div(u1,u2) (dx(u1)+dy(u2)) // EOM
+macro b(u1,u2,q) -div(u1,u2)*q // EOM
+macro F(v1,v2) (f1*v1 + f2*v2) // EOM
+
+real eps = 1e-10;
+problem Stokes([u1,u2,p],[v1,v2,q]) =
+          int2d(Th)( 
+                     a(u1,u2,v1,v2)
+                    + b(v1,v2,p)
+                    + b(u1,u2,q)
+                    - eps*p*q )
+          -int2d(Th)(F(v1,v2))
+          + on(1,2,3,4,u1=0,u2=0);
+
+// Step 4: solve
+Stokes;
+
+// Step 5: compute errors 
+func ue1 = -(2^8)*(x^2-2*x^3+x^4)*(2*y-6*y^2+4*y^3);
+func ue2 = 2^8*(2*x-6*x^2+4*x^3)*(y^2-2*y^3+y^4);
+func pe = -(2^8)*(2-12*x+12*x^2)*(y^2-2*y^3+y^4);
+
+L2erroru[i] = sqrt( int2d(Th)((u1-ue1)^2) + int2d(Th)((u2-ue2)^2) );
+L2errorp[i] = sqrt( int2d(Th)((p-pe)^2) );
+
+cout<<" L2erroru=: "<< L2erroru[i]<<" \t L2errorp=: "<< L2errorp[i]<<endl;
+// plot(u1,fill=1);
+
+}
+
+for (int i=0; i<4; i++){
+cout <<" convergence rate = " << log(L2erroru[i]/L2erroru[i+1])/log(2.)<<endl ;
+}
+

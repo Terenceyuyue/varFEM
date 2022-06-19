@@ -11,6 +11,12 @@ if nargin == 4,  Vh = {'P1'}; quadOrder = 3; end % default: P1
 if nargin == 5, quadOrder = 3; end
 
 if ~iscell(Vh), Vh = {Vh}; end % Vh is stored in cell array
+if isnumeric(Coef) && length(Coef)==1 % a constant
+    Coef = @(p) Coef+0*p(:,1);
+end
+if ~iscell(Coef), Coef = {Coef}; end 
+if ~isempty(Test) && ~iscell(Test), Test = {Test}; end
+if ~isempty(Trial) && ~iscell(Trial), Trial = {Trial}; end
 
 %% Scalar case
 nSpace = length(Vh);
@@ -26,7 +32,7 @@ end
 %  Test  = {'v1.dx', 'v2.dy', 'v1.dy', 'v1.dy', 'v2.dx', 'v2.dx'};
 %  Trial = {'u1.dx', 'u2.dy', 'u1.dy', 'u2.dx', 'u1.dy', 'u2.dx'};
 % nSpace = length(Vh);   % nSpace = 3 for (v1,v2,v3)
-if ~isempty(Trial) && nSpace>1
+if ~isempty(Trial) && nSpace>1 && sum(mycontains(Trial,'+'))
     [Coef,Test,Trial] = getExtendedvarForm(Coef,Test,Trial);
 end
 
@@ -79,10 +85,18 @@ end
 ff = zeros(NNdofvv,1);
 
 % Test --> v.val = [v1.val, v2.val, v3.val]
-if strcmpi(Test, 'v.val')
+if length(Test)==1 && strcmpi(Test{1}, 'v.val')
+    if length(Coef) == 1  % pde.f
+        trf = eye(nSpace); f = Coef{1};
+        Coef = cell(nSpace,1);
+        for i = 1:nSpace
+            Coef{i} = @(pz) f(pz)*trf(:,i); 
+        end
+    end  % else: Coef = {f1Mat,f2,f3}
     for i = 1:nSpace
-        Test = sprintf('v%d.val',i);
-        Fi = assem1d(Th,Coef{i},Test,[],Vh{i},quadOrder);
+        Coefv = Coef{i};
+        Testv = sprintf('v%d.val',i);
+        Fi = assem1d(Th,Coefv,Testv,[],Vh{i},quadOrder);
         id = (1:NNdofv(i)) + (i>=2)*sum(NNdofv(1:i-1)); 
         ff(id) = ff(id) + Fi;
     end

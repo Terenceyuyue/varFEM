@@ -1,7 +1,17 @@
 function [elem2dof,Ndof,NNdof] = dof2d(Th,Vh)
 
 %% Mesh info
-node = Th.node;  elem = Th.elem;
+node = Th.node;
+if size(node,2)==2
+    elem = Th.elem;
+end
+if size(node,2)==3 && isfield(Th,'on')
+    on = Th.on;
+    elem = Th.bdFaceType{on};
+    bdFace2edge = Th.bdFace2edgeType{on};
+end
+if isfield(Th,'elem'), elem = Th.elem; end % given by userTh.on = 1;  
+if isfield(Th,'bdFace2edge'), bdFace2edge = Th.bdFace2edge; end % given by userTh.on = 1;  
 
 %% P1-Lagrange
 if strcmpi(Vh, 'P1')
@@ -9,6 +19,11 @@ if strcmpi(Vh, 'P1')
         Ndof = 3; % number of local dofs
         NNdof = size(node,1); % number of global dofs
         elem2dof = elem; 
+    end
+    if size(node,2) == 3 % 3-D boundary faces
+        Ndof = 3;
+        NNdof = Th.N;
+        elem2dof = elem; % elem2dof in 2-D inherited from 2-D
     end
 end
 
@@ -18,6 +33,11 @@ if  strcmpi(Vh, 'P2')
         Ndof = 6;
         NNdof = Th.N + Th.NE;
         elem2dof = [elem, Th.elem2edge+Th.N];
+    end
+    if size(node,2)==3
+        Ndof = 6; 
+        NNdof = Th.N + Th.NE;
+        elem2dof = [elem, bdFace2edge + Th.N];
     end
 end
 
@@ -39,4 +59,5 @@ if  strcmpi(Vh, 'P3')
         % elem2dof
         elem2dof = [elem, elema, elemb, (1:NT)'+N+2*NE];
     end
+    % P3-Lagrange is not provided in 3-D
 end

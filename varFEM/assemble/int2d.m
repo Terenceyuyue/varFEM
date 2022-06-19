@@ -33,7 +33,7 @@ end
 %  Coef  = {1, 1, 0.5, 0.5, 0.5, 0.5};
 %  Test  = {'v1.dx', 'v2.dy', 'v1.dy', 'v1.dy', 'v2.dx', 'v2.dx'};
 %  Trial = {'u1.dx', 'u2.dy', 'u1.dy', 'u2.dx', 'u1.dy', 'u2.dx'};
-if ~isempty(Trial) && nSpace>1
+if ~isempty(Trial) && nSpace>1 && sum(mycontains(Trial,'+'))
     [Coef,Test,Trial] = getExtendedvarForm(Coef,Test,Trial);
 end
 
@@ -88,11 +88,17 @@ ff = zeros(NNdofvv,1);
 
 % Test --> v.val = [v1.val, v2.val, v3.val]
 if length(Test)==1 && strcmpi(Test{1}, 'v.val')
-    trf = eye(nSpace); f = Coef{1};
+    if length(Coef) == 1  % pde.f
+        trf = eye(nSpace); f = Coef{1};
+        Coef = cell(nSpace,1);
+        for i = 1:nSpace
+            Coef{i} = @(pz) f(pz)*trf(:,i); 
+        end
+    end  % else: Coef = {f1Mat,f2,f3}
     for i = 1:nSpace
-        Coef = @(pz) f(pz)*trf(:, i);  
-        Test = sprintf('v%d.val',i);
-        Fi = assem2d(Th,Coef,Test,[],Vh{i},quadOrder);
+        Coefv = Coef{i};
+        Testv = sprintf('v%d.val',i);
+        Fi = assem2d(Th,Coefv,Testv,[],Vh{i},quadOrder);
         id = (1:NNdofv(i)) + (i>=2)*sum(NNdofv(1:i-1)); 
         ff(id) = ff(id) + Fi;
     end

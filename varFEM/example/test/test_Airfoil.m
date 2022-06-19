@@ -61,7 +61,7 @@ varcontourf(x,y,node,elem,uh(1:Th.N),20);
 title('Numerical solution of varFEM');
 subplot(1,2,2),
 load sol_airfoil.mat ufh
-load meshdata_airfoil node elem
+[node,elem] = getMeshFreeFEM('meshdata_airfoil.msh');
 varcontourf(x,y,node,elem,ufh(1:size(node,1)),20); 
 title('Numerical solution of FreeFEM++');
 

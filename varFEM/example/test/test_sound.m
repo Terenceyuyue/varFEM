@@ -1,5 +1,5 @@
 clc; clear; close all
-%%% This is an exmple given in FreeFem Documentation: Release 4.0
+%%% This is an exmple given in FreeFem Documentation: Release 4.6
 %   Subsection 2.5 - Acoustics (sound.edp)
 
 %% Mesh
@@ -25,8 +25,9 @@ kk = assem2d(Th,Coef,Test,Trial,Vh,quadOrder);
 %% Assemble Neumann boundary condition
 Coef = gN;  
 Test = 'v.val';  
-Th.elem1d = Th.bdEdgeType{1};
-Th.elem1dIdx = Th.bdEdgeIdxType{1};
+Th.on = 1;
+% Th.elem1d = Th.bdEdgeType{1};
+% Th.elem1dIdx = Th.bdEdgeIdxType{1};
 ff = assem1d(Th,Coef,Test,[],Vh,quadOrder); 
 
 %% Solve

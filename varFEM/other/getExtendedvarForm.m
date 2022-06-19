@@ -7,7 +7,6 @@ function [Coef,Test,Trial] = getExtendedvarForm(Coef,Test,Trial)
 %  Test  = {'v1.dx', 'v2.dy', 'v1.dy', 'v1.dy', 'v2.dx', 'v2.dx'};
 %  Trial = {'u1.dx', 'u2.dy', 'u1.dy', 'u2.dx', 'u1.dy', 'u2.dx'};
 %
-% Copyright (C) Terence Yu.
 
 % check the existence of linear combination
 idv = cellfun(@(str) mycontains(str,'+'), Test);  idv = sum(idv);
@@ -56,14 +55,14 @@ for i = 1:nu
     if length(str)==2, cuu{i} = str2double(str{1}); struu{i} = str{2}; end
 end
 % cross pairs: Coef, Test, Trial
-% Coef
-cvv = repmat(cvv, 1, nu);
-Coef1 = cvv([1:2:end, 2:2:end]);
-Coef2 = repmat(cuu, 1, nv);
-Coef = cellfun(@(x,y) x*y, Coef1, Coef2, 'UniformOutput', false);
-% Test
-strvv = repmat(strvv, 1, nu);
-Test = strvv([1:2:end, 2:2:end]);
-% Trial
-Trial = repmat(struu, 1, nv);
+[Coef,Test,Trial] = deal(cell(1,nu*nv)); 
+s = 1;
+for i = 1:nu
+    for j = 1:nv
+        Coef{s} = cvv{i}*cuu{j};
+        Test{s} = strvv{i};
+        Trial{s} = struu{j};
+        s = s + 1;
+    end
+end
 end

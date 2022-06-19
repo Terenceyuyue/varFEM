@@ -1,4 +1,4 @@
-function w = Base2D_P2(wStr,node,elem,quadOrder)
+function w = Base2d_P2(wStr,node,elem,quadOrder)
 
 % Gauss quadrature rule
 [lambda,weight] = quadpts(quadOrder);  
