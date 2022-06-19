@@ -1,10 +1,6 @@
 # varFEM: Variational formulation based programming for Finite Element Methods in MATLAB
 
 [TOC]
-
- Tool of reading Markdown: Typora
- 
- **The pacakge has been renamed as varFEM.**
  
  --------------
 
