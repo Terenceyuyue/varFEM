@@ -1,4 +1,4 @@
-function w = Base1d(wStr,node,elem1,Vh,quadOrder)
+function w = Base1d(wStr,node,elem1d,Vh,quadOrder)
 %% BASE1D  returns base matrix for numerical integration
 %
 %  w = {w1,w2, ..., wn}, where n is the number of the basis functions
@@ -12,9 +12,9 @@ if nargin == 4, quadOrder = 3; end
 wStr = lower(wStr); % lowercase string
 
 %% Quadrature and gradbasis
-nel = size(elem1,1);
+nel = size(elem1d,1);
 % length
-h = sqrt(sum((node(elem1(:,2),:)-node(elem1(:,1),:)).^2,2));
+h = sqrt(sum((node(elem1d(:,2),:)-node(elem1d(:,1),:)).^2,2));
 % Gauss quadrature rule
 [lambda,weight] = quadpts1(quadOrder); ng = length(weight);
 % derivatives of basis functions
@@ -84,21 +84,3 @@ if  strcmpi(Vh, 'P3')
     w = {w1,w2,w3,w4};
     return;
 end
-
-% %% Crouzeix-Raviart linear element
-% if  strcmpi(Vh, 'CR') || isempty(Vh)
-%     % u.val
-%     if mycontains(wStr,'.val') 
-%         w1 = ones(nel,ng); % % phi1 at xp, p = 1,2,...
-%         w2 = repmat(1-2*lambda(:,1)',nel,1);
-%         w3 = repmat(1-2*lambda(:,2)',nel,1);
-%     end
-%     % u.dx
-%     if mycontains(wStr,'.dx') 
-%         w1 = 0*Dlambda1;  w1 = repmat(w1,1,ng);
-%         w2 = -2*Dlambda1;  w1 = repmat(w1,1,ng);
-%         w3 = -2*Dlambda2;  w1 = repmat(w1,1,ng);
-%     end
-%     w = {w1,w2,w3};
-%     return;
-% end

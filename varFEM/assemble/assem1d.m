@@ -123,24 +123,39 @@ if ~isempty(Trial)
 end
 
 %% Linear form
-% % if isempty(Trial)
-% Test functions (v.val, v.dx, v.dy)
-F = zeros(nel,Ndofv); % straighten
-% Weight matrix
-ww = repmat(weight,nel,1);
-for ss = 1:length(Test)
-    v = Test{ss};
-    vbase = Base1d(v,node,elem1d,Vh{1},quadOrder);
-
-    % Coef matrix
-    cc = CoefMat{ss};    
-
-    % Load vector
+if isempty(Trial) && ~isempty(Test)
+    % Test functions (v.val, v.dx, v.dy)
     F = zeros(nel,Ndofv); % straighten
-    for j = 1:Ndofv
-        vj = vbase{j};
-        F(:,j) = F(:,j) + h.*sum(ww.*cc.*vj,2);  % [f*phi1, f*phi2]
+    % Weight matrix
+    ww = repmat(weight,nel,1);
+    for ss = 1:length(Test)
+        v = Test{ss};
+        vbase = Base1d(v,node,elem1d,Vh{1},quadOrder); % v1,v2
+
+        % Coef matrix
+        cc = CoefMat{ss};
+
+        % Load vector
+        for j = 1:Ndofv
+            vj = vbase{j};
+            F(:,j) = F(:,j) + h.*sum(ww.*cc.*vj,2);  % [f*phi1, f*phi2]
+        end
     end
+    varargout{1} = accumarray(elem2dofv(:), F(:),[NNdofv 1]); % ff
+    varargout{2} = F(:);
+    return;
 end
-varargout{1} = accumarray(elem2dofv(:), F(:),[NNdofv 1]); % ff
-varargout{2} = F(:);
+
+%% Integral
+if isempty(Trial) && isempty(Test)
+    % I = \int_\Omega Coef dx
+    %   = assem1d(Th,Coef,[],[],Vh,quadOrder)
+    % Weight matrix
+    ww = repmat(weight,nel,1);
+    I = 0;
+    for ss = 1:length(Coef)
+        cc = CoefMat{ss};
+        I = I + dot(h, sum(ww.*cc,2));
+    end
+    varargout{1} = I;
+end

@@ -4,8 +4,11 @@ function Th = FeMesh3d(node,elem3,bdStr)
 if nargin==2, bdStr = []; end
 
 % node, elem
-elem3 = fixorder3(node,elem3);  % with reverse normal vector
-elem3(:,[2 3]) = elem3(:,[3 2]);
+[elem3fix,Idx] = fixorder3(node,elem3);  % with reverse normal vector
+if length(Idx)>1  % only for uniformrefine3
+    elem3 = elem3fix;
+    elem3(:,[2 3]) = elem3(:,[3 2]);
+end
 
 % % WARNING: the output of fixorder3.m can not be used in uniformrefine3.m
 Th.node = node; Th.elem3 = elem3;
@@ -57,7 +60,7 @@ bdNodeIdxType{end} = unique(bdFaceType{end});
 %% edge, elem2edge
 % edge
 allEdge = [elem3(:,[1,2]); elem3(:,[1,3]); elem3(:,[1,4]);
-           elem3(:,[2,3]); elem3(:,[2,4]); elem3(:,[3,4])];
+    elem3(:,[2,3]); elem3(:,[2,4]); elem3(:,[3,4])];
 totalEdge = sort(allEdge,2);
 [edge,~,totalJE] = unique(totalEdge,'rows');
 NT = size(elem3,1);
@@ -65,9 +68,9 @@ elem2edge = reshape(totalJE, NT, 6);
 
 %% face2edge
 allFace2edge = [elem2edge(:,[6,4,5]);  % face1
-                elem2edge(:,[6,3,2]);  % face2
-                elem2edge(:,[5,1,3]);  % face3
-                elem2edge(:,[4,2,1])]; % face4
+    elem2edge(:,[6,3,2]);  % face2
+    elem2edge(:,[5,1,3]);  % face3
+    elem2edge(:,[4,2,1])]; % face4
 face2edge = allFace2edge(i1,:);
 bdFace2edgeType = cell(nbdType,1);
 for s = 1:nbdType
@@ -88,7 +91,7 @@ Th.bdNodeIdxType = bdNodeIdxType;
 % boundary edge
 bdEdgeIdxType = cell(nbdType,1);
 bdEdgeType = cell(nbdType,1);
-for s = 1:nbdType    
+for s = 1:nbdType
     bdEdgeIdxType{s} = unique(bdFace2edgeType{s});
     bdEdgeType{s} = edge(bdEdgeIdxType{s},:);
 end

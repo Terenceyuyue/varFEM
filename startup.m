@@ -10,3 +10,4 @@ clc;clear;close all
 addpath(genpath(pwd)); 
 % savepath; % not recommended
 % open pathdef.m % check the path
+% rmpath(genpath(pwd)); % remove the path
