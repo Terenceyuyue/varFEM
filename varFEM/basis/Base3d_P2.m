@@ -6,8 +6,7 @@ ng = length(weight);
 NT = size(elem3,1);
 
 % gradbasis
-if mycontains(wStr,'.dx') || mycontains(wStr,'.dy')  || mycontains(wStr,'.dz') ...
-        || mycontains(wStr,'.grad')
+if ~strcmpi(wStr,'.val')
     Dlambda = gradbasis3(node,elem3);
     Dlambda1 = Dlambda(1:NT,:,1);
     Dlambda2 = Dlambda(1:NT,:,2);
@@ -19,7 +18,7 @@ if mycontains(wStr,'.dx') || mycontains(wStr,'.dy')  || mycontains(wStr,'.dz') .
 end
 
 %% u.val
-if mycontains(wStr,'.val')
+if strcmpi(wStr,'.val')
     w1 = lambda(:,1)'.*(2*lambda(:,1)'-1);  % a1
     w2 = lambda(:,2)'.*(2*lambda(:,2)'-1);  % a2
     w3 = lambda(:,3)'.*(2*lambda(:,3)'-1);  % a3
@@ -38,7 +37,7 @@ if mycontains(wStr,'.val')
     return;
 end
 %% u.dx
-if mycontains(wStr,'.dx')
+if strcmpi(wStr,'.dx')
     [w1,w2,w3,w4,w5,w6,w7,w8,w9,w10] = deal(zeros(NT,ng));
     for p = 1:ng
         w1(:,p) = (4*lambda(p,1)-1).*Dlambdax(:,1);
@@ -56,7 +55,7 @@ if mycontains(wStr,'.dx')
     return;
 end
 %% u.dy
-if mycontains(wStr,'.dy')
+if strcmpi(wStr,'.dy')
     [w1,w2,w3,w4,w5,w6,w7,w8,w9,w10] = deal(zeros(NT,ng));
     for p = 1:ng
         w1(:,p) = (4*lambda(p,1)-1).*Dlambday(:,1);
@@ -75,7 +74,7 @@ if mycontains(wStr,'.dy')
 end
 
 %% u.dz
-if mycontains(wStr,'.dz')
+if strcmpi(wStr,'.dz')
     [w1,w2,w3,w4,w5,w6,w7,w8,w9,w10] = deal(zeros(NT,ng));
     for p = 1:ng
         w1(:,p) = (4*lambda(p,1)-1).*Dlambdaz(:,1);
@@ -94,7 +93,7 @@ if mycontains(wStr,'.dz')
 end
 
 %% u.grad
-if mycontains(wStr,'.grad')
+if strcmpi(wStr,'.grad')
     [w1,w2,w3,w4,w5,w6,w7,w8,w9,w10] = deal(zeros(NT,3*ng));
     for p = 1:ng
         w1(:,3*p-2:3*p) = (4*lambda(p,1)-1).*Dlambda1;

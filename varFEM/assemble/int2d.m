@@ -19,6 +19,15 @@ if ~iscell(Coef), Coef = {Coef}; end
 if ~isempty(Test) && ~iscell(Test), Test = {Test}; end
 if ~isempty(Trial) && ~iscell(Trial), Trial = {Trial}; end
 
+%% extended [Coef,Trial,Test]
+% e.g. (v.dx + v.dy) * (u.dx + u.dy)
+% is expanded as
+%  Coef  = {1, 1, 1, 1};
+%  Test  = {'v.dx', 'v.dx', 'v.dy', 'v.dy'};
+%  Trial = {'u.dx', 'u.dy', 'u.dx', 'u.dy'};
+if ~isempty(Trial) && sum(mycontains(Trial,'+'))
+    [Coef,Test,Trial] = getExtendedvarForm(Coef,Test,Trial);
+end
 
 %% Scalar case
 nSpace = length(Vh);
@@ -27,15 +36,16 @@ if nSpace == 1
     return;  % otherwise, vector case
 end
 
-%% extended [Coef,Trial,Test]
-% e.g. Eij(u)Eij(v) = v1x*u1x + v2x*u2y + 0.5(v1y+v2x)*(u1y+u2x)
-% is expanded as
-%  Coef  = {1, 1, 0.5, 0.5, 0.5, 0.5};
-%  Test  = {'v1.dx', 'v2.dy', 'v1.dy', 'v1.dy', 'v2.dx', 'v2.dx'};
-%  Trial = {'u1.dx', 'u2.dy', 'u1.dy', 'u2.dx', 'u1.dy', 'u2.dx'};
-if ~isempty(Trial) && nSpace>1 && sum(mycontains(Trial,'+'))
-    [Coef,Test,Trial] = getExtendedvarForm(Coef,Test,Trial);
-end
+% %% extended [Coef,Trial,Test]
+% % e.g. Eij(u)Eij(v) = v1x*u1x + v2x*u2y + 0.5*(v1y+v2x)*(u1y+u2x)
+% % is expanded as
+% %  Coef  = {1, 1, 0.5, 0.5, 0.5, 0.5};
+% %  Test  = {'v1.dx', 'v2.dy', 'v1.dy', 'v1.dy', 'v2.dx', 'v2.dx'};
+% %  Trial = {'u1.dx', 'u2.dy', 'u1.dy', 'u2.dx', 'u1.dy', 'u2.dx'};
+% %if ~isempty(Trial) && nSpace>1 && sum(mycontains(Trial,'+'))
+% if ~isempty(Trial) && sum(mycontains(Trial,'+'))
+%     [Coef,Test,Trial] = getExtendedvarForm(Coef,Test,Trial);
+% end
 
 %% Sparse assembly index
 % elementwise d.o.f.s

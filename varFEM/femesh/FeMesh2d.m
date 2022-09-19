@@ -60,6 +60,11 @@ totalJelem = repmat((1:NT)',3,1);
 i2(totalJ) = 1:length(totalJ); i2 = i2(:); % second occurence by overlapping 
 edge2elem = totalJelem([i1,i2]);
 
+%% ne
+v12 = node(edge(:,1),:)-node(edge(:,2),:);
+Ne = [-v12(:,2),v12(:,1)];
+he = vecnorm(v12,2,2);
+ne = Ne./he;
 
 %% Stored as a struct
 Th.node = node; Th.elem = elem;
@@ -75,5 +80,8 @@ Th.elem2edge = elem2edge;
 Th.edge2elem = edge2elem;
 % number
 Th.N = N; Th.NT = NT; Th.NE = NE;
+% geometric quantities
+Th.ne = ne;  Th.he = he;  Th.Ne = Ne;
+Th.diameter = max(he(elem2edge), [], 2);
 % bdStr
 Th.bdStr = bdStr;

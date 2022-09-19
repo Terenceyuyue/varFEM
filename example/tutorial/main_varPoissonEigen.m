@@ -20,7 +20,7 @@ lamExact = sort(lamExact);  % in ascending order
 nlam = length(lamExact);
 
 %% Finite element method
-Vh = 'P1'; quadOrder = 7;
+Vh = 'P3'; quadOrder = 7;
 for k = 1:maxIt
     % refine mesh
     [node,elem] = uniformrefine(node,elem);

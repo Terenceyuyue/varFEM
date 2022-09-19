@@ -7,7 +7,7 @@ z3 = node(elem(:,3),:);  x3 = z3(:,1);  y3 = z3(:,2);
 xi = [x2-x3, x3-x1, x1-x2];
 eta = [y2-y3, y3-y1, y1-y2];
 omega = [x2.*y3-x3.*y2, x3.*y1-x1.*y3, x1.*y2-x2.*y1];
-S = (omega(:,1) + omega(:,2) + omega(:,3))/2;
+S = sum(omega,2)/2;
 
 lam1 = @(x,y) 1./(2*S).*(eta(:,1)*x - xi(:,1)*y + omega(:,1));
 lam2 = @(x,y) 1./(2*S).*(eta(:,2)*x - xi(:,2)*y + omega(:,2));

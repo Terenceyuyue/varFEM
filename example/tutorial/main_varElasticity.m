@@ -17,7 +17,7 @@ para.lambda = lambda; para.mu = mu;
 pde = elasticitydatavar(para);
 
 %% Finite Element Method
-i = 1; % 1,2,3
+i = 2; % 1,2,3
 Vh = ['P', num2str(i)];
 quadOrder = i+2;
 Vhvec = repmat( {Vh}, 1, 2 ); % v = [v1,v2]

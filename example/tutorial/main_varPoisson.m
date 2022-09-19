@@ -17,7 +17,7 @@ g_R = @(p) 1 + p(:,1) + p(:,2); % 1 + x + y
 pde.g_R = g_R;
 
 %% Finite Element 
-i = 1; % 1,2,3
+i = 3; % 1,2,3
 Vh = ['P', num2str(i)];
 quadOrder = i+2;
 for k = 1:maxIt

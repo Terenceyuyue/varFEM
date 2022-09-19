@@ -5,8 +5,11 @@ function w = Base2d_P2(wStr,node,elem,quadOrder)
 ng = length(weight);  
 NT = size(elem,1);
 
+dot = strfind(wStr,'.');
+wStr = wStr(dot:end);
+
 % gradbasis
-if mycontains(wStr,'.dx') || mycontains(wStr,'.dy') || mycontains(wStr,'.grad')
+if ~strcmpi(wStr,'.val')
     Dlambda = gradbasis(node,elem);
     Dlambda1 = Dlambda(1:NT,:,1);
     Dlambda2 = Dlambda(1:NT,:,2);
@@ -17,7 +20,7 @@ end
 
 
 %% u.val
-if mycontains(wStr,'.val')
+if strcmpi(wStr,'.val')
     w1 = lambda(:,1)'.*(2*lambda(:,1)'-1);
     w2 = lambda(:,2)'.*(2*lambda(:,2)'-1);
     w3 = lambda(:,3)'.*(2*lambda(:,3)'-1);
@@ -30,7 +33,7 @@ if mycontains(wStr,'.val')
     return;
 end
 %% u.dx
-if mycontains(wStr,'.dx')
+if strcmpi(wStr,'.dx')
     [w1,w2,w3,w4,w5,w6] = deal(zeros(NT,ng));
     for p = 1:ng
         w1(:,p) = Dlambdax(:,1)*(4*lambda(p,1)-1);
@@ -44,7 +47,7 @@ if mycontains(wStr,'.dx')
     return;
 end
 %% u.dy
-if mycontains(wStr,'.dy')
+if strcmpi(wStr,'.dy')
     [w1,w2,w3,w4,w5,w6] = deal(zeros(NT,ng));
     for p = 1:ng
         w1(:,p) = Dlambday(:,1)*(4*lambda(p,1)-1);
@@ -58,7 +61,7 @@ if mycontains(wStr,'.dy')
     return;
 end
 %% u.grad
-if mycontains(wStr,'.grad')
+if strcmpi(wStr,'.grad')
     [w1,w2,w3,w4,w5,w6] = deal(zeros(NT,2*ng));
     for p = 1:ng
         w1(:,2*p-1:2*p) = Dlambda1*(4*lambda(p,1)-1);
@@ -68,6 +71,39 @@ if mycontains(wStr,'.grad')
         w5(:,2*p-1:2*p) = 4*(Dlambda1*lambda(p,3) + Dlambda3*lambda(p,1));
         w6(:,2*p-1:2*p) = 4*(Dlambda1*lambda(p,2) + Dlambda2*lambda(p,1));
     end
+    w = {w1,w2,w3,w4,w5,w6};
+    return;
+end
+%% u.dxx
+if strcmpi(wStr,'.dxx')
+    w1 = repmat(4*Dlambdax(:,1).^2,1,ng);
+    w2 = repmat(4*Dlambdax(:,2).^2,1,ng);
+    w3 = repmat(4*Dlambdax(:,3).^2,1,ng);
+    w4 = repmat(8*(Dlambdax(:,2).*Dlambdax(:,3)),1,ng);
+    w5 = repmat(8*(Dlambdax(:,1).*Dlambdax(:,3)),1,ng);
+    w6 = repmat(8*(Dlambdax(:,1).*Dlambdax(:,2)),1,ng);
+    w = {w1,w2,w3,w4,w5,w6};
+    return;
+end
+%% u.dyy
+if strcmpi(wStr,'.dyy')
+    w1 = repmat(4*Dlambday(:,1).^2,1,ng);
+    w2 = repmat(4*Dlambday(:,2).^2,1,ng);
+    w3 = repmat(4*Dlambday(:,3).^2,1,ng);
+    w4 = repmat(8*(Dlambday(:,2).*Dlambday(:,3)),1,ng);
+    w5 = repmat(8*(Dlambday(:,1).*Dlambday(:,3)),1,ng);
+    w6 = repmat(8*(Dlambday(:,1).*Dlambday(:,2)),1,ng);
+    w = {w1,w2,w3,w4,w5,w6};
+    return;
+end
+%% u.dyy
+if strcmpi(wStr,'.dxy') || strcmpi(wStr,'.dyx')
+    w1 = repmat(4*Dlambdax(:,1).*Dlambday(:,1),1,ng);
+    w2 = repmat(4*Dlambdax(:,2).*Dlambday(:,2),1,ng);
+    w3 = repmat(4*Dlambdax(:,3).*Dlambday(:,3),1,ng);
+    w4 = repmat(4*(Dlambdax(:,2).*Dlambday(:,3) + Dlambday(:,2).*Dlambdax(:,3)),1,ng);
+    w5 = repmat(4*(Dlambdax(:,1).*Dlambday(:,3) + Dlambday(:,1).*Dlambdax(:,3)),1,ng);
+    w6 = repmat(4*(Dlambdax(:,1).*Dlambday(:,2) + Dlambday(:,1).*Dlambdax(:,2)),1,ng);
     w = {w1,w2,w3,w4,w5,w6};
     return;
 end

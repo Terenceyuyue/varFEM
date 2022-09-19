@@ -1,4 +1,4 @@
-%clc; clear; close all;
+clc; clear; close all;
 %varFEM1D solves the two-point boundary value problem
 %
 %     -au'' + bu' + cu = f  in \Omega = (a,b), with

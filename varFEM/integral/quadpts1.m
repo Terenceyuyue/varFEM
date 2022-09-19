@@ -105,10 +105,11 @@ switch numPts
             -0.8650633666889845107320967 	0.1494513491505805931457763
             -0.9739065285171717200779640 	0.0666713443086881375935688];
 end
-lambda1 = (A(:,1)+1)/2;
+lambda1 = (A(:,1)+1)/2; % Gauss quadrature points on [0,1]
+[lambda1,id] = sort(lambda1); % add sort
 lambda2 = 1 - lambda1;
 lambda = [lambda1, lambda2];
-weight = A(:,2)/2; 
+weight = A(id,2)/2; 
 weight = weight'; % add
 %% Verification
 % The order of the quadrature rule is verified by the function
