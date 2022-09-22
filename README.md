@@ -31,28 +31,28 @@ Example: The stiffness matrix for the bilinear form  $\int_{T_h} \nabla u \cdot 
   
 ## Textbook examples
 
-# Poisson equation
+### Poisson equation
 ![image](https://github.com/Terenceyuyue/varFEM/blob/master/images/Poisson.png)
 
-# Linear elasticity problem
+### Linear elasticity problem
 ![image](https://github.com/Terenceyuyue/varFEM/blob/master/images/elasticity.png)
 
-# Biharmonic equation (mixed element)
+### Biharmonic equation (mixed element)
 ![image](https://github.com/Terenceyuyue/varFEM/blob/master/images/biharmonic.png)
 
-# Stokes problem
+### Stokes problem
 ![image](https://github.com/Terenceyuyue/varFEM/blob/master/images/Stokes.png)
 
-# Heat equation
+### Heat equation
 ![image](https://github.com/Terenceyuyue/varFEM/blob/master/images/heat.png)
 
-# Navier-Stokes equation
+### Navier-Stokes equation
 ![image](https://github.com/Terenceyuyue/varFEM/blob/master/images/NS.png)
 
-# Variational inequalities
+### Variational inequalities
 ![image](https://github.com/Terenceyuyue/varFEM/blob/master/images/inequality.png)
 
-# Eigenvalue problems
+### Eigenvalue problems
 ![image](https://github.com/Terenceyuyue/varFEM/blob/master/images/Eigenvalue.png)
 
 
