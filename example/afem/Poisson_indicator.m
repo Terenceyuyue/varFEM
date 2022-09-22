@@ -17,13 +17,13 @@ Coef = (fc + uxxc + uyyc).^2;
 [~,elemIh] = integral2d(Th,Coef,Vh,quadOrder);
 elemRes = diameter.^2.*elemIh;
 
-%% elementwise interpolant at quadrature points
-[elemuhxP,elemuhxM] = elem2edgeInterp('.dx',Th,uh,Vh,quadOrder);
-[elemuhyP,elemuhyM] = elem2edgeInterp('.dy',Th,uh,Vh,quadOrder);
+%% elementwise interior and exterior evaluations at quadrature points
+[elemuhxM,elemuhxP] = elem2edgeInterp('.dx',Th,uh,Vh,quadOrder);
+[elemuhyM,elemuhyP] = elem2edgeInterp('.dy',Th,uh,Vh,quadOrder);
 
-%% elementwise jump at quadrature points
-elem2Jumpx = elemuhxP - elemuhxM;
-elem2Jumpy = elemuhyP - elemuhyM;
+%% elementwise evaluations of the jump integral
+elem2Jumpx = elemuhxM - elemuhxP;
+elem2Jumpy = elemuhyM - elemuhyP;
 elemJump = zeros(NT,1);
 [~,weight1d] = quadpts1(quadOrder);
 ng = length(weight1d);
