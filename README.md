@@ -30,3 +30,5 @@ Example: The stiffness matrix for the bilinear form  $\int_{T_h} \nabla u \cdot 
   - We remark that the current design can be adapted to find FEM solutions of most of the PDE problems.
   
 ## Unified implementation of adaptive finte element methods
+
+![image](https://github.com/Terenceyuyue/varFEM/blob/master/images/afem.jpg)
