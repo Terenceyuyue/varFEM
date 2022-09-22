@@ -53,7 +53,7 @@ Example: The stiffness matrix for the bilinear form  $\int_{T_h} \nabla u \cdot 
 ![image](https://github.com/Terenceyuyue/varFEM/blob/master/images/inequality.png)
 
 ### Eigenvalue problems
-![image](https://github.com/Terenceyuyue/varFEM/blob/master/images/Eigenvalue.png)
+![image](https://github.com/Terenceyuyue/varFEM/blob/master/images/eigenvalue.png)
 
 
 ## Unified implementation of adaptive finte element methods
