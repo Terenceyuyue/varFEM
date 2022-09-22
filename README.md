@@ -29,6 +29,33 @@ Example: The stiffness matrix for the bilinear form  $\int_{T_h} \nabla u \cdot 
   
   - We remark that the current design can be adapted to find FEM solutions of most of the PDE problems.
   
+## Textbook examples
+
+# Poisson equation
+![image](https://github.com/Terenceyuyue/varFEM/blob/master/images/Poisson.png)
+
+# Linear elasticity problem
+![image](https://github.com/Terenceyuyue/varFEM/blob/master/images/elasticity.png)
+
+# Biharmonic equation (mixed element)
+![image](https://github.com/Terenceyuyue/varFEM/blob/master/images/biharmonic.png)
+
+# Stokes problem
+![image](https://github.com/Terenceyuyue/varFEM/blob/master/images/Stokes.png)
+
+# Heat equation
+![image](https://github.com/Terenceyuyue/varFEM/blob/master/images/heat.png)
+
+# Navier-Stokes equation
+![image](https://github.com/Terenceyuyue/varFEM/blob/master/images/NS.png)
+
+# Variational inequalities
+![image](https://github.com/Terenceyuyue/varFEM/blob/master/images/inequality.png)
+
+# Eigenvalue problems
+![image](https://github.com/Terenceyuyue/varFEM/blob/master/images/Eigenvalue.png)
+
+
 ## Unified implementation of adaptive finte element methods
 
 ![image](https://github.com/Terenceyuyue/varFEM/blob/master/images/afem.jpg)
