@@ -31,11 +31,10 @@ for i = 1:3  % i-th side
     id(sgni<0,:) = repmat((ng:-1:1)+ng*NE, sum(sgni<0), 1);
     elem2dofM(:,(1:ng)+(i-1)*ng) = id + (ei-1)*ng;
 end
-rep = ones(1,ng);
-elem2dofsign = [sgnelem(:,rep),sgnelem(:,2*rep),sgnelem(:,3*rep)];
-elem2dofP = elem2dofM + (-ng*NE)*(elem2dofsign<0) + ng*NE*(elem2dofsign>0); 
+elem2dofP = elem2dofM + (-ng*NE)*(elem2dofM>ng*NE) + ng*NE*(elem2dofM<=ng*NE); 
 
 %% elementwise interior and exterior evaluations
+% interior evaluations
 elemuhM = zeros(NT,3*ng);
 for p = 1:3*ng
     % interpolation at the p-th quadrture point
@@ -44,6 +43,7 @@ for p = 1:3*ng
         elemuhM(:,p) = elemuhM(:,p) + uh(elem2dof(:,i)).*base(:,p);
     end
 end
+% exterior evaluations
 uhI = zeros(2*NE*ng,1);      
-uhI(elem2dofM) = elemuhM;   
+uhI(elem2dofM) = elemuhM;  % the exterior values on the boundary edges remain zero  
 elemuhP = uhI(elem2dofP);  

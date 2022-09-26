@@ -24,6 +24,9 @@ bdEdge = allEdge(i1(s==1),:);
 bdEdgeIdx = find(s==1);
 nbE = size(bdEdge,1);
 
+%% Restore the counterclockwise orientation of edges on domain boundary
+edge(bdEdgeIdx,:) = bdEdge;
+
 %% Set up boundary edges
 midbdEdge = (node(bdEdge(:,1),:) + node(bdEdge(:,2),:))/2;
 x = midbdEdge(:,1); y = midbdEdge(:,2); %#ok<NASGU> 
@@ -66,6 +69,9 @@ Ne = [-v12(:,2),v12(:,1)];
 he = vecnorm(v12,2,2);
 ne = Ne./he;
 
+%% area
+area = simplexvolume(node,elem);
+
 %% Stored as a struct
 Th.node = node; Th.elem = elem;
 % boundary
@@ -83,5 +89,6 @@ Th.N = N; Th.NT = NT; Th.NE = NE;
 % geometric quantities
 Th.ne = ne;  Th.he = he;  Th.Ne = Ne;
 Th.diameter = max(he(elem2edge), [], 2);
+Th.area = area;
 % bdStr
 Th.bdStr = bdStr;
