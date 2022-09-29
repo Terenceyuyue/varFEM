@@ -1,5 +1,7 @@
 # varFEM: Variational formulation based programming for Finite Element Methods in MATLAB
 
+If you have any problems, please contact me via the email: terenceyuyue@sjtu.edu.cn
+
 [TOC]
  
  --------------
