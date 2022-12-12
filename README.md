@@ -42,4 +42,4 @@ Example: The stiffness matrix for the bilinear form  $\int_{T_h} \nabla u \cdot 
   - Variational inequalities
   - Eigenvalue problems
   - Unified implementation of adaptive finte element methods: Poisson equation
-  - Unified implementation of FEMs involving jumps and aveages in biliner forms: C0 interior penalty method for the biharmonic equation
+  - Unified implementation of FEMs involving jumps and averages in biliner forms: C0 interior penalty method for the biharmonic equation
