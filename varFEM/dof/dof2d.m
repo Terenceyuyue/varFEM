@@ -53,7 +53,7 @@ if  strcmpi(Vh, 'P3')
         E = false(NE,1); E(bdEdgeIdx) = 1;
         sgnelem = sign(elem(:,v2)-elem(:,v1));
         sgnbd = E(elem2edge);    sgnelem(sgnbd) = 1;
-        sgnelem(sgnelem==-1) = 0;
+        sgnelem(sgnelem<0) = 0;
         elema = elem2edge + N*sgnelem + (N+NE)*(~sgnelem); % 1/3 point
         elemb = elem2edge + (N+NE)*sgnelem + N*(~sgnelem); % 2/3 point
         % elem2dof

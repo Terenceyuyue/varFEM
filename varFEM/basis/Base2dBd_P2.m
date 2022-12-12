@@ -74,3 +74,36 @@ if strcmpi(wStr,'.grad')
     w = {w1,w2,w3,w4,w5,w6};
     return;
 end
+%% u.dxx
+if strcmpi(wStr,'.dxx')
+    w1 = repmat(4*Dlambdax(:,1).^2,1,nG);
+    w2 = repmat(4*Dlambdax(:,2).^2,1,nG);
+    w3 = repmat(4*Dlambdax(:,3).^2,1,nG);
+    w4 = repmat(8*(Dlambdax(:,2).*Dlambdax(:,3)),1,nG);
+    w5 = repmat(8*(Dlambdax(:,1).*Dlambdax(:,3)),1,nG);
+    w6 = repmat(8*(Dlambdax(:,1).*Dlambdax(:,2)),1,nG);
+    w = {w1,w2,w3,w4,w5,w6};
+    return;
+end
+%% u.dyy
+if strcmpi(wStr,'.dyy')
+    w1 = repmat(4*Dlambday(:,1).^2,1,nG);
+    w2 = repmat(4*Dlambday(:,2).^2,1,nG);
+    w3 = repmat(4*Dlambday(:,3).^2,1,nG);
+    w4 = repmat(8*(Dlambday(:,2).*Dlambday(:,3)),1,nG);
+    w5 = repmat(8*(Dlambday(:,1).*Dlambday(:,3)),1,nG);
+    w6 = repmat(8*(Dlambday(:,1).*Dlambday(:,2)),1,nG);
+    w = {w1,w2,w3,w4,w5,w6};
+    return;
+end
+%% u.dyy
+if strcmpi(wStr,'.dxy') || strcmpi(wStr,'.dyx')
+    w1 = repmat(4*Dlambdax(:,1).*Dlambday(:,1),1,nG);
+    w2 = repmat(4*Dlambdax(:,2).*Dlambday(:,2),1,nG);
+    w3 = repmat(4*Dlambdax(:,3).*Dlambday(:,3),1,nG);
+    w4 = repmat(4*(Dlambdax(:,2).*Dlambday(:,3) + Dlambday(:,2).*Dlambdax(:,3)),1,nG);
+    w5 = repmat(4*(Dlambdax(:,1).*Dlambday(:,3) + Dlambday(:,1).*Dlambdax(:,3)),1,nG);
+    w6 = repmat(4*(Dlambdax(:,1).*Dlambday(:,2) + Dlambday(:,1).*Dlambdax(:,2)),1,nG);
+    w = {w1,w2,w3,w4,w5,w6};
+    return;
+end

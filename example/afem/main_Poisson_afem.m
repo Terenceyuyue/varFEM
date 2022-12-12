@@ -15,7 +15,7 @@ bdStr = [];
 pde = Poissondata_afem();
 
 %% Adaptive Finite Element Method 
-Vh = 'P3'; quadOrder = 7;
+Vh = 'P2'; quadOrder = 7;
 for k = 1:maxIt
     % Step 1: SOLVE
     % get the mesh information

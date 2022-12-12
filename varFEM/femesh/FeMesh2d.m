@@ -24,8 +24,8 @@ bdEdge = allEdge(i1(s==1),:);
 bdEdgeIdx = find(s==1);
 nbE = size(bdEdge,1);
 
-%% Restore the counterclockwise orientation of edges on domain boundary
-edge(bdEdgeIdx,:) = bdEdge;
+% %% Restore the counterclockwise orientation of edges on domain boundary
+% edge(bdEdgeIdx,:) = bdEdge;
 
 %% Set up boundary edges
 midbdEdge = (node(bdEdge(:,1),:) + node(bdEdge(:,2),:))/2;
@@ -62,6 +62,14 @@ elem2edge = reshape(totalJ,NT,3);
 totalJelem = repmat((1:NT)',3,1);
 i2(totalJ) = 1:length(totalJ); i2 = i2(:); % second occurence by overlapping 
 edge2elem = totalJelem([i1,i2]);
+% add local index of the edge in the left and right triangles
+edge2elem = [edge2elem, ceil(i1/NT), ceil(i2/NT)];  % K1, K2, id1, id2
+
+%% node2elem
+ii = totalJelem; jj = elem(:);  ss = ones(length(ii),1);
+t2v = sparse(ii,jj,ss,NT,N);
+node2elem = cellfun(@(x) find(x), num2cell(t2v,1) ,'UniformOutput', false);
+node2elem = node2elem';
 
 %% ne
 v12 = node(edge(:,1),:)-node(edge(:,2),:);
@@ -84,10 +92,12 @@ Th.bdNodeIdxType = bdNodeIdxType;
 Th.edge = edge; 
 Th.elem2edge = elem2edge;
 Th.edge2elem = edge2elem;
+Th.node2elem = node2elem;
 % number
 Th.N = N; Th.NT = NT; Th.NE = NE;
 % geometric quantities
-Th.ne = ne;  Th.he = he;  Th.Ne = Ne;
+Th.ne = ne;  Th.Ne = Ne;
+Th.he = he;  
 Th.diameter = max(he(elem2edge), [], 2);
 Th.area = area;
 % bdStr

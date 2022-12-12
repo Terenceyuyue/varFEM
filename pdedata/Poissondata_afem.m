@@ -50,9 +50,6 @@ function [a,c,u,ux,uy,f] = compute_rhs()
     aux = a*ux;  auy = a*uy;
     % f
     f = -(diff(aux,x)+diff(auy,y)) + c*u;
-    % uxx
-    uxx = diff(u,x,2);  uxy = diff(ux,y); uyy = diff(u,y,2);
-    u2 = (uxx)^2;
     % convert to anonymous functions
     a = matlabFunction(a,'Vars',{x,y});
     c = matlabFunction(c,'Vars',{x,y}); 

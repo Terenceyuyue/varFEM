@@ -6,9 +6,9 @@ function [lambdaBd,weightBd] = quadptsBd(order)
 [~,id] = sort(lambda1d(:,1));
 lambda1d = lambda1d(id,:); weight1d = weight1d(id);
 % quadrature on each side
-lambdae1 = [zeros(ng,1), lambda1d(:,2), lambda1d(:,1)];
+lambdae1 = [zeros(ng,1), lambda1d(:,2), lambda1d(:,1)]; % (lambda1, lambda2, lambda3)
 lambdae2 = [lambda1d(:,1), zeros(ng,1), lambda1d(:,2)];
-lambdae3 = 1 - lambdae1 - lambdae2;
+lambdae3 = [lambda1d(:,2), lambda1d(:,1), zeros(ng,1)]; %1 - lambdae1 - lambdae2;
 % quadrature along the boundary of each element
-lambdaBd = [lambdae1; lambdae2; lambdae3];
+lambdaBd = [lambdae1; lambdae2; lambdae3]; % (3*ng, 3)
 weightBd = repmat(weight1d,1,3);
