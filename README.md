@@ -2,6 +2,8 @@
 
 If you have any problems, please contact me via the email: terenceyuyue@sjtu.edu.cn
 
+More academic examples and problems can be found in the companion package - mFEM:  https://github.com/Terenceyuyue/mFEM
+
 [TOC]
  
  --------------
